@@ -1,0 +1,2 @@
+PKG_CPPFLAGS  =  -D_FOR_R
+CXX_STD       =  CXX11

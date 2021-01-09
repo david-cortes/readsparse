@@ -1,0 +1,31 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.out
+*.o
+*.a
+*.Rproj
+*.Rhistory
+
+# dist files
+dist/
+*.zip
+*.tar.gz
+
+MANIFEST
+.directory
+
+readsparse/cpp_interface.cpp
+readsparse/cpp_interface_size_t.cpp
+readsparse/cpp_interface_uint64_t.cpp
+
+
+readsparse.egg-info/*
+
+build/*
+example/*
+
+docs/.directory
+docs/_build/*
+

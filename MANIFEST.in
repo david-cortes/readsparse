@@ -1,0 +1,13 @@
+global-include *.pyx
+global-include *.pxi
+global-include *.cpp
+global-include *.hpp
+global-exclude *.o
+global-exclude *.so
+include pyproject.toml
+exclude .gitignore
+exclude .gitattributes
+exclude readsparse/*.cpp
+exclude docs/*
+prune docs/*
+exclude src/Rwrapper.cpp
