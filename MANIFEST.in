@@ -10,4 +10,7 @@ exclude .gitattributes
 exclude readsparse/*.cpp
 exclude docs/*
 prune docs/*
+exclude example/*
+prune example/*
 exclude src/Rwrapper.cpp
+exclude src/RcppExports.cpp
