@@ -29,3 +29,4 @@ example/*
 docs/.directory
 docs/_build/*
 
+.Rproj.user

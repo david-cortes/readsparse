@@ -1,12 +1,12 @@
-#' @importFrom methods as new
+#' @importFrom methods as new .hasSlot
 #' @importFrom Rcpp evalCpp
-#' @importClassesFrom Matrix dgRMatrix ngRMatrix
+#' @importClassesFrom Matrix RsparseMatrix dgRMatrix ngRMatrix
 #' @useDynLib readsparse, .registration=TRUE
 
 check.bool <- function(var, name) {
     if (NROW(var) != 1)
         stop(sprintf("Error: %s must be a single boolean/logical.", name))
-    if (!("logical" %in% class(var)))
+    if (typeof(var) != "logical")
         var <- as.logical(var)
     if (is.na(var))
         stop(sprintf("%s cannot be NA.", name))
@@ -16,7 +16,7 @@ check.bool <- function(var, name) {
 check.int <- function(var, name) {
     if (NROW(var) != 1)
         stop(sprintf("Error: %s must be a single non-negative integer.", name))
-    if (!("integer" %in% class(var)))
+    if (typeof(var) != "integer")
         var <- as.integer(var)
     if (is.na(var))
         stop(sprintf("%s cannot be NA.", name))
@@ -28,16 +28,16 @@ check.int <- function(var, name) {
 }
 
 cast.df <- function(df) {
-    if (NROW(intersect(class(df), c("data.table", "tibble"))))
+    if (inherits(df, c("tibble", "data.table")))
         df <- as.data.frame(df)
-    if ("data.frame" %in% class(df))
+    if (inherits(df, "data.frame"))
         df <- as.matrix(df)
     return(df)
 }
 
 cast.dense.vec <- function(X) {
-    if (NROW(intersect(class(X), c("numeric", "integer", "float32")))) {
-        if (!("numeric" %in% class(X)))
+    if (inherits(X, c("numeric", "integer", "float32"))) {
+        if (typeof(X) != "double")
             X <- as.numeric(X)
         X <- matrix(X, nrow=1L)
     }
@@ -45,7 +45,7 @@ cast.dense.vec <- function(X) {
 }
 
 cast.sparse.vec <- function(X) {
-    if ("dsparseVector" %in% class(X)) {
+    if (inherits(X, "dsparseVector")) {
         X.csr <- new("dgRMatrix")
         X.csr@Dim <- c(1L, X@length)
         X.csr@p <- c(0L, length(X@x))
@@ -242,7 +242,7 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
     min_cols        <-  check.int(min_cols, "min_cols")
     min_classes     <-  check.int(min_classes, "min_classes")
     
-    if ("connection" %in% class(file)) {
+    if (inherits(file, "connection")) {
         file <- paste(readLines(file), collapse="\n")
         from_string <- TRUE
     }
@@ -258,7 +258,7 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
         }
         
     } else {
-        if (!("character" %in% class(file)))
+        if (typeof(file) != "character")
             stop("Must pass a character/string variable as input.")
         
         if (multilabel) {
@@ -390,13 +390,13 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     if (NROW(y) != NROW(X))
         stop("'X' and 'y' must have the same number of rows.")
     if (!to_string) {
-        if (!("character" %in% class(file)) || NROW(file) == 0L)
+        if ((typeof(file) != "character") || NROW(file) == 0L)
             stop("'file' must be a character variable containing a file path.")
     }
     if (NROW(decimal_places) != 1L)
         stop("'decimal_places' must be a single integer.")
     decimal_places <- as.integer(decimal_places)
-    if (is.na(decimal_places) || is.infinite(decimal_places) || (decimal_places < 0))
+    if (is.na(decimal_places) || is.infinite(decimal_places) || (decimal_places < 0L))
         stop("Invalid 'decimal_places'.")
     if (decimal_places > 20L) {
         warning("'decimal_places' is greater than 20.")
@@ -414,37 +414,48 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     
     X <- cast.dense.vec(X)
     X <- cast.sparse.vec(X)
-    if (nrow(X) == 1) {
+    if (nrow(X) == 1L) {
         y <- cast.sparse.vec(y)
-    } else if ("dsparseVector" %in% class(y)) {
+    } else if (inherits(y, "dsparseVector")) {
         y <- as.numeric(y)
     }
     
-    if (!("dgRMatrix" %in% class(X))) {
-        X <- as(X, "RsparseMatrix")
-        if (!("dgRMatrix" %in% class(X)))
-            X <- as(X, "dgRMatrix")
+    if (!inherits(X, "RsparseMatrix"))
+        X <- as (X, "RsparseMatrix")
+    if (!inherits(X, "dgRMatrix")) {
+        ### Note: casting from ngRMatrix to dgRMatrix is broken in Matrix==1.3.0
+        X.csr        <- new("dgRMatrix")
+        X.csr@Dim    <-  X@Dim
+        X.csr@p      <-  X@p
+        X.csr@j      <-  X@j
+        if (.hasSlot(X, "x"))
+            X.csr@x  <-  as.numeric(X@x)
+        else
+            X.csr@x  <-  rep(1., length(X@j))
+        X <- X.csr
     }
     
     allowed_y_multi <- c("matrix", "matrix.coo", "matrix.csr", "matrix.csc",
                          "dgRMatrix", "dgCMatrix", "dgTMatrix",
                          "ngRMatrix", "ngCMatrix", "ngTMatrix")
-    allowed_y_single <- c("integer", "numeric", "factor")
+    allowed_y_single <- c("integer", "numeric", "factor", "float32")
     allowed_y <- c(allowed_y_multi, allowed_y_single)
-    if (!NROW(intersect(class(y), allowed_y)))
+    if (!inherits(y, allowed_y))
         stop(sprintf("Invalid 'y' - allowed types: %s", paste0(allowed_y, collapse=",")))
-    if (NROW(intersect(class(y), allowed_y_multi))) {
+    if (inherits(y, allowed_y_multi)) {
         y_is_multi <- TRUE
-        if (!NROW(intersect(class(y), c("dgRMatrix", "ngRMatrix")))) {
+        if (!inherits(y, "RsparseMatrix")) {
             y <- as(y, "RsparseMatrix")
         }
     } else {
+        if (inherits(y, "float32") && ncol(y) != 1L)
+            stop("'float32' objects not supported for multi-label 'y'.")
         y_is_multi <- FALSE
         if (integer_labels) {
-            if (!("integer" %in% class(y)))
+            if (typeof(y) != "integer")
                 y <- as.integer(y)
         } else {
-            if (!("numeric" %in% class(y)))
+            if (typeof(y) != "double")
                 y <- as.numeric(y)
         }
     }
@@ -454,7 +465,7 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     } else {
         if (NROW(qid) != NROW(X))
             stop("'X' and 'qid' must have the same number of rows.")
-        if (!("integer" %in% class(qid)))
+        if (typeof(qid) != "integer")
             qid <- as.integer(qid)
     }
     
@@ -471,7 +482,7 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
                 n_classes <- max(n_classes, 1L)
                 if (is.na(n_classes) || is.infinite(n_classes))
                     nclasses <- 0L
-                if (!("integer" %in% class(n_classes)))
+                if (typeof(n_classes) != "integer")
                     n_classes <- as.integer(n_classes)
             }
         } else

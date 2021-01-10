@@ -2,9 +2,11 @@
 
 export(read.sparse)
 export(write.sparse)
+importClassesFrom(Matrix,RsparseMatrix)
 importClassesFrom(Matrix,dgRMatrix)
 importClassesFrom(Matrix,ngRMatrix)
 importFrom(Rcpp,evalCpp)
+importFrom(methods,.hasSlot)
 importFrom(methods,as)
 importFrom(methods,new)
 useDynLib(readsparse, .registration=TRUE)
