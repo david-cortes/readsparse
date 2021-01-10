@@ -85,7 +85,7 @@ cdef extern from "reader.hpp":
         const bool_t sort_indices,
         const bool_t text_is_base1,
         const bool_t assume_no_qid
-    )
+    ) except +
 
     bool_t read_multi_label_template[int_t_, real_t_](
         FILE *input_file,
@@ -102,7 +102,7 @@ cdef extern from "reader.hpp":
         const bool_t sort_indices,
         const bool_t text_is_base1,
         const bool_t assume_no_qid
-    )
+    ) except +
 
 cdef extern from "writer.hpp":
 
@@ -124,7 +124,7 @@ cdef extern from "writer.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    )
+    ) except +
 
     bool_t write_multi_label_template[int_t_, real_t_](
         FILE *output_file,
@@ -144,7 +144,7 @@ cdef extern from "writer.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    )
+    ) except +
 
 
 cdef extern from "python_streams.hpp":
@@ -163,7 +163,7 @@ cdef extern from "python_streams.hpp":
         const bool_t sort_indices,
         const bool_t text_is_base1,
         const bool_t assume_no_qid
-    )
+    ) except +
 
     string write_multi_label_str[int_t_, real_t_](
         int_t_ *indptr,
@@ -182,7 +182,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    )
+    ) except +
 
     bool_t read_single_label_str[int_t_, real_t_, label_t_](
         string &input_str,
@@ -198,7 +198,7 @@ cdef extern from "python_streams.hpp":
         const bool_t sort_indices,
         const bool_t text_is_base1,
         const bool_t assume_no_qid
-    )
+    ) except +
 
     string write_single_label_str[int_t_, real_t_, label_t_](
         int_t_ *indptr,
@@ -217,7 +217,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    )
+    ) except +
 
 
 cdef int_t* get_ptr_int(np.ndarray[int_t, ndim=1] a):
