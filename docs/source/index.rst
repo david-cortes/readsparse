@@ -3,17 +3,32 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to readsparse's documentation!
-======================================
+ReadSparse
+==========
+
+Efficient library for reading and writing labelled sparse matrices in delimited text format (a.k.a. SVMLight or LibSVM format).
+
+For more information, see the project's GitHub page:
+
+`<https://www.github.com/david-cortes/readsparse/>`_
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: readsparse
+
+Read Sparse Matrices
+--------------------
+.. autoclass:: readsparse.read_sparse
     :members:
     :undoc-members:
-    :show-inheritance:
+    :inherited-members:
+
+Write Sparse Matrices
+---------------------
+.. autoclass:: readsparse.write_sparse
+    :members:
+    :undoc-members:
     :inherited-members:
 
 
