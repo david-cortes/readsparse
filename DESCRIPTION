@@ -5,6 +5,8 @@ Version: 0.1
 Date: 2021-01-05
 Author: David Cortes
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
+URL: https://github.com/david-cortes/readsparse
+BugReports: https://github.com/david-cortes/readsparse/issues
 Description: Read and write labelled sparse matrices in text format as used by
     software such as SVMLight, LibSVM, ThunderSVM, LibFM, xLearn, XGBoost, LightGBM,
     and others. Supports labelled data for regression, classification (binary, multi-class, multi-label),
