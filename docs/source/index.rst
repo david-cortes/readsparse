@@ -18,14 +18,14 @@ For more information, see the project's GitHub page:
 
 
 Read Sparse Matrices
---------------------
+====================
 .. autoclass:: readsparse.read_sparse
     :members:
     :undoc-members:
     :inherited-members:
 
 Write Sparse Matrices
----------------------
+=====================
 .. autoclass:: readsparse.write_sparse
     :members:
     :undoc-members:
