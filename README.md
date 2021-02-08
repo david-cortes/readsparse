@@ -60,6 +60,11 @@ Lines might also contain comments (everything after a `#` is considered a commen
 pip install git+https://www.github.com/david-cortes/readsparse.git
 ```
 
+**Note:** the setup script uses a PEP517 environment, which means it will create an isolated virtual environment, install its build dependencies there, compile, and then copy to the actual environment. This can causes issues - for example, if one has NumPy<1.20 and the build environment installs NumPy>=1.20, there will be a binary incompatibility which will make the package fail to import. To avoid PEP517, install with:
+```
+pip install --no-use-pep517 readsparse
+```
+
 (A small note: on Windows, if compiling with MinGW, will use its default `stdio` library, which at the time of writing takes it from an outdated MSVC library. To use MinGW's own workarounds for `stdio`, one can define an environment variable `ANSISTDIO` or pass argument `-ansistdio` to `setup.py`)
 
 
