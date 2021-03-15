@@ -375,7 +375,8 @@ bool read_multi_label_template
         }
         is_first_line = false;
 
-        if (ln.size() <= 1 && (ln.size() == 0 || ln[0] != '#'))
+        if ((ln.size() <= 1 && (ln.size() == 0 || ln[0] != '#')) ||
+            (ln.size() == 2 && ln[0] == '\r'))
         {
             indptr_lab.push_back(indices_lab.size());
             indptr.push_back(indices.size());
@@ -1114,7 +1115,8 @@ bool read_single_label_template
         }
         is_first_line = false;
 
-        if (ln.size() <= 1 && (ln.size() == 0 || ln[0] != '#'))
+        if ((ln.size() <= 1 && (ln.size() == 0 || ln[0] != '#')) ||
+            (ln.size() == 2 && ln[0] == '\r'))
         {
             labels.push_back(missing_label);
             indptr.push_back(indices.size());

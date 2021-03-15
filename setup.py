@@ -32,7 +32,7 @@ class build_ext_subclass( build_ext ):
                     e.extra_compile_args = ['-O2', '-march=native', '-std=gnu++11']
                     e.define_macros += [("_FILE_OFFSET_BITS", 64),
                                         ("__STDC_FORMAT_MACROS", None)]
-                    if not use_ansi_stdio:
+                    if use_ansi_stdio:
                         e.define_macros += [("__USE_MINGW_ANSI_STDIO", None)]
                     else:
                         e.define_macros += [("AVOID_MINGW_ANSI_STDIO", None)]
