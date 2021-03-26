@@ -299,6 +299,11 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
         if (integer_labels)
             labels <- as.integer(labels)
     }
+
+    if (!has_qid && length(r$indptr) > 1L &&
+        r$indptr[1L] == r$indptr[length(r$indptr)]) {
+        warning("Data has empty features. Perhaps the file has 'qid' field?")
+    }
     
     if (!has_qid)
         return(list(X = features, y = labels))

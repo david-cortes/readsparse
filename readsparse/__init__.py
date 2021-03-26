@@ -242,6 +242,9 @@ def read_sparse(
             else:
                 labels = labels.astype(ctypes.c_int)
 
+    if (not has_qid) and (r["indptr"].shape[0] > 1) and (r["indptr"][0] == r["indptr"][-1]):
+        warnings.warn("Data has empty features. Perhaps the file has 'qid' field?")
+
     if not has_qid:
         return {"X":features, "y":labels}
     else:

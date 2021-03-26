@@ -57,7 +57,7 @@ Lines might also contain comments (everything after a `#` is considered a commen
 * Python
 
 ```
-pip install git+https://www.github.com/david-cortes/readsparse.git
+pip install readsparse
 ```
 
 **Note:** the setup script uses a PEP517 environment, which means it will create an isolated virtual environment, install its build dependencies there, compile, and then copy to the actual environment. This can causes issues - for example, if one has NumPy<1.20 and the build environment installs NumPy>=1.20, there will be a binary incompatibility which will make the package fail to import. To avoid PEP517, install with:
