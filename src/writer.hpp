@@ -599,7 +599,11 @@ bool write_single_label_template
     {
         if (label_is_num)
         {
+            #ifndef _FOR_R
             if (!std::isnan((double)labels[row]))
+            #else
+            if (!ISNAN(labels[row]))
+            #endif
             {
                 output_file << labels[row];
                 if (output_file.bad()) goto terminate_badly;
@@ -917,7 +921,11 @@ bool write_single_label_template
     {
         if (label_is_num)
         {
+            #ifndef _FOR_R
             if (!std::isnan((double)labels[row]))
+            #else
+            if (!ISNAN(labels[row]))
+            #endif
             {
                 #ifdef HAS_FULL_STDIO
                 #   if defined(__GNUC__) || defined(__GNUG__)
