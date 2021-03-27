@@ -438,7 +438,7 @@ bool read_multi_label_template
                     qid.push_back(curr_col);
                     lim_first = ln.find_first_of(WHITESPACE_CHARS, lim_next + bytes_advance);
                     if (lim_first == std::string::npos)
-                        continue;
+                        goto next_line;
                     ln_char = (char*)ln.c_str() + lim_first + 1;
                 }
                 else
@@ -1173,7 +1173,7 @@ bool read_single_label_template
                     qid.push_back(curr_col);
                     lim_first = ln.find_first_of(WHITESPACE_CHARS, lim_next + bytes_advance);
                     if (lim_first == std::string::npos)
-                        continue;
+                        goto next_line;
                     ln_char = (char*)ln.c_str() + lim_first + 1;
                 }
                 else
