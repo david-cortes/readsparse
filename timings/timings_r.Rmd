@@ -1,0 +1,31 @@
+---
+title: "SVMLight file reading timings"
+author: "David Cortes"
+date: "3/28/2021"
+output: html_document
+---
+
+```{r}
+library(readsparse)
+library(sparsio)
+library(e1071)
+library(microbenchmark)
+file_name <- "covtype.libsvm.binary"
+```
+```{r}
+microbenchmark({
+    data <- readsparse::read.sparse(file_name)
+}, times=3L)
+```
+```{r}
+microbenchmark({
+    data <- sparsio::read_svmlight(file_name,
+                                   type="TsparseMatrix",
+                                   zero_based=FALSE)
+}, times=3L)
+```
+```{r}
+microbenchmark({
+    data <- e1071::read.matrix.csr(file_name, fac=FALSE)
+}, times=1L)
+```
