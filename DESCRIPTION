@@ -1,14 +1,14 @@
 Package: readsparse
 Type: Package
-Title: Read and Write Sparse Matrices in SVMLight and LibSVM Formats
-Version: 0.1.1-1
+Title: Read and Write Sparse Matrices in 'SVMLight' and 'LibSVM' Formats
+Version: 0.1.1-2
 Date: 2021-04-02
 Author: David Cortes
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
 URL: https://github.com/david-cortes/readsparse
 BugReports: https://github.com/david-cortes/readsparse/issues
 Description: Read and write labelled sparse matrices in text format as used by
-    software such as SVMLight, LibSVM, ThunderSVM, LibFM, xLearn, XGBoost, LightGBM,
+    software such as 'SVMLight', 'LibSVM', 'ThunderSVM', 'LibFM', 'xLearn', 'XGBoost', 'LightGBM',
     and others. Supports labelled data for regression, classification (binary, multi-class, multi-label),
     and ranking (with 'qid' field), and can handle header metadata and comments in files.
 License: BSD_2_clause + file LICENSE
