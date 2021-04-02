@@ -222,7 +222,7 @@ check.for.overflow <- function(lst) {
 #' ### (Note that columns with all-zeros are discarded,
 #' ###  this behavior can be avoided with 'add_header=TRUE')
 #' @references Datasets in this format can be found here:\itemize{
-#' \item LibSVM Data: \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets}
+#' \item LibSVM Data: \url{https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/}
 #' \item Extreme Classification Repository: \url{http://manikvarma.org/downloads/XC/XMLRepository.html}
 #' }
 #' 
