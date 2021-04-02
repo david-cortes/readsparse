@@ -1,0 +1,5 @@
+Sys.setenv("R_TESTS" = "")
+library(testthat)
+library(Matrix)
+library(readsparse)
+test_check("readsparse")

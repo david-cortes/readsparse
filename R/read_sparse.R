@@ -442,7 +442,8 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     
     allowed_y_multi <- c("matrix", "matrix.coo", "matrix.csr", "matrix.csc",
                          "dgRMatrix", "dgCMatrix", "dgTMatrix",
-                         "ngRMatrix", "ngCMatrix", "ngTMatrix")
+                         "ngRMatrix", "ngCMatrix", "ngTMatrix",
+                         "lgRMatrix", "lgCMatrix", "lgTMatrix")
     allowed_y_single <- c("integer", "numeric", "factor", "float32")
     allowed_y <- c(allowed_y_multi, allowed_y_single)
     if (!inherits(y, allowed_y))
@@ -476,7 +477,9 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     
     if (integer_labels) {
         if (add_header) {
-            if (any(is.infinite(y)) || all(is.na(y))) {
+            if (y_is_multi) {
+                n_classes <- ncol(y)
+            } else if (any(is.infinite(y)) || all(is.na(y))) {
                 n_classes <- 0L
             } else if (any(y < 0)) {
                 n_classes <- length(unique(y))

@@ -31,9 +31,45 @@
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::plugins(unwindProtect)]]
 
+#ifndef _FOR_CRAN
+
 extern "C" {
     FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 }
+#define R_fopen RC_fopen
+
+#else
+#   if defined(_WIN32) || defined(_WIN64)
+/* https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t */
+/*  */
+#include <locale>
+#include <codecvt>
+#include <string>
+FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
+{
+    if (expand)
+        fname = Rcpp::Function("path.expand")(fname);
+    Rcpp::String s(fname[0], CE_UTF8);
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring wide = converter.from_bytes(s.get_cstring());
+    std::string mode__(mode);
+    std::wstring mode_ = converter.from_bytes(mode__);
+    return _wfopen( wide.c_str(), mode_.c_str());
+}
+#   else
+FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
+{
+    if (expand)
+        fname = Rcpp::Function("path.expand")(fname);
+    std::string s = Rcpp::as<std::string>(fname);
+    return fopen(s.c_str(), mode);
+}
+#   endif
+FILE *R_fopen(const SEXP fname, const char *mode, const Rboolean expand)
+{
+    return CRAN_acceptable_fopen(fname, mode, expand);
+}
+#endif
 
 
 SEXP convert_IntVecToRcpp(void *data)
@@ -80,7 +116,7 @@ Rcpp::List read_multi_label_R
     std::vector<int> qid;
     size_large nrows, ncols, nclasses;
 
-    FILE *input_file = RC_fopen(fname[0], "r", TRUE);
+    FILE *input_file = R_fopen(fname[0], "r", TRUE);
     if (input_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -235,7 +271,7 @@ Rcpp::List read_single_label_R
     std::vector<int> qid;
     size_large nrows, ncols, nclasses;
 
-    FILE *input_file = RC_fopen(fname[0], "r", TRUE);
+    FILE *input_file = R_fopen(fname[0], "r", TRUE);
     if (input_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -378,7 +414,7 @@ bool write_multi_label_R
     const bool append
 )
 {
-    FILE *output_file = RC_fopen(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -475,7 +511,7 @@ bool write_single_label_numeric_R
     const bool append
 )
 {
-    FILE *output_file = RC_fopen(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -523,7 +559,7 @@ bool write_single_label_integer_R
     const bool append
 )
 {
-    FILE *output_file = RC_fopen(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
