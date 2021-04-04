@@ -429,18 +429,18 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     ### in-place modifications of the data which would render the input unusable
     ### TODO: this here could benefit from MatrixExtra
     if (sort_indices) {
+        
         if (inherits(y, "RsparseMatrix") && !inherits(y, "ngRMatrix")) {
             y@j <- deepcopy_int(y@j)
-            if (inherits(y, "lsparseMatrix")) {
-                y@x <- deepcopy_log(y@x)
-            } else if (inherits(y, "dsparseMatrix")) {
-                y@x <- deepcopy_num(y@x)
-            }
         }
+
         if (inherits(X, "RsparseMatrix") && !inherits(X, "dgRMatrix")) {
             X@j <- deepcopy_int(X@j)
-            if (inherits(X, "lsparseMatrix"))
+            if (inherits(X, "lsparseMatrix")) {
                 X@x <- deepcopy_log(X@x)
+            } else if (inherits(X, "dsparseMatrix")) {
+                X@x <- deepcopy_num(X@x)
+            }
         }
     }
     
