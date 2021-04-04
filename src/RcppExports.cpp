@@ -5,6 +5,36 @@
 
 using namespace Rcpp;
 
+// deepcopy_num
+Rcpp::NumericVector deepcopy_num(Rcpp::NumericVector x);
+RcppExport SEXP _readsparse_deepcopy_num(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(deepcopy_num(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// deepcopy_int
+Rcpp::IntegerVector deepcopy_int(Rcpp::IntegerVector x);
+RcppExport SEXP _readsparse_deepcopy_int(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< Rcpp::IntegerVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(deepcopy_int(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// deepcopy_log
+Rcpp::LogicalVector deepcopy_log(Rcpp::LogicalVector x);
+RcppExport SEXP _readsparse_deepcopy_log(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::traits::input_parameter< Rcpp::LogicalVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(deepcopy_log(x));
+    return rcpp_result_gen;
+END_RCPP
+}
 // read_multi_label_R
 Rcpp::List read_multi_label_R(Rcpp::CharacterVector fname, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid);
 RcppExport SEXP _readsparse_read_multi_label_R(SEXP fnameSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP) {
@@ -197,6 +227,9 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_readsparse_deepcopy_num", (DL_FUNC) &_readsparse_deepcopy_num, 1},
+    {"_readsparse_deepcopy_int", (DL_FUNC) &_readsparse_deepcopy_int, 1},
+    {"_readsparse_deepcopy_log", (DL_FUNC) &_readsparse_deepcopy_log, 1},
     {"_readsparse_read_multi_label_R", (DL_FUNC) &_readsparse_read_multi_label_R, 5},
     {"_readsparse_read_multi_label_from_str_R", (DL_FUNC) &_readsparse_read_multi_label_from_str_R, 5},
     {"_readsparse_read_single_label_R", (DL_FUNC) &_readsparse_read_single_label_R, 5},

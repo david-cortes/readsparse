@@ -23,11 +23,15 @@
 *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/* TODO: what happens after an fopen should be in a try catch so
+   as to close the file handle if there is an error. */
+
 #ifdef _FOR_R
 
 #include <Rcpp.h>
 #include <Rcpp/unwindProtect.h>
 #include "readsparse.hpp"
+#include "utils.hpp"
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::plugins(unwindProtect)]]
 
@@ -88,6 +92,48 @@ SEXP convert_StringStreamToRcpp(void *data)
 {
     return Rcpp::wrap<Rcpp::CharacterVector>(((std::stringstream*)data)->str());
 }
+
+void sort_sparse_indices_known_ncol
+(
+    Rcpp::IntegerVector indptr,
+    Rcpp::IntegerVector indices,
+    Rcpp::NumericVector values,
+    int ncol
+)
+{
+    if (values.size())
+        sort_sparse_indices_known_ncol<int, double>(
+            INTEGER(indptr),
+            INTEGER(indices),
+            REAL(values),
+            indptr.size()-1, ncol
+        );
+    else
+        sort_sparse_indices_known_ncol<int>(
+            INTEGER(indptr),
+            INTEGER(indices),
+            indptr.size()-1, ncol
+        );
+}
+
+// [[Rcpp::export(rng = false)]]
+Rcpp::NumericVector deepcopy_num(Rcpp::NumericVector x)
+{
+    return Rcpp::NumericVector(x.begin(), x.end());
+}
+
+// [[Rcpp::export(rng = false)]]
+Rcpp::IntegerVector deepcopy_int(Rcpp::IntegerVector x)
+{
+    return Rcpp::IntegerVector(x.begin(), x.end());
+}
+
+// [[Rcpp::export(rng = false)]]
+Rcpp::LogicalVector deepcopy_log(Rcpp::LogicalVector x)
+{
+    return Rcpp::LogicalVector(x.begin(), x.end());
+}
+
 
 // [[Rcpp::export(rng = false)]]
 Rcpp::List read_multi_label_R
@@ -420,6 +466,24 @@ bool write_multi_label_R
         REprintf("Error %d: %s\n", errno, strerror(errno));
         return false;
     }
+
+    if (sort_indices)
+    {
+        sort_sparse_indices_known_ncol(
+            indptr,
+            indices,
+            values,
+            ncols
+        );
+
+        sort_sparse_indices_known_ncol(
+            indptr_lab,
+            indices_lab,
+            Rcpp::NumericVector(),
+            nclasses
+        );
+    }
+
     bool succeeded = write_multi_label(
         output_file,
         INTEGER(indptr),
@@ -434,7 +498,7 @@ bool write_multi_label_R
         ncols,
         nclasses,
         ignore_zero_valued,
-        sort_indices,
+        false,
         text_is_base1,
         add_header,
         decimal_places
@@ -462,6 +526,23 @@ Rcpp::List write_multi_label_to_str_R
     const int decimal_places
 )
 {
+    if (sort_indices)
+    {
+        sort_sparse_indices_known_ncol(
+            indptr,
+            indices,
+            values,
+            ncols
+        );
+
+       sort_sparse_indices_known_ncol(
+            indptr_lab,
+            indices_lab,
+            Rcpp::NumericVector(),
+            nclasses
+        );
+    }
+
     Rcpp::List out = Rcpp::List::create(
         Rcpp::_["str"] = R_NilValue
     );
@@ -480,7 +561,7 @@ Rcpp::List write_multi_label_to_str_R
         ncols,
         nclasses,
         ignore_zero_valued,
-        sort_indices,
+        false,
         text_is_base1,
         add_header,
         decimal_places
@@ -565,6 +646,17 @@ bool write_single_label_integer_R
         REprintf("Error %d: %s\n", errno, strerror(errno));
         return false;
     }
+
+    if (sort_indices)
+    {
+        sort_sparse_indices_known_ncol(
+            indptr,
+            indices,
+            values,
+            ncols
+        );
+    }
+
     bool succeeded = write_single_label(
         output_file,
         INTEGER(indptr),
@@ -579,7 +671,7 @@ bool write_single_label_integer_R
         ncols,
         nclasses,
         ignore_zero_valued,
-        sort_indices,
+        false,
         text_is_base1,
         add_header,
         decimal_places
@@ -605,6 +697,16 @@ Rcpp::List write_single_label_numeric_to_str_R
     const int decimal_places
 )
 {
+    if (sort_indices)
+    {
+        sort_sparse_indices_known_ncol(
+            indptr,
+            indices,
+            values,
+            ncols
+        );
+    }
+
     Rcpp::List out = Rcpp::List::create(
         Rcpp::_["str"] = R_NilValue
     );
@@ -624,7 +726,7 @@ Rcpp::List write_single_label_numeric_to_str_R
         ncols,
         nclasses,
         ignore_zero_valued,
-        sort_indices,
+        false,
         text_is_base1,
         add_header,
         decimal_places
@@ -653,6 +755,16 @@ Rcpp::List write_single_label_integer_to_str_R
     const int decimal_places
 )
 {
+    if (sort_indices)
+    {
+        sort_sparse_indices_known_ncol(
+            indptr,
+            indices,
+            values,
+            ncols
+        );
+    }
+
     Rcpp::List out = Rcpp::List::create(
         Rcpp::_["str"] = R_NilValue
     );
@@ -672,7 +784,7 @@ Rcpp::List write_single_label_integer_to_str_R
         ncols,
         nclasses,
         ignore_zero_valued,
-        sort_indices,
+        false,
         text_is_base1,
         add_header,
         decimal_places

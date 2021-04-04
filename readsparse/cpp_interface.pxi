@@ -2,6 +2,9 @@
 import numpy as np
 cimport numpy as np
 
+### TODO: what happens after an fopen should be in a try catch so
+### as to close the file handle if there is an error.
+
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as bool_t
@@ -220,6 +223,13 @@ cdef extern from "python_streams.hpp":
         const int decimal_places
     ) nogil except +
 
+cdef extern from "utils.hpp":
+    void sort_sparse_indices_known_ncol[int_t_, real_t_](
+        int_t_ *indptr,
+        int_t_ *indices,
+        real_t_ *values,
+        size_t nrows, size_t ncols
+    )
 
 cdef int_t* get_ptr_int(np.ndarray[int_t, ndim=1] a):
     if a.shape[0]:
@@ -238,6 +248,38 @@ cdef label_t* get_ptr_lab(np.ndarray[label_t, ndim=1] a):
         return &a[0]
     else:
         return NULL
+
+def sort_matrix_indices(
+        np.ndarray[int_t, ndim=1] indptr,
+        np.ndarray[int_t, ndim=1] indices,
+        np.ndarray[real_t, ndim=1] values,
+        size_t nrows, size_t ncols
+    ):
+    cdef int_t *ptr_indptr = NULL
+    cdef int_t *ptr_indices = NULL
+    cdef real_t *ptr_values = NULL
+
+    if int_t is int:
+        ptr_indptr = get_ptr_int[int](indptr)
+        ptr_indices = get_ptr_int[int](indices)
+    elif int_t is int64_t:
+        ptr_indptr = get_ptr_int[int64_t](indptr)
+        ptr_indices = get_ptr_int[int64_t](indices)
+    else:
+        ptr_indptr = get_ptr_int[size_t](indptr)
+        ptr_indices = get_ptr_int[size_t](indices)
+
+    if real_t is float:
+        ptr_values = get_ptr_num[float](values)
+    else:
+        ptr_values = get_ptr_num[double](values)
+    
+    sort_sparse_indices_known_ncol(
+        ptr_indptr,
+        ptr_indices,
+        ptr_values,
+        nrows, ncols
+    )
 
 ### https://github.com/cython/cython/issues/3968
 cdef np.ndarray[label_t, ndim=1] cast_vec(label_t *v0, vector[label_t] &inp):

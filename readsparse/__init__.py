@@ -382,6 +382,15 @@ def write_sparse(
     if not use_cpp:
         to_string = True
 
+    ### Note: this check should be made right here due to potential
+    ### in-place modifications of the data which would render the input unusable
+    if sort_indices:
+        if isspmatrix_csr(y):
+            y.sort_indices()
+        if isspmatrix_csr(X):
+            X.sort_indices()
+        sort_indices = False
+
     indptr, indices, values, nrows, ncols = _process_X(X)
     indptr_lab, indices_lab, labels, nrows_y, nclasses = _process_y(y, add_header, integer_labels)
     qid = _process_qid(qid)
@@ -398,7 +407,6 @@ def write_sparse(
             indices_lab,
             qid
         )
-
 
     if not to_string:
         if (add_header) and (append) and (os.path.exists(file)):

@@ -147,6 +147,41 @@ void sort_sparse_indices
     size_t nrows
 );
 
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *restrict indptr,
+    int_t *restrict indices,
+    real_t *values,
+    size_t nrows, size_t ncol,
+    bool has_values
+);
+
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    std::vector<int_t> &indptr,
+    std::vector<int_t> &indices,
+    std::vector<real_t> &values
+);
+
+template <class int_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *indptr,
+    int_t *indices,
+    size_t nrows, size_t ncol
+);
+
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *indptr,
+    int_t *indices,
+    real_t *values,
+    size_t nrows, size_t ncol
+);
+
 /* reader.hpp */
 
 template <class int_t>

@@ -474,10 +474,6 @@ bool read_multi_label_template
         indptr.push_back(indices.size());
     }
 
-    sort_sparse_indices(indptr, indices, values);
-    std::vector<real_t> unused_vec;
-    sort_sparse_indices(indptr_lab, indices_lab, unused_vec);
-
     if (text_is_base1) {
         subtract_one_from_vec(indices);
         subtract_one_from_vec(indices_lab);
@@ -491,6 +487,10 @@ bool read_multi_label_template
         missing_ind = -1;
     ncols = std::max(header_ncols, find_largest_val<int_t>(indices, missing_ind)+1);
     nclasses = std::max(header_nclasses, find_largest_val(indices_lab, missing_ind)+1);
+
+    sort_sparse_indices_known_ncol(indptr, indices, values, ncols);
+    std::vector<real_t> unused_vec;
+    sort_sparse_indices_known_ncol(indptr_lab, indices_lab, unused_vec, nclasses);
 
     return true;
 }
@@ -841,9 +841,6 @@ bool read_multi_label_template
         }
     }
 
-    sort_sparse_indices(indptr, indices, values);
-    std::vector<real_t> temp;
-    sort_sparse_indices(indptr_lab, indices_lab, temp);
 
     if (text_is_base1) {
         subtract_one_from_vec(indices);
@@ -858,6 +855,10 @@ bool read_multi_label_template
         missing_ind = -1;
     ncols = std::max(header_ncols, find_largest_val<int_t>(indices, missing_ind)+1);
     nclasses = std::max(header_nclasses, find_largest_val(indices_lab, missing_ind)+1);
+
+    sort_sparse_indices_known_ncol(indptr, indices, values, ncols);
+    std::vector<real_t> temp;
+    sort_sparse_indices_known_ncol(indptr_lab, indices_lab, temp, ncols);
 
     return true;
 }
@@ -1209,7 +1210,6 @@ bool read_single_label_template
         indptr.push_back(indices.size());
     }
 
-    sort_sparse_indices(indptr, indices, values);
     if (text_is_base1)
         subtract_one_from_vec(indices);
 
@@ -1224,6 +1224,8 @@ bool read_single_label_template
         nclasses = std::max(header_nclasses, find_largest_val(labels, missing_label)+1);
     else
         nclasses = 0;
+
+    sort_sparse_indices_known_ncol(indptr, indices, values, ncols);
 
     return true;
 }
@@ -1643,7 +1645,6 @@ bool read_single_label_template
         }
     }
 
-    sort_sparse_indices(indptr, indices, values);
     if (text_is_base1)
         subtract_one_from_vec(indices);
 
@@ -1658,6 +1659,8 @@ bool read_single_label_template
         nclasses = std::max(header_nclasses, find_largest_val(labels, missing_label)+1);
     else
         nclasses = 0;
+
+    sort_sparse_indices_known_ncol(indptr, indices, values, ncols);
 
     return true;
 }

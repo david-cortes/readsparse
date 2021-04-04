@@ -366,7 +366,7 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
 #' starting at 1. Most software assumes this is `TRUE`.
 #' @param sort_indices Whether to sort the indices of `X` (and of `y` if multi-label) before
 #' writing the data. Note that this will cause in-place modifications if either `X` or `y`
-#' are passed as CSR matrices from `Matrix` package.
+#' are passed as CSR matrices from the `Matrix` package.
 #' @param ignore_zeros Whether to ignore (not write) features with a value of zero
 #' after rounding to the specified decimal places.
 #' @param add_header Whether to add a header with metadata as the first line (number of rows,
@@ -423,6 +423,25 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
         y <- cast.sparse.vec(y)
     } else if (inherits(y, "dsparseVector")) {
         y <- as.numeric(y)
+    }
+
+    ### Note: this check should be made right here due to potential
+    ### in-place modifications of the data which would render the input unusable
+    ### TODO: this here could benefit from MatrixExtra
+    if (sort_indices) {
+        if (inherits(y, "RsparseMatrix") && !inherits(y, "ngRMatrix")) {
+            y@j <- deepcopy_int(y@j)
+            if (inherits(y, "lsparseMatrix")) {
+                y@x <- deepcopy_log(y@x)
+            } else if (inherits(y, "dsparseMatrix")) {
+                y@x <- deepcopy_num(y@x)
+            }
+        }
+        if (inherits(X, "RsparseMatrix") && !inherits(X, "dgRMatrix")) {
+            X@j <- deepcopy_int(X@j)
+            if (inherits(X, "lsparseMatrix"))
+                X@x <- deepcopy_log(X@x)
+        }
     }
     
     if (!inherits(X, "RsparseMatrix"))

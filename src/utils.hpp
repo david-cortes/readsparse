@@ -79,7 +79,8 @@ void sort_sparse_indices
                 }
                 std::iota(argsorted.begin(), argsorted.begin() + n_this, (size_t)ix1);
                 std::sort(argsorted.begin(), argsorted.begin() + n_this,
-                          [&indices](const size_t a, const size_t b){return indices[a] < indices[b];});
+                          [&indices](const size_t a, const size_t b)
+                          {return indices[a] < indices[b];});
                 for (size_t ix = 0; ix < n_this; ix++)
                     temp_indices[ix] = indices[argsorted[ix]];
                 std::copy(temp_indices.begin(), temp_indices.begin() + n_this, indices + ix1);
@@ -88,6 +89,52 @@ void sort_sparse_indices
                     for (size_t ix = 0; ix < n_this; ix++)
                         temp_values[ix] = values[argsorted[ix]];
                     std::copy(temp_values.begin(), temp_values.begin() + n_this, values + ix1);
+                }
+            }
+        }
+    }
+}
+
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *restrict indptr,
+    int_t *restrict indices,
+    real_t *values,
+    size_t nrows, size_t ncol,
+    bool has_values
+)
+{
+    std::unique_ptr<size_t[]> argsorted_(new size_t[ncol]);
+    std::unique_ptr<int_t[]> temp_indices_(new int_t[ncol]);
+    std::unique_ptr<real_t[]> temp_values_(new real_t[has_values? ncol : 0]);
+    auto *restrict argsorted = argsorted_.get();
+    auto *restrict temp_indices = temp_values_.get();
+    auto *restrict temp_values = temp_values_.get();
+    size_t ix1, ix2;
+    size_t n_this;
+
+    for (size_t ix = 1; ix <= nrows; ix++)
+    {
+        ix1 = indptr[ix-1];
+        ix2 = indptr[ix];
+        n_this = ix2 - ix1;
+        if (n_this)
+        {
+            if (!check_is_sorted<int_t>(indices + ix1, n_this))
+            {
+                std::iota(argsorted, argsorted + n_this, (size_t)ix1);
+                std::sort(argsorted, argsorted + n_this,
+                          [&indices](const size_t a, const size_t b)
+                          {return indices[a] < indices[b];});
+                for (size_t ix = 0; ix < n_this; ix++)
+                    temp_indices[ix] = indices[argsorted[ix]];
+                std::copy(temp_indices, temp_indices + n_this, indices + ix1);
+                if (has_values)
+                {
+                    for (size_t ix = 0; ix < n_this; ix++)
+                        temp_values[ix] = values[argsorted[ix]];
+                    std::copy(temp_values, temp_values + n_this, values + ix1);
                 }
             }
         }
@@ -142,6 +189,60 @@ void sort_sparse_indices
         indices,
         values,
         nrows,
+        true
+    );
+}
+
+
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    std::vector<int_t> &indptr,
+    std::vector<int_t> &indices,
+    std::vector<real_t> &values,
+    size_t ncol
+)
+{
+    sort_sparse_indices_known_ncol<int_t, real_t>(
+        indptr.data(),
+        indices.data(),
+        values.data(),
+        indptr.size()-1, ncol,
+        values.size() > 0
+    );
+}
+
+template <class int_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *indptr,
+    int_t *indices,
+    size_t nrows, size_t ncol
+)
+{
+    sort_sparse_indices_known_ncol<int_t, double>(
+        indptr,
+        indices,
+        (double*)NULL,
+        nrows, ncol,
+        false
+    );
+}
+
+template <class int_t, class real_t>
+void sort_sparse_indices_known_ncol
+(
+    int_t *indptr,
+    int_t *indices,
+    real_t *values,
+    size_t nrows, size_t ncol
+)
+{
+    sort_sparse_indices_known_ncol<int_t, real_t>(
+        indptr,
+        indices,
+        values,
+        nrows, ncol,
         true
     );
 }
