@@ -2,9 +2,6 @@
 import numpy as np
 cimport numpy as np
 
-### TODO: what happens after an fopen should be in a try catch so
-### as to close the file handle if there is an error.
-
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool as bool_t
@@ -353,75 +350,78 @@ def read_single_label_py(
     if input_file == NULL:
         py_throw_err()
     cdef bool_t succeded
-    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-        if use_int64:
-            if use_double:
-                succeded = read_single_label_template[int64_t, double, double](
-                    input_file,
-                    indptr,
-                    indices,
-                    values,
-                    labels,
-                    qid,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
+    try:
+        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+            if use_int64:
+                if use_double:
+                    succeded = read_single_label_template[int64_t, double, double](
+                        input_file,
+                        indptr,
+                        indices,
+                        values,
+                        labels,
+                        qid,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+                else:
+                    succeded = read_single_label_template[int64_t, float, float](
+                        input_file,
+                        indptr,
+                        indices,
+                        values_float,
+                        labels_float,
+                        qid,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
             else:
-                succeded = read_single_label_template[int64_t, float, float](
-                    input_file,
-                    indptr,
-                    indices,
-                    values_float,
-                    labels_float,
-                    qid,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
-        else:
-            if use_double:
-                succeded = read_single_label_template[int, double, double](
-                    input_file,
-                    indptr_int,
-                    indices_int,
-                    values,
-                    labels,
-                    qid_int,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
-            else:
-                succeded = read_single_label_template[int, float, float](
-                    input_file,
-                    indptr_int,
-                    indices_int,
-                    values_float,
-                    labels_float,
-                    qid_int,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
+                if use_double:
+                    succeded = read_single_label_template[int, double, double](
+                        input_file,
+                        indptr_int,
+                        indices_int,
+                        values,
+                        labels,
+                        qid_int,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+                else:
+                    succeded = read_single_label_template[int, float, float](
+                        input_file,
+                        indptr_int,
+                        indices_int,
+                        values_float,
+                        labels_float,
+                        qid_int,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+    finally:
         if (input_file != NULL):
             fclose(input_file)
+            input_file = NULL
 
     cdef vector[int64_t] indptr_lab, indices_lab
     cdef vector[int] indptr_lab_int, indices_lab_int
@@ -507,79 +507,82 @@ def read_multi_label_py(
     if input_file == NULL:
         py_throw_err()
     cdef bool_t succeded
-    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-        if use_int64:
-            if use_double:
-                succeded = read_multi_label_template[int64_t, double](
-                    input_file,
-                    indptr,
-                    indices,
-                    values,
-                    indptr_lab,
-                    indices_lab,
-                    qid,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
+    try:
+        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+            if use_int64:
+                if use_double:
+                    succeded = read_multi_label_template[int64_t, double](
+                        input_file,
+                        indptr,
+                        indices,
+                        values,
+                        indptr_lab,
+                        indices_lab,
+                        qid,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+                else:
+                    succeded = read_multi_label_template[int64_t, float](
+                        input_file,
+                        indptr,
+                        indices,
+                        values_float,
+                        indptr_lab,
+                        indices_lab,
+                        qid,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
             else:
-                succeded = read_multi_label_template[int64_t, float](
-                    input_file,
-                    indptr,
-                    indices,
-                    values_float,
-                    indptr_lab,
-                    indices_lab,
-                    qid,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
-        else:
-            if use_double:
-                succeded = read_multi_label_template[int, double](
-                    input_file,
-                    indptr_int,
-                    indices_int,
-                    values,
-                    indptr_lab_int,
-                    indices_lab_int,
-                    qid_int,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
-            else:
-                succeded = read_multi_label_template[int, float](
-                    input_file,
-                    indptr_int,
-                    indices_int,
-                    values_float,
-                    indptr_lab_int,
-                    indices_lab_int,
-                    qid_int,
-                    nrows,
-                    ncols,
-                    nclasses,
-                    ignore_zero_valued,
-                    sort_indices,
-                    text_is_base1,
-                    assume_no_qid
-                )
+                if use_double:
+                    succeded = read_multi_label_template[int, double](
+                        input_file,
+                        indptr_int,
+                        indices_int,
+                        values,
+                        indptr_lab_int,
+                        indices_lab_int,
+                        qid_int,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+                else:
+                    succeded = read_multi_label_template[int, float](
+                        input_file,
+                        indptr_int,
+                        indices_int,
+                        values_float,
+                        indptr_lab_int,
+                        indices_lab_int,
+                        qid_int,
+                        nrows,
+                        ncols,
+                        nclasses,
+                        ignore_zero_valued,
+                        sort_indices,
+                        text_is_base1,
+                        assume_no_qid
+                    )
+    finally:
         if (input_file != NULL):
             fclose(input_file)
+            input_file = NULL
 
     cdef vector[double] labels
     cdef vector[float] labels_float
@@ -967,9 +970,6 @@ def write_single_label_py(
         missing_label = SIZE_MAX
     else:
         missing_label = -INT_MAX
-    cdef FILE *output_file = cy_fopen(fname, False, append)
-    if output_file == NULL:
-        py_throw_err()
 
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0]-1
@@ -980,229 +980,235 @@ def write_single_label_py(
     cdef int_t *ptr_qid = get_ptr_int(qid)
     cdef label_t *ptr_labels = get_ptr_lab(labels)
 
-    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-        if int_t is int:
-            if real_t is float:
-                if label_t is int:
-                    success =  write_single_label_template[int, float, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[int, float, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[int, float, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[int, float, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[int, float, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-            else:
-                if label_t is int:
-                    success =  write_single_label_template[int, double, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[int, double, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[int, double, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[int, double, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[int, double, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-        elif int_t is int64_t:
-            if real_t is float:
-                if label_t is int:
-                    success =  write_single_label_template[int64_t, float, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[int64_t, float, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[int64_t, float, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[int64_t, float, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[int64_t, float, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-            else:
-                if label_t is int:
-                    success =  write_single_label_template[int64_t, double, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[int64_t, double, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[int64_t, double, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[int64_t, double, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[int64_t, double, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-        else:
-            if real_t is float:
-                if label_t is int:
-                    success =  write_single_label_template[size_t, float, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[size_t, float, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[size_t, float, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[size_t, float, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[size_t, float, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-            else:
-                if label_t is int:
-                    success =  write_single_label_template[size_t, double, int](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is int64_t:
-                    success =  write_single_label_template[size_t, double, int64_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is size_t:
-                    success =  write_single_label_template[size_t, double, size_t](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                elif label_t is float:
-                    success =  write_single_label_template[size_t, double, float](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
-                else:
-                    success =  write_single_label_template[size_t, double, double](
-                        output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
-                        missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
-                        ignore_zero_valued, sort_indices, text_is_base1,
-                        add_header, decimal_places
-                    )
+    cdef FILE *output_file = cy_fopen(fname, False, append)
+    if output_file == NULL:
+        py_throw_err()
 
+    try:
+        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+            if int_t is int:
+                if real_t is float:
+                    if label_t is int:
+                        success =  write_single_label_template[int, float, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[int, float, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[int, float, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[int, float, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[int, float, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                else:
+                    if label_t is int:
+                        success =  write_single_label_template[int, double, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[int, double, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[int, double, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[int, double, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[int, double, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+            elif int_t is int64_t:
+                if real_t is float:
+                    if label_t is int:
+                        success =  write_single_label_template[int64_t, float, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[int64_t, float, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[int64_t, float, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[int64_t, float, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[int64_t, float, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                else:
+                    if label_t is int:
+                        success =  write_single_label_template[int64_t, double, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[int64_t, double, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[int64_t, double, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[int64_t, double, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[int64_t, double, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+            else:
+                if real_t is float:
+                    if label_t is int:
+                        success =  write_single_label_template[size_t, float, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[size_t, float, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[size_t, float, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[size_t, float, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[size_t, float, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                else:
+                    if label_t is int:
+                        success =  write_single_label_template[size_t, double, int](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is int64_t:
+                        success =  write_single_label_template[size_t, double, int64_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is size_t:
+                        success =  write_single_label_template[size_t, double, size_t](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    elif label_t is float:
+                        success =  write_single_label_template[size_t, double, float](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+                    else:
+                        success =  write_single_label_template[size_t, double, double](
+                            output_file, ptr_indptr, ptr_indices, ptr_values, ptr_labels, ptr_qid,
+                            missing_qid, missing_label, has_qid, nrows, ncols, nclasses,
+                            ignore_zero_valued, sort_indices, text_is_base1,
+                            add_header, decimal_places
+                        )
+    finally:
         if (output_file != NULL):
             fclose(output_file)
+            output_file = NULL
     
     if not success:
         raise ValueError("Error: could not write file.")
@@ -1226,9 +1232,6 @@ def write_multi_label_py(
         bool_t append = False
     ):
     cdef int_t missing_qid = SIZE_MAX if int_t is size_t else -INT_MAX
-    cdef FILE *output_file = cy_fopen(fname, False, append)
-    if output_file == NULL:
-        py_throw_err()
     cdef bool_t succeded = False
 
     cdef int_t * ptr_indptr = get_ptr_int(indptr)
@@ -1241,61 +1244,67 @@ def write_multi_label_py(
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0] - 1
 
-    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-        if int_t is int:
-            if real_t is float:
-                succeded = write_multi_label_template[int, float](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
-            else:
-                succeded = write_multi_label_template[int, double](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
-        elif int_t is int64_t:
-            if real_t is float:
-                succeded = write_multi_label_template[int64_t, float](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
-            else:
-                succeded = write_multi_label_template[int64_t, double](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
-        else:
-            if real_t is float:
-                succeded = write_multi_label_template[size_t, float](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
-            else:
-                succeded = write_multi_label_template[size_t, double](
-                    output_file, ptr_indptr, ptr_indices,
-                    ptr_values, ptr_indptr_lab, ptr_indices_lab,
-                    ptr_qid, missing_qid,
-                    has_qid, nrows, ncols, nclasses, ignore_zero_valued,
-                    sort_indices, text_is_base1, add_header, decimal_places
-                )
+    cdef FILE *output_file = cy_fopen(fname, False, append)
+    if output_file == NULL:
+        py_throw_err()
 
+    try:
+        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+            if int_t is int:
+                if real_t is float:
+                    succeded = write_multi_label_template[int, float](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+                else:
+                    succeded = write_multi_label_template[int, double](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+            elif int_t is int64_t:
+                if real_t is float:
+                    succeded = write_multi_label_template[int64_t, float](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+                else:
+                    succeded = write_multi_label_template[int64_t, double](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+            else:
+                if real_t is float:
+                    succeded = write_multi_label_template[size_t, float](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+                else:
+                    succeded = write_multi_label_template[size_t, double](
+                        output_file, ptr_indptr, ptr_indices,
+                        ptr_values, ptr_indptr_lab, ptr_indices_lab,
+                        ptr_qid, missing_qid,
+                        has_qid, nrows, ncols, nclasses, ignore_zero_valued,
+                        sort_indices, text_is_base1, add_header, decimal_places
+                    )
+    finally:
         if (output_file != NULL):
             fclose(output_file)
+            output_file = NULL
     
     if not succeded:
         raise ValueError("Error: could not write file.")

@@ -23,9 +23,6 @@
 *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* TODO: what happens after an fopen should be in a try catch so
-   as to close the file handle if there is an error. */
-
 #ifdef _FOR_R
 
 #include <Rcpp.h>
@@ -75,6 +72,32 @@ FILE *R_fopen(const SEXP fname, const char *mode, const Rboolean expand)
 }
 #endif
 
+class FileOpener
+{
+public:
+    FILE *handle = NULL;
+    FileOpener(const SEXP fname, const char *mode, const Rboolean expand)
+    {
+        if (this->handle != NULL)
+            this->close_file();
+        this->handle = R_fopen(fname, mode, expand);
+    }
+    FILE *get_handle()
+    {
+        return this->handle;
+    }
+    void close_file()
+    {
+        if (this->handle != NULL) {
+            fclose(this->handle);
+            this->handle = NULL;
+        }
+    }
+    ~FileOpener()
+    {
+        this->close_file();
+    }
+};
 
 SEXP convert_IntVecToRcpp(void *data)
 {
@@ -162,7 +185,8 @@ Rcpp::List read_multi_label_R
     std::vector<int> qid;
     size_large nrows, ncols, nclasses;
 
-    FILE *input_file = R_fopen(fname[0], "r", TRUE);
+    FileOpener file_(fname[0], "r", TRUE);
+    FILE *input_file = file_.get_handle();
     if (input_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -184,7 +208,7 @@ Rcpp::List read_multi_label_R
         text_is_base1,
         assume_no_qid
     );
-    if (input_file != NULL) fclose(input_file);
+    file_.close_file();
 
     if (!succeeded)
         return Rcpp::List();
@@ -317,7 +341,8 @@ Rcpp::List read_single_label_R
     std::vector<int> qid;
     size_large nrows, ncols, nclasses;
 
-    FILE *input_file = R_fopen(fname[0], "r", TRUE);
+    FileOpener file_(fname[0], "r", TRUE);
+    FILE *input_file = file_.get_handle();
     if (input_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -338,7 +363,7 @@ Rcpp::List read_single_label_R
         text_is_base1,
         assume_no_qid
     );
-    if (input_file != NULL) fclose(input_file);
+    file_.close_file();
     
     if (!succeeded)
         return Rcpp::List();
@@ -460,7 +485,8 @@ bool write_multi_label_R
     const bool append
 )
 {
-    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
+    FileOpener file_(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -503,7 +529,7 @@ bool write_multi_label_R
         add_header,
         decimal_places
     );
-    if (output_file != NULL) fclose(output_file);
+    file_.close_file();
     return succeeded;
 }
 
@@ -592,7 +618,8 @@ bool write_single_label_numeric_R
     const bool append
 )
 {
-    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
+    FileOpener file_(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -617,7 +644,7 @@ bool write_single_label_numeric_R
         add_header,
         decimal_places
     );
-    if (output_file != NULL) fclose(output_file);
+    file_.close_file();
     return succeeded;
 }
 
@@ -640,7 +667,8 @@ bool write_single_label_integer_R
     const bool append
 )
 {
-    FILE *output_file = R_fopen(fname[0], append? "a" : "w", TRUE);
+    FileOpener file_(fname[0], append? "a" : "w", TRUE);
+    FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
         REprintf("Error %d: %s\n", errno, strerror(errno));
@@ -676,7 +704,7 @@ bool write_single_label_integer_R
         add_header,
         decimal_places
     );
-    if (output_file != NULL) fclose(output_file);
+    file_.close_file();
     return succeeded;
 }
 
