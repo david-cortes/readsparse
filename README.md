@@ -86,7 +86,7 @@ pip install --no-use-pep517 readsparse
 * R
 
 ```
-remotes::install_github("david-cortes/readsparse")
+install.packages("readsparse")
 ```
 
 
@@ -105,7 +105,7 @@ sudo make install
 
 * Python: documentation is available at [ReadTheDocs](http://readsparse.readthedocs.io/en/latest/).
 
-* R: documentation is internally available (e.g. `?readsparse::read.sparse` and `?readsparse::write.sparse`).
+* R: documentation is available at [CRAN](https://cran.r-project.org/web/packages/readsparse/index.html).
 
 * C++: documentation is available under the [public header](https://github.com/david-cortes/readsparse/blob/master/src/readsparse.hpp).
 
