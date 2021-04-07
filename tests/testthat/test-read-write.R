@@ -148,39 +148,43 @@ test_that("Ranking mode", {
 })
 
 test_that("Non-ascii file names", {
-    X <- matrix(1:10, nrow=5)
-    y <- 11:15
-    mode(X) <- "numeric"
-    mode(y) <- "numeric"
-    
-    file_name <- "\u00d1o\u00f1o.txt"
-    file_name <- file.path(tempdir(), file_name)
-    write.sparse(file_name, X, y)
-    r <- read.sparse(file_name)
-    expect_equal(unname(X), unname(as.matrix(r$X)))
-    expect_equal(unname(y), unname(as.numeric(r$y)))
-    
-    
-    file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
-    file_name <- file.path(tempdir(), file_name)
-    write.sparse(file_name, X, y)
-    r <- read.sparse(file_name)
-    expect_equal(unname(X), unname(as.matrix(r$X)))
-    expect_equal(unname(y), unname(as.numeric(r$y)))
-    
-    if (Sys.info()['sysname'] == "Windows") {
+    if (readsparse_nonascii_support()) {
+        X <- matrix(1:10, nrow=5)
+        y <- 11:15
+        mode(X) <- "numeric"
+        mode(y) <- "numeric"
+        
+        file_name <- "\u00d1o\u00f1o.txt"
+        file_name <- file.path(tempdir(), file_name)
+        write.sparse(file_name, X, y)
+        r <- read.sparse(file_name)
+        expect_equal(unname(X), unname(as.matrix(r$X)))
+        expect_equal(unname(y), unname(as.numeric(r$y)))
+        
+        
         file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
-        f_backslash <- paste(tempdir(), file_name, sep="\\")
-        f_forwardslash <- paste(tempdir(), file_name, sep="//")
-        
-        write.sparse(f_backslash, X, y)
-        r <- read.sparse(f_backslash)
+        file_name <- file.path(tempdir(), file_name)
+        write.sparse(file_name, X, y)
+        r <- read.sparse(file_name)
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
         
-        write.sparse(f_forwardslash, X, y)
-        r <- read.sparse(f_forwardslash)
-        expect_equal(unname(X), unname(as.matrix(r$X)))
-        expect_equal(unname(y), unname(as.numeric(r$y)))
+        if (Sys.info()['sysname'] == "Windows") {
+            file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
+            f_backslash <- paste(tempdir(), file_name, sep="\\")
+            f_forwardslash <- paste(tempdir(), file_name, sep="//")
+            
+            write.sparse(f_backslash, X, y)
+            r <- read.sparse(f_backslash)
+            expect_equal(unname(X), unname(as.matrix(r$X)))
+            expect_equal(unname(y), unname(as.numeric(r$y)))
+            
+            write.sparse(f_forwardslash, X, y)
+            r <- read.sparse(f_forwardslash)
+            expect_equal(unname(X), unname(as.matrix(r$X)))
+            expect_equal(unname(y), unname(as.numeric(r$y)))
+        }
+    } else {
+        testthat::expect_true(TRUE)
     }
 })

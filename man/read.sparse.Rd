@@ -129,6 +129,11 @@ a row in the data) the lines that start with `#`.
 Be aware that the data is represented as a CSR matrix with index pointer of
 class C `int`, thus the number of rows/columns cannot exceed `.Machine$integer.max`.
 
+On Windows, if using the GCC compiler version 4 or earlier (the default in older
+versions of RTools, such as Rtools35), it will not be able to read from or write to
+file names with non-ASCII characters. Whether support for non-ASCII file names is
+available or not can be checked through \link{readsparse_nonascii_support}.
+
 On 64-bit Windows systems, if compiling the library with a compiler other than MinGW
 or MSVC, it will not be able to read files larger than 2GB. This should not be a concern
 if installing it from CRAN or from R itself, as the Windows version at the time

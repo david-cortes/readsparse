@@ -51,7 +51,7 @@ starting at 1. Most software assumes this is `TRUE`.}
 
 \item{sort_indices}{Whether to sort the indices of `X` (and of `y` if multi-label) before
 writing the data. Note that this will cause in-place modifications if either `X` or `y`
-are passed as CSR matrices from `Matrix` package.}
+are passed as CSR matrices from the `Matrix` package.}
 
 \item{ignore_zeros}{Whether to ignore (not write) features with a value of zero
 after rounding to the specified decimal places.}

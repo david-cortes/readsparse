@@ -38,11 +38,13 @@ extern "C" {
     FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
 }
 #define R_fopen RC_fopen
+#define SUPPORTS_NON_ASCII true
 
 #else
 #   if defined(_WIN32) || defined(_WIN64)
 /* https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t */
 /*  */
+#       if (defined(__GNUC__) && (__GNUC__ < 5))
 #include <locale>
 #include <codecvt>
 #include <string>
@@ -55,22 +57,41 @@ FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool 
     std::wstring wide = converter.from_bytes(s.get_cstring());
     std::string mode__(mode);
     std::wstring mode_ = converter.from_bytes(mode__);
-    return _wfopen( wide.c_str(), mode_.c_str());
+    return _wfopen(wide.c_str(), mode_.c_str());
 }
+#define SUPPORTS_NON_ASCII true
+#       else
+FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
+{
+    if (expand)
+        fname = Rcpp::Function("path.expand")(fname);
+    Rcpp::String s(fname[0]);
+    return fopen(s.get_cstring(), mode);
+}
+#define SUPPORTS_NON_ASCII false
+#       endif
 #   else
 FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
 {
     if (expand)
         fname = Rcpp::Function("path.expand")(fname);
-    std::string s = Rcpp::as<std::string>(fname);
-    return fopen(s.c_str(), mode);
+    Rcpp::String s(fname[0]);
+    s.set_encoding(CE_NATIVE);
+    return fopen(s.get_cstring(), mode);
 }
+#define SUPPORTS_NON_ASCII true
 #   endif
 FILE *R_fopen(const SEXP fname, const char *mode, const Rboolean expand)
 {
     return CRAN_acceptable_fopen(fname, mode, expand);
 }
 #endif
+
+// [[Rcpp::export(rng = false)]]
+bool supports_nonascii_internal()
+{
+    return SUPPORTS_NON_ASCII;
+}
 
 class FileOpener
 {

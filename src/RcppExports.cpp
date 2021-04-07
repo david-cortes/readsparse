@@ -5,6 +5,15 @@
 
 using namespace Rcpp;
 
+// supports_nonascii_internal
+bool supports_nonascii_internal();
+RcppExport SEXP _readsparse_supports_nonascii_internal() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    rcpp_result_gen = Rcpp::wrap(supports_nonascii_internal());
+    return rcpp_result_gen;
+END_RCPP
+}
 // deepcopy_num
 Rcpp::NumericVector deepcopy_num(Rcpp::NumericVector x);
 RcppExport SEXP _readsparse_deepcopy_num(SEXP xSEXP) {
@@ -227,6 +236,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_readsparse_supports_nonascii_internal", (DL_FUNC) &_readsparse_supports_nonascii_internal, 0},
     {"_readsparse_deepcopy_num", (DL_FUNC) &_readsparse_deepcopy_num, 1},
     {"_readsparse_deepcopy_int", (DL_FUNC) &_readsparse_deepcopy_int, 1},
     {"_readsparse_deepcopy_log", (DL_FUNC) &_readsparse_deepcopy_log, 1},
