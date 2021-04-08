@@ -44,7 +44,7 @@ extern "C" {
 #   if defined(_WIN32) || defined(_WIN64)
 /* https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t */
 /*  */
-#       if (defined(__GNUC__) && (__GNUC__ < 5))
+#       if (defined(__GNUC__) && (__GNUC__ >= 5))
 #include <locale>
 #include <codecvt>
 #include <string>
