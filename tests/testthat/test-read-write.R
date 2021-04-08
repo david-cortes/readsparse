@@ -161,10 +161,22 @@ test_that("Non-ascii file names", {
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
         
+        s <- write.sparse(NULL, X, y, to_string=TRUE)
+        writeLines(s, file_name, sep="")
+        r <- read.sparse(file_name)
+        expect_equal(unname(X), unname(as.matrix(r$X)))
+        expect_equal(unname(y), unname(as.numeric(r$y)))
+        
         
         file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
         file_name <- file.path(tempdir(), file_name)
         write.sparse(file_name, X, y)
+        r <- read.sparse(file_name)
+        expect_equal(unname(X), unname(as.matrix(r$X)))
+        expect_equal(unname(y), unname(as.numeric(r$y)))
+        
+        s <- write.sparse(NULL, X, y, to_string=TRUE)
+        writeLines(s, file_name, sep="")
         r <- read.sparse(file_name)
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
