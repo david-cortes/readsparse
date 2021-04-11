@@ -67,6 +67,18 @@ check.for.overflow <- function(lst) {
     }
 }
 
+process.file.name <- function(fname) {
+    fname <- path.expand(fname)
+    if (Encoding("fname") != "unknown") {
+        if (Sys.info()['sysname'] == "Windows") {
+            fname <- enc2utf8(fname)
+        } else {
+            fname <- enc2native(fname)
+        }
+    }
+    return(fname)
+}
+
 #' @title Determine if readsparse will handle non-ASCII file paths
 #' @description See \link{read.sparse} for details. In general, the library will
 #' be able to handle non-ASCII file paths, unless it is compiled with G++ version
@@ -127,7 +139,6 @@ readsparse_nonascii_support <- function() {
 #' \item Will not make any checks for negative column indices.
 #' \item Has a precision of C type `int` for column indices and integer labels
 #' (the maximum value that this type can hold can be checked in `.Machine$integer.max`).
-#' \item Will be able to read numeric values in scientific notation only if the E is capitalized.
 #' \item Will fill missing labels with NAs when passing `multilabel=FALSE`.
 #' \item Will fill with zeros (empty values) the lines that are empty (that is,
 #' they generate a row in the data), but will ignore (that is, will not generate
@@ -135,24 +146,21 @@ readsparse_nonascii_support <- function() {
 #' }
 #' 
 #' Be aware that the data is represented as a CSR matrix with index pointer of
-#' class C `int`, thus the number of rows/columns cannot exceed `.Machine$integer.max`.
+#' class C `int`, thus the number of rows/columns/non-zero-elements cannot exceed
+#' `.Machine$integer.max`.
 #' 
 #' On Windows, if the package is installed from CRAN and compiled using the GCC
 #' compiler version 4 or earlier (the default in older versions of RTools, such
-#' as Rtools35), it will not be able to read from or write to
-#' file names with non-ASCII characters. Whether support for non-ASCII file names is
-#' available or not can be checked through \link{readsparse_nonascii_support}.
-#' If the package is installed from the GitHub repository
-#' (`remotes::install_github("david-cortes/readsparse")`), it should always be able
-#' to handle non-ASCII file names, as long as R's own IO functions can do it too.
+#' as Rtools35), it will not be able to read from or write to file names with
+#' non-ASCII characters, which can be solved by installing it directly from the
+#' GitHub repository (`remotes::install_github("david-cortes/readsparse")`).
+#' Whether support for non-ASCII file names is available or not can be checked
+#' through \link{readsparse_nonascii_support}.
 #' 
 #' On 64-bit Windows systems, if compiling the library with a compiler other than MinGW
 #' or MSVC, it will not be able to read files larger than 2GB. This should not be a concern
 #' if installing it from CRAN or from R itself, as the Windows version at the time
 #' of writing can only be compiled with MinGW.
-#' 
-#' If the file cannot be read, the function will throw an error, but will not be
-#' able to tell exactly what failed (e.g. permissions, corrupted file, etc.).
 #' 
 #' If the file contains a header, and this header denotes a larger number of columns
 #' or of labels than the largest index in the data, the resulting object will have
@@ -269,8 +277,8 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
     }
     
     if (!from_string) {
-        if (!file.exists(file))
-            stop("Error: file does not exist.")
+
+        file <- process.file.name(file)
         
         if (multilabel) {
             read_func <- read_multi_label_R
@@ -540,6 +548,9 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     }
     
     if (!to_string) {
+
+        file <- process.file.name(file)
+        
         if (add_header && append && file.exists(file))
             warning("Warning: adding header to existing file with 'append=TRUE'.")
         

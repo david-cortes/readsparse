@@ -32,26 +32,15 @@
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::plugins(unwindProtect)]]
 
-#ifndef _FOR_CRAN
+#if (defined(_WIN32) || defined(_WIN64)) && (defined(__GNUC__) && (__GNUC__ >= 5))
 
-extern "C" {
-    FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
-}
-#define R_fopen RC_fopen
-#define SUPPORTS_NON_ASCII true
-
-#else
-#   if defined(_WIN32) || defined(_WIN64)
 /* https://stackoverflow.com/questions/2573834/c-convert-string-or-char-to-wstring-or-wchar-t */
 /*  */
-#       if (defined(__GNUC__) && (__GNUC__ >= 5))
 #include <locale>
 #include <codecvt>
 #include <string>
 FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
 {
-    if (expand)
-        fname = Rcpp::Function("path.expand")(fname);
     Rcpp::String s(fname[0], CE_UTF8);
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     std::wstring wide = converter.from_bytes(s.get_cstring());
@@ -59,33 +48,46 @@ FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool 
     std::wstring mode_ = converter.from_bytes(mode__);
     return _wfopen(wide.c_str(), mode_.c_str());
 }
-#define SUPPORTS_NON_ASCII true
-#       else
-FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
+FILE *R_fopen(const SEXP fname, const char *mode, const Rboolean expand)
 {
-    if (expand)
-        fname = Rcpp::Function("path.expand")(fname);
-    Rcpp::String s(fname[0]);
-    return fopen(s.get_cstring(), mode);
+    return CRAN_acceptable_fopen(fname, mode, expand);
 }
-#define SUPPORTS_NON_ASCII false
-#       endif
-#   else
+#define SUPPORTS_NON_ASCII true
+
+
+#elif (defined(_WIN32) || defined(_WIN64)) && !defined(_FOR_CRAN)
+
+
+extern "C" {
+    FILE *RC_fopen(const SEXP fn, const char *mode, const Rboolean expand);
+}
+#   define R_fopen RC_fopen
+#   define SUPPORTS_NON_ASCII true
+
+
+#else
+
+
 FILE *CRAN_acceptable_fopen(Rcpp::CharacterVector fname, const char *mode, bool expand)
 {
-    if (expand)
-        fname = Rcpp::Function("path.expand")(fname);
     Rcpp::String s(fname[0]);
     s.set_encoding(CE_NATIVE);
     return fopen(s.get_cstring(), mode);
 }
-#define SUPPORTS_NON_ASCII true
+#   if !(defined(_WIN32) || defined(_WIN64))
+#       define SUPPORTS_NON_ASCII true
+#   else
+#       define SUPPORTS_NON_ASCII false
 #   endif
 FILE *R_fopen(const SEXP fname, const char *mode, const Rboolean expand)
 {
     return CRAN_acceptable_fopen(fname, mode, expand);
 }
+
+
 #endif
+
+
 
 // [[Rcpp::export(rng = false)]]
 bool supports_nonascii_internal()
