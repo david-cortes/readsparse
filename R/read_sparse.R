@@ -69,13 +69,10 @@ check.for.overflow <- function(lst) {
 
 process.file.name <- function(fname) {
     fname <- path.expand(fname)
-    if (Encoding("fname") != "unknown") {
-        if (Sys.info()['sysname'] == "Windows") {
-            fname <- enc2utf8(fname)
-        } else {
-            fname <- enc2native(fname)
-        }
-    }
+    if (take_as_utf8())
+        fname <- enc2utf8(fname)
+    else if (Encoding(fname) != "unknown")
+        fname <- enc2native(fname)
     return(fname)
 }
 

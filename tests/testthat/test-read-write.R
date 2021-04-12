@@ -157,9 +157,11 @@ test_that("Non-ascii file names", {
         file_name <- "\u00d1o\u00f1o.txt"
         file_name <- file.path(tempdir(), file_name)
         write.sparse(file_name, X, y)
+        expect_true(file.exists(file_name))
         r <- read.sparse(file_name)
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
+        file.remove(file_name)
         
         s <- write.sparse(NULL, X, y, to_string=TRUE)
         writeLines(s, file_name, sep="")
@@ -171,9 +173,11 @@ test_that("Non-ascii file names", {
         file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
         file_name <- file.path(tempdir(), file_name)
         write.sparse(file_name, X, y)
+        expect_true(file.exists(file_name))
         r <- read.sparse(file_name)
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
+        file.remove(file_name)
         
         s <- write.sparse(NULL, X, y, to_string=TRUE)
         writeLines(s, file_name, sep="")
@@ -190,11 +194,13 @@ test_that("Non-ascii file names", {
             r <- read.sparse(f_backslash)
             expect_equal(unname(X), unname(as.matrix(r$X)))
             expect_equal(unname(y), unname(as.numeric(r$y)))
+            file.remove(f_backslash)
             
             write.sparse(f_forwardslash, X, y)
             r <- read.sparse(f_forwardslash)
             expect_equal(unname(X), unname(as.matrix(r$X)))
             expect_equal(unname(y), unname(as.numeric(r$y)))
+            file.remove(f_forwardslash)
         }
     } else {
         testthat::expect_true(TRUE)

@@ -14,6 +14,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// take_as_utf8
+bool take_as_utf8();
+RcppExport SEXP _readsparse_take_as_utf8() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    rcpp_result_gen = Rcpp::wrap(take_as_utf8());
+    return rcpp_result_gen;
+END_RCPP
+}
 // deepcopy_num
 Rcpp::NumericVector deepcopy_num(Rcpp::NumericVector x);
 RcppExport SEXP _readsparse_deepcopy_num(SEXP xSEXP) {
@@ -237,6 +246,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_readsparse_supports_nonascii_internal", (DL_FUNC) &_readsparse_supports_nonascii_internal, 0},
+    {"_readsparse_take_as_utf8", (DL_FUNC) &_readsparse_take_as_utf8, 0},
     {"_readsparse_deepcopy_num", (DL_FUNC) &_readsparse_deepcopy_num, 1},
     {"_readsparse_deepcopy_int", (DL_FUNC) &_readsparse_deepcopy_int, 1},
     {"_readsparse_deepcopy_log", (DL_FUNC) &_readsparse_deepcopy_log, 1},

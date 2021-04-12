@@ -5,6 +5,10 @@ supports_nonascii_internal <- function() {
     .Call(`_readsparse_supports_nonascii_internal`)
 }
 
+take_as_utf8 <- function() {
+    .Call(`_readsparse_take_as_utf8`)
+}
+
 deepcopy_num <- function(x) {
     .Call(`_readsparse_deepcopy_num`, x)
 }
