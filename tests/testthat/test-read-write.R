@@ -154,39 +154,51 @@ test_that("Non-ascii file names", {
         mode(X) <- "numeric"
         mode(y) <- "numeric"
         
+        has_utf8 <- grepl("UTF-?8$", Sys.getenv("LANG"))
+        is_windows <- Sys.info()['sysname'] == "Windows"
+        
         file_name <- "\u00d1o\u00f1o.txt"
         file_name <- file.path(tempdir(), file_name)
         write.sparse(file_name, X, y)
-        expect_true(file.exists(file_name))
+        if (has_utf8 || is_windows)
+            expect_true(file.exists(file_name))
         r <- read.sparse(file_name)
         expect_equal(unname(X), unname(as.matrix(r$X)))
         expect_equal(unname(y), unname(as.numeric(r$y)))
-        file.remove(file_name)
+        if (has_utf8 || is_windows)
+            file.remove(file_name)
         
-        s <- write.sparse(NULL, X, y, to_string=TRUE)
-        writeLines(s, file_name, sep="")
-        r <- read.sparse(file_name)
-        expect_equal(unname(X), unname(as.matrix(r$X)))
-        expect_equal(unname(y), unname(as.numeric(r$y)))
+        if (has_utf8 || is_windows) {
+            s <- write.sparse(NULL, X, y, to_string=TRUE)
+            writeLines(s, file_name, sep="")
+            r <- read.sparse(file_name)
+            expect_equal(unname(X), unname(as.matrix(r$X)))
+            expect_equal(unname(y), unname(as.numeric(r$y)))
+        }
         
-        
-        file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
-        file_name <- file.path(tempdir(), file_name)
-        write.sparse(file_name, X, y)
-        expect_true(file.exists(file_name))
-        r <- read.sparse(file_name)
-        expect_equal(unname(X), unname(as.matrix(r$X)))
-        expect_equal(unname(y), unname(as.numeric(r$y)))
-        file.remove(file_name)
-        
-        s <- write.sparse(NULL, X, y, to_string=TRUE)
-        writeLines(s, file_name, sep="")
-        r <- read.sparse(file_name)
-        expect_equal(unname(X), unname(as.matrix(r$X)))
-        expect_equal(unname(y), unname(as.numeric(r$y)))
-        
-        if (Sys.info()['sysname'] == "Windows") {
+        if (has_utf8) {
             file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439.txt"
+            file_name <- file.path(tempdir(), file_name)
+            write.sparse(file_name, X, y)
+            if (has_utf8 || is_windows)
+                expect_true(file.exists(file_name))
+            r <- read.sparse(file_name)
+            expect_equal(unname(X), unname(as.matrix(r$X)))
+            expect_equal(unname(y), unname(as.numeric(r$y)))
+            if (has_utf8 || is_windows)
+                file.remove(file_name)
+        }
+        
+        if (has_utf8) {
+            s <- write.sparse(NULL, X, y, to_string=TRUE)
+            writeLines(s, file_name, sep="")
+            r <- read.sparse(file_name)
+            expect_equal(unname(X), unname(as.matrix(r$X)))
+            expect_equal(unname(y), unname(as.numeric(r$y)))
+        }
+        
+        if (is_windows) {
+            file_name <- "\u0440\u0443\u0441\u0441\u043a\u0438\u0439_2.txt"
             f_backslash <- paste(tempdir(), file_name, sep="\\")
             f_forwardslash <- paste(tempdir(), file_name, sep="//")
             

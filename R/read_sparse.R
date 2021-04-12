@@ -71,8 +71,8 @@ process.file.name <- function(fname) {
     fname <- path.expand(fname)
     if (take_as_utf8())
         fname <- enc2utf8(fname)
-    else if (Encoding(fname) != "unknown")
-        fname <- enc2native(fname)
+    # else if (Encoding(fname) != "unknown")
+    #     fname <- enc2native(fname)
     return(fname)
 }
 
