@@ -4,6 +4,7 @@ global-include *.cpp
 global-include *.hpp
 global-exclude *.o
 global-exclude *.so
+global-exclude *.md
 include pyproject.toml
 exclude .gitignore
 exclude .gitattributes
