@@ -45,12 +45,16 @@ cast.dense.vec <- function(X) {
 }
 
 cast.sparse.vec <- function(X) {
-    if (inherits(X, "dsparseVector")) {
+    if (inherits(X, "sparseVector")) {
         X.csr <- new("dgRMatrix")
         X.csr@Dim <- c(1L, X@length)
         X.csr@p <- c(0L, length(X@x))
         X.csr@j <- X@i - 1L
-        X.csr@x <- X@x
+        if (.hasSlot(X, "x")) {
+            X.csr@x <- as.numeric(X@x)
+        } else {
+            X.csr@x <- rep(1., length(X@i))
+        }
         X <- X.csr
     }
     return(X)
@@ -451,38 +455,53 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
         y <- as.numeric(y)
     }
 
+
+    has_MatrixExtra <- requireNamespace("MatrixExtra", quietly=TRUE)
+
     ### Note: this check should be made right here due to potential
     ### in-place modifications of the data which would render the input unusable
     ### TODO: this here could benefit from MatrixExtra
     if (sort_indices) {
         
-        if (inherits(y, "RsparseMatrix") && !inherits(y, "ngRMatrix")) {
-            y@j <- deepcopy_int(y@j)
-        }
+        if (has_MatrixExtra) {
+            if (inherits(X, "RsparseMatrix")) {
+                X <- MatrixExtra::as.csr.matrix(X)
+                X <- MatrixExtra::sort_sparse_indices(X, copy=TRUE)
+                sort_indices <- FALSE
+            }
+        } else {
+            if (inherits(y, "RsparseMatrix") && !inherits(y, "ngRMatrix")) {
+                y@j <- deepcopy_int(y@j)
+            }
 
-        if (inherits(X, "RsparseMatrix") && !inherits(X, "dgRMatrix")) {
-            X@j <- deepcopy_int(X@j)
-            if (inherits(X, "lsparseMatrix")) {
-                X@x <- deepcopy_log(X@x)
-            } else if (inherits(X, "dsparseMatrix")) {
-                X@x <- deepcopy_num(X@x)
+            if (inherits(X, "RsparseMatrix") && !inherits(X, "dgRMatrix")) {
+                X@j <- deepcopy_int(X@j)
+                if (inherits(X, "lsparseMatrix")) {
+                    X@x <- deepcopy_log(X@x)
+                } else if (inherits(X, "dsparseMatrix")) {
+                    X@x <- deepcopy_num(X@x)
+                }
             }
         }
     }
-    
-    if (!inherits(X, "RsparseMatrix"))
-        X <- as (X, "RsparseMatrix")
-    if (!inherits(X, "dgRMatrix")) {
-        ### Note: casting from ngRMatrix to dgRMatrix is broken in Matrix==1.3.0
-        X.csr        <- new("dgRMatrix")
-        X.csr@Dim    <-  X@Dim
-        X.csr@p      <-  X@p
-        X.csr@j      <-  X@j
-        if (.hasSlot(X, "x"))
-            X.csr@x  <-  as.numeric(X@x)
-        else
-            X.csr@x  <-  rep(1., length(X@j))
-        X <- X.csr
+
+    if (has_MatrixExtra) {
+        X <- MatrixExtra::as.csr.matrix(X)
+    } else {
+        if (!inherits(X, "RsparseMatrix"))
+            X <- as (X, "RsparseMatrix")
+        if (!inherits(X, "dgRMatrix")) {
+            ### Note: casting from ngRMatrix to dgRMatrix is broken in Matrix==1.3.0
+            X.csr        <- new("dgRMatrix")
+            X.csr@Dim    <-  X@Dim
+            X.csr@p      <-  X@p
+            X.csr@j      <-  X@j
+            if (.hasSlot(X, "x"))
+                X.csr@x  <-  as.numeric(X@x)
+            else
+                X.csr@x  <-  rep(1., length(X@j))
+            X <- X.csr
+        }
     }
     
     allowed_y_multi <- c("matrix", "matrix.coo", "matrix.csr", "matrix.csc",
@@ -496,7 +515,11 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     if (inherits(y, allowed_y_multi)) {
         y_is_multi <- TRUE
         if (!inherits(y, "RsparseMatrix")) {
-            y <- as(y, "RsparseMatrix")
+            if (has_MatrixExtra) {
+                y <- MatrixExtra::as.csr.matrix(y, binary=TRUE)
+            } else {
+                y <- as(y, "RsparseMatrix")
+            }
         }
     } else {
         if (inherits(y, "float32") && ncol(y) != 1L)
