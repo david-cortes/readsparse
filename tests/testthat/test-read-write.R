@@ -218,3 +218,62 @@ test_that("Non-ascii file names", {
         testthat::expect_true(TRUE)
     }
 })
+
+test_that("Problematic input 1", {
+
+    txt_mat <- "1 19767:0.5479394618272178 
+1 20336:0.3895789860528069 
+"
+    file_name <- file.path(tempdir(), "test_sparse_matrix.txt")
+    writeLines(txt_mat, con = file_name, sep = "")
+    r1 <- read.sparse(file_name, from_string=FALSE)
+    r2 <- read.sparse(txt_mat, from_string=TRUE)
+    r3 <- read.sparse(file_name, from_string=FALSE, multilabel=TRUE)
+    r4 <- read.sparse(txt_mat, from_string=TRUE, multilabel=TRUE)
+    
+    expect_equal(r1$X@p, r2$X@p)
+    expect_equal(r1$X@j, r2$X@j)
+    expect_equal(r1$X@x, r2$X@x)
+
+    expect_equal(r1$X@p, r3$X@p)
+    expect_equal(r1$X@j, r3$X@j)
+    expect_equal(r1$X@x, r3$X@x)
+
+    expect_equal(r1$X@p, r4$X@p)
+    expect_equal(r1$X@j, r4$X@j)
+    expect_equal(r1$X@x, r4$X@x)
+
+    expect_equal(r1$X@p, c(0L, 1L, 2L))
+    expect_equal(r1$X@j, c(19767L-1L, 20336L-1L))
+    expect_equal(r1$X@x, c(0.5479394618272178, 0.3895789860528069))
+})
+
+test_that("Problematic input 2", {
+
+    txt_mat <- "1 3:0.54 5:4.2 
+ 7:3
+9 2:0.38 
+"
+    file_name <- file.path(tempdir(), "test_sparse_matrix.txt")
+    writeLines(txt_mat, con = file_name, sep = "")
+    r1 <- read.sparse(file_name, from_string=FALSE)
+    r2 <- read.sparse(txt_mat, from_string=TRUE)
+    r3 <- read.sparse(file_name, from_string=FALSE, multilabel=TRUE)
+    r4 <- read.sparse(txt_mat, from_string=TRUE, multilabel=TRUE)
+    
+    expect_equal(r1$X@p, r2$X@p)
+    expect_equal(r1$X@j, r2$X@j)
+    expect_equal(r1$X@x, r2$X@x)
+
+    expect_equal(r1$X@p, r3$X@p)
+    expect_equal(r1$X@j, r3$X@j)
+    expect_equal(r1$X@x, r3$X@x)
+
+    expect_equal(r1$X@p, r4$X@p)
+    expect_equal(r1$X@j, r4$X@j)
+    expect_equal(r1$X@x, r4$X@x)
+
+    expect_equal(r1$X@p, c(0L, 2L, 3L, 5L))
+    expect_equal(r1$X@j, c(3L-1L, 5L-1L, 7L-1L, 2L-1L))
+    expect_equal(r1$X@x, c(0.54, 4.2, 3, 0.38))
+})
