@@ -33,6 +33,13 @@
 #   define throw_err(msg) REprintf(msg)
 #endif
 
+static void print_errno()
+{
+    char msg[1000];
+    snprintf(msg, 999, "Error %d: %s\n", errno, strerror(errno));
+    throw_err(msg);
+}
+
 
 template <class int_t>
 bool check_is_sorted(int_t* vec, size_t n)

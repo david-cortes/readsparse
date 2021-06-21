@@ -112,6 +112,8 @@
 template <class int_t>
 bool check_is_sorted(int_t* vec, size_t n);
 
+static void print_errno();
+
 template <class int_t, class real_t>
 void sort_sparse_indices
 (

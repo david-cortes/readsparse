@@ -518,8 +518,7 @@ bool write_multi_label_template
 
     throw_err:
     {
-        char msg[1000];
-        snprintf(msg, 999, "Error %d: %s\n", errno, strerror(errno));
+        print_errno();
         return false;
     }
 }
@@ -1069,8 +1068,7 @@ bool write_single_label_template
 
     throw_err:
     {
-        char msg[1000];
-        snprintf(msg, 999, "Error %d: %s\n", errno, strerror(errno));
+        print_errno();
         return false;
     }
 }

@@ -851,6 +851,11 @@ bool read_multi_label_template
         }
     }
 
+    if (!feof(input_file) && ferror(input_file))
+    {
+        print_errno();
+        return false;
+    }
 
     if (text_is_base1) {
         subtract_one_from_vec(indices);
@@ -1662,6 +1667,12 @@ bool read_single_label_template
             if (next_char == EOF)
                 break;
         }
+    }
+
+    if (!feof(input_file) && ferror(input_file))
+    {
+        print_errno();
+        return false;
     }
 
     if (text_is_base1)
