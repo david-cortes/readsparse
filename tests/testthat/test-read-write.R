@@ -273,7 +273,7 @@ test_that("Problematic input 2", {
     expect_equal(r1$X@j, r4$X@j)
     expect_equal(r1$X@x, r4$X@x)
 
-    expect_equal(r1$X@p, c(0L, 2L, 3L, 5L))
+    expect_equal(r1$X@p, c(0L, 2L, 3L, 4L))
     expect_equal(r1$X@j, c(3L-1L, 5L-1L, 7L-1L, 2L-1L))
     expect_equal(r1$X@x, c(0.54, 4.2, 3, 0.38))
 })
