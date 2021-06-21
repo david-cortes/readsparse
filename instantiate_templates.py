@@ -33,8 +33,20 @@ license_info = """
 */
 """
 
+msvc_export = """
+#if defined(_FOR_PYTHON) || defined(_FOR_R) || !defined(_WIN32)
+    #define EXPORTABLE 
+#else
+    #ifdef READSPARSE_COMPILE
+        #define EXPORTABLE __declspec(dllexport)
+    #else
+        #define EXPORTABLE __declspec(dllimport)
+    #endif
+#endif
+"""
+
 untyped_reader_multi_label = """
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     <stream_t>input_file,
     std::vector<int_t> &indptr,
@@ -72,7 +84,7 @@ bool read_multi_label
 """
 
 untyped_reader_single_label = """
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     <stream_t>input_file,
     std::vector<int_t> &indptr,
@@ -108,7 +120,7 @@ bool read_single_label
 """
 
 untyped_writer_multi_label = """
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     <stream_t>output_file,
     int_t *indptr,
@@ -152,7 +164,7 @@ bool write_multi_label
 """
 
 untyped_writer_single_label = """
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     <stream_t>output_file,
     int_t *indptr,
@@ -211,12 +223,14 @@ with open("src/readsparse_detemplated.hpp", "w") as f_dt:
     f_dt.write(info_header)
     f_dt.write(license_info)
     f_dt.write(size_def)
+    f_dt.write(msvc_export)
 
     f_dt.write("\n/* reader.cpp */\n")
     with open("src/reader.cpp", "w") as f:
         ### Beginning
         f.write(info_header)
         f.write(license_info)
+        f.write(msvc_export)
         f.write("\n#include \"reader.hpp\"\n")
 
         ### For R
@@ -293,6 +307,7 @@ with open("src/readsparse_detemplated.hpp", "w") as f_dt:
         ### Beginning
         f.write(info_header)
         f.write(license_info)
+        f.write(msvc_export)
         f.write("\n#include \"writer.hpp\"\n")
 
         ### For R

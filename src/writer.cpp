@@ -25,11 +25,21 @@
 *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#if defined(_FOR_PYTHON) || defined(_FOR_R) || !defined(_WIN32)
+    #define EXPORTABLE 
+#else
+    #ifdef READSPARSE_COMPILE
+        #define EXPORTABLE __declspec(dllexport)
+    #else
+        #define EXPORTABLE __declspec(dllimport)
+    #endif
+#endif
+
 #include "writer.hpp"
 
 #ifdef _FOR_R
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -71,7 +81,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -113,7 +123,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -155,7 +165,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -197,7 +207,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -239,7 +249,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -283,7 +293,7 @@ bool write_single_label
 
 #else
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -325,7 +335,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -367,7 +377,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -409,7 +419,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -451,7 +461,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -493,7 +503,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -535,7 +545,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -577,7 +587,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -619,7 +629,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -661,7 +671,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -703,7 +713,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -745,7 +755,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -787,7 +797,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -829,7 +839,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -871,7 +881,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -913,7 +923,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -955,7 +965,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -997,7 +1007,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1039,7 +1049,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1081,7 +1091,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1123,7 +1133,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1165,7 +1175,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1207,7 +1217,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1249,7 +1259,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -1291,7 +1301,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1333,7 +1343,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1375,7 +1385,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1417,7 +1427,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1459,7 +1469,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1501,7 +1511,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1543,7 +1553,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1585,7 +1595,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1627,7 +1637,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1669,7 +1679,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1711,7 +1721,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1753,7 +1763,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -1795,7 +1805,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1837,7 +1847,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1879,7 +1889,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1921,7 +1931,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1963,7 +1973,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2005,7 +2015,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2047,7 +2057,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2089,7 +2099,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2131,7 +2141,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2173,7 +2183,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2215,7 +2225,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2257,7 +2267,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2299,7 +2309,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2341,7 +2351,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2383,7 +2393,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2425,7 +2435,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2467,7 +2477,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2509,7 +2519,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2551,7 +2561,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2593,7 +2603,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2635,7 +2645,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2677,7 +2687,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2719,7 +2729,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2761,7 +2771,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2803,7 +2813,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -2845,7 +2855,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -2887,7 +2897,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -2929,7 +2939,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -2971,7 +2981,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3013,7 +3023,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3055,7 +3065,7 @@ bool write_single_label
     );
 }
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3097,7 +3107,7 @@ bool write_multi_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3139,7 +3149,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3181,7 +3191,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3223,7 +3233,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3265,7 +3275,7 @@ bool write_single_label
     );
 }
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,

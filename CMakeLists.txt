@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(SRC_FILES ${PROJECT_SOURCE_DIR}/src/reader.cpp
               ${PROJECT_SOURCE_DIR}/src/writer.cpp)
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 set(BUILD_SHARED_LIBS True)
 add_library(readsparse SHARED ${SRC_FILES})
+add_compile_definitions(READSPARSE_COMPILE)
 
 if (WIN32 OR MSVC)
     add_compile_definitions(_FILE_OFFSET_BITS=64)

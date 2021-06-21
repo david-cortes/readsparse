@@ -25,11 +25,21 @@
 *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#if defined(_FOR_PYTHON) || defined(_FOR_R) || !defined(_WIN32)
+    #define EXPORTABLE 
+#else
+    #ifdef READSPARSE_COMPILE
+        #define EXPORTABLE __declspec(dllexport)
+    #else
+        #define EXPORTABLE __declspec(dllimport)
+    #endif
+#endif
+
 #include "reader.hpp"
 
 #ifdef _FOR_R
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -65,7 +75,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -99,7 +109,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -135,7 +145,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -171,7 +181,7 @@ bool read_single_label
 
 #elif defined(_FOR_PYTHON)
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -207,7 +217,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -241,7 +251,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -275,7 +285,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -311,7 +321,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -345,7 +355,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -379,7 +389,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -415,7 +425,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -449,7 +459,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -483,7 +493,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -519,7 +529,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -553,7 +563,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -587,7 +597,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -623,7 +633,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -657,7 +667,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -691,7 +701,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -727,7 +737,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -761,7 +771,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -795,7 +805,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -831,7 +841,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -865,7 +875,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -899,7 +909,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -935,7 +945,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -969,7 +979,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1005,7 +1015,7 @@ bool read_single_label
 
 #else
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1041,7 +1051,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1075,7 +1085,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1109,7 +1119,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1143,7 +1153,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1177,7 +1187,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1211,7 +1221,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1247,7 +1257,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1281,7 +1291,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1315,7 +1325,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1349,7 +1359,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1383,7 +1393,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -1417,7 +1427,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1453,7 +1463,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1487,7 +1497,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1521,7 +1531,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1555,7 +1565,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1589,7 +1599,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1623,7 +1633,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1659,7 +1669,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1693,7 +1703,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1727,7 +1737,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1761,7 +1771,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1795,7 +1805,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -1829,7 +1839,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1865,7 +1875,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1899,7 +1909,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1933,7 +1943,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1967,7 +1977,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2001,7 +2011,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2035,7 +2045,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2071,7 +2081,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2105,7 +2115,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2139,7 +2149,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2173,7 +2183,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2207,7 +2217,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -2241,7 +2251,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2277,7 +2287,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2311,7 +2321,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2345,7 +2355,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2379,7 +2389,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2413,7 +2423,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2447,7 +2457,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2483,7 +2493,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2517,7 +2527,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2551,7 +2561,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2585,7 +2595,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2619,7 +2629,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -2653,7 +2663,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2689,7 +2699,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2723,7 +2733,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2757,7 +2767,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2791,7 +2801,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2825,7 +2835,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2859,7 +2869,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2895,7 +2905,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2929,7 +2939,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2963,7 +2973,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -2997,7 +3007,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -3031,7 +3041,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -3065,7 +3075,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3101,7 +3111,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3135,7 +3145,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3169,7 +3179,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3203,7 +3213,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3237,7 +3247,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3271,7 +3281,7 @@ bool read_single_label
     );
 }
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3307,7 +3317,7 @@ bool read_multi_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3341,7 +3351,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3375,7 +3385,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3409,7 +3419,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -3443,7 +3453,7 @@ bool read_single_label
     );
 }
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,

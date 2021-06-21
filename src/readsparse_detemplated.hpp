@@ -35,11 +35,21 @@
 #   endif
 #endif
 
+#if defined(_FOR_PYTHON) || defined(_FOR_R) || !defined(_WIN32)
+    #define EXPORTABLE 
+#else
+    #ifdef READSPARSE_COMPILE
+        #define EXPORTABLE __declspec(dllexport)
+    #else
+        #define EXPORTABLE __declspec(dllimport)
+    #endif
+#endif
+
 /* reader.cpp */
 
 #ifdef _FOR_R
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -57,7 +67,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -74,7 +84,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -92,7 +102,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -111,7 +121,7 @@ bool read_single_label
 
 #elif defined(_FOR_PYTHON)
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -129,7 +139,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -146,7 +156,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -163,7 +173,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -181,7 +191,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -198,7 +208,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -215,7 +225,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -233,7 +243,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -250,7 +260,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -267,7 +277,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -285,7 +295,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -302,7 +312,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -319,7 +329,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -337,7 +347,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -354,7 +364,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -371,7 +381,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -389,7 +399,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -406,7 +416,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -423,7 +433,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -441,7 +451,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -458,7 +468,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -475,7 +485,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -493,7 +503,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -510,7 +520,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -529,7 +539,7 @@ bool read_single_label
 
 #else
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -547,7 +557,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -564,7 +574,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -581,7 +591,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -598,7 +608,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -615,7 +625,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -632,7 +642,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -650,7 +660,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -667,7 +677,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -684,7 +694,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -701,7 +711,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -718,7 +728,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int> &indptr,
@@ -735,7 +745,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -753,7 +763,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -770,7 +780,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -787,7 +797,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -804,7 +814,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -821,7 +831,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -838,7 +848,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -856,7 +866,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -873,7 +883,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -890,7 +900,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -907,7 +917,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -924,7 +934,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int64_t> &indptr,
@@ -941,7 +951,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -959,7 +969,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -976,7 +986,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -993,7 +1003,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1010,7 +1020,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1027,7 +1037,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1044,7 +1054,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1062,7 +1072,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1079,7 +1089,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1096,7 +1106,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1113,7 +1123,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1130,7 +1140,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<size_t> &indptr,
@@ -1147,7 +1157,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1165,7 +1175,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1182,7 +1192,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1199,7 +1209,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1216,7 +1226,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1233,7 +1243,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1250,7 +1260,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1268,7 +1278,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1285,7 +1295,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1302,7 +1312,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1319,7 +1329,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1336,7 +1346,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int> &indptr,
@@ -1353,7 +1363,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1371,7 +1381,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1388,7 +1398,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1405,7 +1415,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1422,7 +1432,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1439,7 +1449,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1456,7 +1466,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1474,7 +1484,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1491,7 +1501,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1508,7 +1518,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1525,7 +1535,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1542,7 +1552,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int64_t> &indptr,
@@ -1559,7 +1569,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1577,7 +1587,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1594,7 +1604,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1611,7 +1621,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1628,7 +1638,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1645,7 +1655,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1662,7 +1672,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1680,7 +1690,7 @@ bool read_multi_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1697,7 +1707,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1714,7 +1724,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1731,7 +1741,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1748,7 +1758,7 @@ bool read_single_label
     const bool assume_no_qid = true
 );
 
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<size_t> &indptr,
@@ -1771,7 +1781,7 @@ bool read_single_label
 
 #ifdef _FOR_R
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -1792,7 +1802,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -1813,7 +1823,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -1834,7 +1844,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1855,7 +1865,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1876,7 +1886,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -1899,7 +1909,7 @@ bool write_single_label
 
 #else
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -1920,7 +1930,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -1941,7 +1951,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -1962,7 +1972,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -1983,7 +1993,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2004,7 +2014,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2025,7 +2035,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int *indptr,
@@ -2046,7 +2056,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2067,7 +2077,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2088,7 +2098,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2109,7 +2119,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2130,7 +2140,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int *indptr,
@@ -2151,7 +2161,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2172,7 +2182,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2193,7 +2203,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2214,7 +2224,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2235,7 +2245,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2256,7 +2266,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2277,7 +2287,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2298,7 +2308,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2319,7 +2329,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2340,7 +2350,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2361,7 +2371,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2382,7 +2392,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int64_t *indptr,
@@ -2403,7 +2413,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2424,7 +2434,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2445,7 +2455,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2466,7 +2476,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2487,7 +2497,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2508,7 +2518,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2529,7 +2539,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2550,7 +2560,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2571,7 +2581,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2592,7 +2602,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2613,7 +2623,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2634,7 +2644,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     size_t *indptr,
@@ -2655,7 +2665,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2676,7 +2686,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2697,7 +2707,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2718,7 +2728,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2739,7 +2749,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2760,7 +2770,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2781,7 +2791,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2802,7 +2812,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2823,7 +2833,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2844,7 +2854,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2865,7 +2875,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2886,7 +2896,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int *indptr,
@@ -2907,7 +2917,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2928,7 +2938,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2949,7 +2959,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2970,7 +2980,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -2991,7 +3001,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3012,7 +3022,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3033,7 +3043,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3054,7 +3064,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3075,7 +3085,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3096,7 +3106,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3117,7 +3127,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3138,7 +3148,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int64_t *indptr,
@@ -3159,7 +3169,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3180,7 +3190,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3201,7 +3211,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3222,7 +3232,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3243,7 +3253,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3264,7 +3274,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3285,7 +3295,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3306,7 +3316,7 @@ bool write_multi_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3327,7 +3337,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3348,7 +3358,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3369,7 +3379,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,
@@ -3390,7 +3400,7 @@ bool write_single_label
     const int decimal_places = 8
 );
 
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     size_t *indptr,

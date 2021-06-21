@@ -32,6 +32,16 @@
 #   include <stddef.h>
 #endif
 
+#if defined(_FOR_PYTHON) || defined(_FOR_R) || !defined(_WIN32)
+    #define EXPORTABLE 
+#else
+    #ifdef READSPARSE_COMPILE
+        #define EXPORTABLE __declspec(dllexport)
+    #else
+        #define EXPORTABLE __declspec(dllimport)
+    #endif
+#endif
+
 /*  Functions for reading and writing sparse CSR matrices in text format.
     See SVMLight's webpage for some details about the format:
         http://svmlight.joachims.org
@@ -187,7 +197,7 @@
 #endif
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     std::istream &input_file,
     std::vector<int_t> &indptr,
@@ -205,7 +215,7 @@ bool read_single_label
 );
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>
-bool read_single_label
+EXPORTABLE bool read_single_label
 (
     FILE *input_file,
     std::vector<int_t> &indptr,
@@ -223,7 +233,7 @@ bool read_single_label
 );
 
 template <class int_t=int64_t, class real_t=double>
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     std::istream &input_file,
     std::vector<int_t> &indptr,
@@ -242,7 +252,7 @@ bool read_multi_label
 );
 
 template <class int_t=int64_t, class real_t=double> 
-bool read_multi_label
+EXPORTABLE bool read_multi_label
 (
     FILE *input_file,
     std::vector<int_t> &indptr,
@@ -261,7 +271,7 @@ bool read_multi_label
 );
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     std::ostream &output_file,
     int_t *indptr,
@@ -283,7 +293,7 @@ bool write_single_label
 );
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>
-bool write_single_label
+EXPORTABLE bool write_single_label
 (
     FILE *output_file,
     int_t *indptr,
@@ -305,7 +315,7 @@ bool write_single_label
 );
 
 template <class int_t=int64_t, class real_t=double>
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     std::ostream &output_file,
     int_t *indptr,
@@ -327,7 +337,7 @@ bool write_multi_label
 );
 
 template <class int_t=int64_t, class real_t=double>
-bool write_multi_label
+EXPORTABLE bool write_multi_label
 (
     FILE *output_file,
     int_t *indptr,
