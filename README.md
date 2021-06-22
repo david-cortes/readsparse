@@ -19,6 +19,8 @@ Timings for reading the [Cover Type](https://www.csie.ntu.edu.tw/~cjlin/libsvmto
 | sparsio (R)          | 2.75      |
 | e1071 (R)            | 30.58     |
 
+*Note: achieving these speeds requires non-default settings, otherwise timing is similar to `sparsio`.*
+
 # Supported formats
 
 The aim of the library is to read and write sparse CSR matrices into text in a delimited format (which is used by popular machine learning software) in which each row is represented by a line, with the data written as follows:

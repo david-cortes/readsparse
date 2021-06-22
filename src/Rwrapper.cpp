@@ -215,7 +215,8 @@ Rcpp::List read_multi_label_R
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -256,7 +257,8 @@ Rcpp::List read_multi_label_R
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
     file_.close_file();
 
@@ -296,7 +298,8 @@ Rcpp::List read_multi_label_from_str_R
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -334,7 +337,8 @@ Rcpp::List read_multi_label_from_str_R
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
     if (!succeeded)
         return Rcpp::List();
@@ -372,7 +376,8 @@ Rcpp::List read_single_label_R
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -411,7 +416,8 @@ Rcpp::List read_single_label_R
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
     file_.close_file();
     
@@ -450,7 +456,8 @@ Rcpp::List read_single_label_from_str_R
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -486,7 +493,8 @@ Rcpp::List read_single_label_from_str_R
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
     if (!succeeded)
         return Rcpp::List();

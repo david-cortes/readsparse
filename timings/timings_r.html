@@ -201,11 +201,11 @@ library(e1071)
 library(microbenchmark)
 file_name &lt;- &quot;covtype.libsvm.binary&quot;</code></pre>
 <pre class="r"><code>microbenchmark({
-    data &lt;- readsparse::read.sparse(file_name)
+    data &lt;- readsparse::read.sparse(file_name, no_trailing_ws=TRUE)
 }, times=3L)</code></pre>
 <pre><code>## Unit: seconds
 ##                                                expr     min       lq     mean
-##  {     data &lt;- readsparse::read.sparse(file_name) } 1.97346 1.973519 2.002683
+##  {     data &lt;- readsparse::read.sparse(file_name, no_trailing_ws=TRUE) } 1.97346 1.973519 2.002683
 ##    median       uq      max neval
 ##  1.973579 2.017295 2.061011     3</code></pre>
 <pre class="r"><code>microbenchmark({

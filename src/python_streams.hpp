@@ -45,7 +45,8 @@ bool read_multi_label_str
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     std::stringstream ss;
@@ -64,7 +65,8 @@ bool read_multi_label_str
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -129,7 +131,8 @@ bool read_single_label_str
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     std::stringstream ss;
@@ -147,7 +150,8 @@ bool read_single_label_str
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 

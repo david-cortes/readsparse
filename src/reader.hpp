@@ -205,7 +205,8 @@ bool read_multi_label_template
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     if (input_file.fail())
@@ -513,7 +514,8 @@ bool read_multi_label_template
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     if (input_file == NULL)
@@ -808,25 +810,44 @@ bool read_multi_label_template
         }
 
         n_matched = 0;
-        while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
+        if (assume_trailing_ws)
         {
-            if (!ignore_zero_valued || curr_val)
+            while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
             {
-                indices.push_back(curr_col);
-                values.push_back(curr_val);
+                if (!ignore_zero_valued || curr_val)
+                {
+                    indices.push_back(curr_col);
+                    values.push_back(curr_val);
+                }
+                
+                return_to = ftell_(input_file);
+                do { next_char = fgetc(input_file); }
+                while (next_char != EOF && isspace(next_char) && (char)next_char != '\n');
+                if (next_char == EOF || (char)next_char == '\n' || (char)next_char == '#')
+                    goto next_line;
+                else
+                    fseek_(input_file, return_to, SEEK_SET);
             }
-            
-            return_to = ftell_(input_file);
-            do { next_char = fgetc(input_file); }
-            while (next_char != EOF && isspace(next_char) && (char)next_char != '\n');
-            if (next_char == EOF || (char)next_char == '\n' || (char)next_char == '#')
-                goto next_line;
-            else
+            if (n_matched == 1) {
                 fseek_(input_file, return_to, SEEK_SET);
+                goto next_line;
+            }
         }
-        if (n_matched == 1) {
-            fseek_(input_file, return_to, SEEK_SET);
-            goto next_line;
+
+        else
+        {
+            while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
+            {
+                if (!ignore_zero_valued || curr_val)
+                {
+                    indices.push_back(curr_col);
+                    values.push_back(curr_val);
+                }
+                
+                next_char = fgetc(input_file);
+                if ((char)next_char == '\n' || (char)next_char == '\r' || !isspace((char)next_char))
+                    break;
+            }
         }
 
 
@@ -894,7 +915,8 @@ bool read_single_label_template
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     if (input_file.fail())
@@ -1261,7 +1283,8 @@ bool read_single_label_template
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
-    const bool assume_no_qid
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
 )
 {
     if (input_file == NULL)
@@ -1626,27 +1649,45 @@ bool read_single_label_template
                 qid.push_back(curr_col);
         }
 
-        while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
+        if (assume_trailing_ws)
         {
-            if (!ignore_zero_valued || curr_val)
+            while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
             {
-                indices.push_back(curr_col);
-                values.push_back(curr_val);
+                if (!ignore_zero_valued || curr_val)
+                {
+                    indices.push_back(curr_col);
+                    values.push_back(curr_val);
+                }
+                
+                return_to = ftell_(input_file);
+                do { next_char = fgetc(input_file); }
+                while (next_char != EOF && isspace(next_char) && (char)next_char != '\n');
+                if (next_char == EOF || (char)next_char == '\n' || (char)next_char == '#')
+                    goto next_line;
+                else
+                    fseek_(input_file, return_to, SEEK_SET);
             }
-            
-            return_to = ftell_(input_file);
-            do { next_char = fgetc(input_file); }
-            while (next_char != EOF && isspace(next_char) && (char)next_char != '\n');
-            if (next_char == EOF || (char)next_char == '\n' || (char)next_char == '#')
-                goto next_line;
-            else
+                if (n_matched == 1) {
                 fseek_(input_file, return_to, SEEK_SET);
-        }
-        if (n_matched == 1) {
-            fseek_(input_file, return_to, SEEK_SET);
-            goto next_line;
+                goto next_line;
+            }
         }
 
+        else
+        {
+             while ((n_matched = fscanf(input_file, parse_code_features, &curr_col, &curr_val)) == 2)
+            {
+                if (!ignore_zero_valued || curr_val)
+                {
+                    indices.push_back(curr_col);
+                    values.push_back(curr_val);
+                }
+                
+                next_char = fgetc(input_file);
+                if ((char)next_char == '\n' || (char)next_char == '\r' || !isspace((char)next_char))
+                    break;
+                }
+        }
 
         next_line:
         indptr.push_back(indices.size());

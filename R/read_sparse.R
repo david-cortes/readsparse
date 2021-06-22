@@ -202,6 +202,10 @@ readsparse_nonascii_support <- function() {
 #' @param min_classes Minimum number of columns that the output `y` object should have,
 #' in case some columns are all missing in the input data. Only used when passing
 #' `multilabel=TRUE`.
+#' @param no_trailing_ws Whether to assume that lines in the file will never have extra whitespaces
+# at the end before a new line. Parsing large files with this option set to
+# `TRUE` can be 1.5x faster, but if the file does turn up to have e.g. extra
+# spaces at the end of lines, the results will be incorrect.
 #' @param from_string Whether to read the data from a string variable instead of a file.
 #' If passing `from_string=TRUE`, then `file` is assumed to be a variable with the
 #' data contents on it.
@@ -259,7 +263,7 @@ readsparse_nonascii_support <- function() {
 #' The format is also described at the SVMLight webpage: \url{http://svmlight.joachims.org}.
 read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FALSE,
                         index1=TRUE, sort_indices=TRUE, ignore_zeros=TRUE,
-                        min_cols=0L, min_classes=0L,
+                        min_cols=0L, min_classes=0L, no_trailing_ws=FALSE,
                         from_string=FALSE) {
     multilabel      <-  check.bool(multilabel, "multilabel")
     has_qid         <-  check.bool(has_qid, "has_qid")
@@ -268,6 +272,7 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
     sort_indices    <-  check.bool(sort_indices, "sort_indices")
     ignore_zeros    <-  check.bool(ignore_zeros, "ignore_zeros")
     from_string     <-  check.bool(from_string, "from_string")
+    no_trailing_ws  <-  check.bool(no_trailing_ws, "no_trailing_ws")
     
     min_cols        <-  check.int(min_cols, "min_cols")
     min_classes     <-  check.int(min_classes, "min_classes")
@@ -303,7 +308,8 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
         ignore_zeros,
         sort_indices,
         index1,
-        !has_qid
+        !has_qid,
+        !no_trailing_ws
     )
     
     if (!length(r))

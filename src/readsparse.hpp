@@ -163,6 +163,12 @@
         Whether to assume that the data has a qid field. If passing false and the
         data does turn out to have qid, the features will not be read. See
         'has_qid' for the writing functions.
+     - assume_trailing_ws
+        Whether to assume that lines in the input can have extra whitespaces at the
+        end before a newline. For large files which do not have any extra whitespace
+        at the end, parsing with this set to 'false' is typically 1.5x faster,
+        but if the file does turn out to have e.g. spaces at the end, the result
+        will be incorrect.
     - add_header
         Whether to add a header with metadata (number of rows, columns, and classes)
         as the first row. The reading functions will automatically detect if the
@@ -211,7 +217,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>
@@ -229,7 +236,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 template <class int_t=int64_t, class real_t=double>
@@ -248,7 +256,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 template <class int_t=int64_t, class real_t=double> 
@@ -267,7 +276,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 template <class int_t=int64_t, class real_t=double, class label_t=double>

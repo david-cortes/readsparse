@@ -64,7 +64,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -81,7 +82,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -99,7 +101,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -116,7 +119,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 #elif defined(_FOR_PYTHON)
@@ -136,7 +140,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -153,7 +158,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -170,7 +176,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -188,7 +195,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -205,7 +213,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -222,7 +231,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -240,7 +250,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -257,7 +268,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -274,7 +286,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -292,7 +305,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -309,7 +323,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -326,7 +341,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -344,7 +360,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -361,7 +378,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -378,7 +396,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -396,7 +415,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -413,7 +433,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -430,7 +451,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -448,7 +470,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -465,7 +488,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -482,7 +506,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -500,7 +525,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -517,7 +543,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -534,7 +561,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 #else
@@ -554,7 +582,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -571,7 +600,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -588,7 +618,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -605,7 +636,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -622,7 +654,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -639,7 +672,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -657,7 +691,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -674,7 +709,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -691,7 +727,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -708,7 +745,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -725,7 +763,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -742,7 +781,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -760,7 +800,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -777,7 +818,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -794,7 +836,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -811,7 +854,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -828,7 +872,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -845,7 +890,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -863,7 +909,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -880,7 +927,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -897,7 +945,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -914,7 +963,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -931,7 +981,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -948,7 +999,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -966,7 +1018,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -983,7 +1036,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1000,7 +1054,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1017,7 +1072,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1034,7 +1090,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1051,7 +1108,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1069,7 +1127,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1086,7 +1145,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1103,7 +1163,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1120,7 +1181,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1137,7 +1199,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1154,7 +1217,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1172,7 +1236,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1189,7 +1254,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1206,7 +1272,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1223,7 +1290,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1240,7 +1308,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1257,7 +1326,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1275,7 +1345,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1292,7 +1363,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1309,7 +1381,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1326,7 +1399,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1343,7 +1417,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1360,7 +1435,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1378,7 +1454,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1395,7 +1472,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1412,7 +1490,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1429,7 +1508,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1446,7 +1526,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1463,7 +1544,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1481,7 +1563,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1498,7 +1581,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1515,7 +1599,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1532,7 +1617,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1549,7 +1635,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1566,7 +1653,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1584,7 +1672,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1601,7 +1690,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1618,7 +1708,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1635,7 +1726,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1652,7 +1744,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1669,7 +1762,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_multi_label
@@ -1687,7 +1781,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1704,7 +1799,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1721,7 +1817,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1738,7 +1835,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1755,7 +1853,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 EXPORTABLE bool read_single_label
@@ -1772,7 +1871,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 );
 
 #endif /* _FOR_R, _FOR_PYTHON */

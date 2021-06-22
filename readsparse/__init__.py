@@ -11,7 +11,7 @@ __all__ = ["read_sparse", "write_sparse"]
 def read_sparse(
         file, multilabel=False, has_qid=False, integer_labels=False,
         index1=True, sort_indices=True, ignore_zeros=True,
-        min_cols=0, min_classes=0,
+        min_cols=0, min_classes=0, no_trailing_ws = False,
         use_int64=False, use_double=True, use_cpp=True, from_string=False
     ):
     """
@@ -125,6 +125,11 @@ def read_sparse(
         Minimum number of columns that the output ``y`` object should have,
         in case some columns are all missing in the input data. Only used when passing
         ``multilabel=True``.
+    no_trailing_ws : bool
+        Whether to assume that lines in the file will never have extra whitespaces
+        at the end before a new line. Parsing large files with this option set to
+        'True' can be 1.5x faster, but if the file does turn up to have e.g. extra
+        spaces at the end of lines, the results will be incorrect.
     use_int64 : bool
         Whether to use 64-bit integers for column and label indices (when passing
         ``multilabel=True``). If passing ``False``, will use the machine's 'int' type
@@ -218,7 +223,8 @@ def read_sparse(
             text_is_base1 = index1,
             assume_no_qid = not has_qid,
             use_int64 = use_int64,
-            use_double = use_double
+            use_double = use_double,
+            assume_trailing_ws = not no_trailing_ws
     )
 
     if len(r) == 0:

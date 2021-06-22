@@ -85,7 +85,8 @@ cdef extern from "reader.hpp":
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
-        const bool_t assume_no_qid
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
     ) nogil except +
 
     bool_t read_multi_label_template[int_t_, real_t_](
@@ -102,7 +103,8 @@ cdef extern from "reader.hpp":
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
-        const bool_t assume_no_qid
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
     ) nogil except +
 
 cdef extern from "writer.hpp":
@@ -163,7 +165,8 @@ cdef extern from "python_streams.hpp":
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
-        const bool_t assume_no_qid
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
     ) nogil except +
 
     string write_multi_label_str[int_t_, real_t_](
@@ -198,7 +201,8 @@ cdef extern from "python_streams.hpp":
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
-        const bool_t assume_no_qid
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
     ) nogil except +
 
     string write_single_label_str[int_t_, real_t_, label_t_](
@@ -333,7 +337,8 @@ def read_single_label_py(
         bool_t text_is_base1 = True,
         bool_t assume_no_qid = True,
         bool_t use_int64 = True,
-        bool_t use_double = True
+        bool_t use_double = True,
+        bool_t assume_trailing_ws = True
     ):
     cdef vector[int64_t] indptr, indices
     cdef vector[double] values, labels
@@ -367,7 +372,8 @@ def read_single_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
                 else:
                     succeded = read_single_label_template[int64_t, float, float](
@@ -383,7 +389,8 @@ def read_single_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
             else:
                 if use_double:
@@ -400,7 +407,8 @@ def read_single_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
                 else:
                     succeded = read_single_label_template[int, float, float](
@@ -416,7 +424,8 @@ def read_single_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
     finally:
         if (input_file != NULL):
@@ -488,7 +497,8 @@ def read_multi_label_py(
         bool_t text_is_base1 = True,
         bool_t assume_no_qid = True,
         bool_t use_int64 = True,
-        bool_t use_double = True
+        bool_t use_double = True,
+        bool_t assume_trailing_ws = True
     ):
     cdef vector[int64_t] indptr, indices
     cdef vector[int64_t] indptr_lab, indices_lab
@@ -525,7 +535,8 @@ def read_multi_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
                 else:
                     succeded = read_multi_label_template[int64_t, float](
@@ -542,7 +553,8 @@ def read_multi_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
             else:
                 if use_double:
@@ -560,7 +572,8 @@ def read_multi_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
                 else:
                     succeded = read_multi_label_template[int, float](
@@ -577,7 +590,8 @@ def read_multi_label_py(
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
-                        assume_no_qid
+                        assume_no_qid,
+                        assume_trailing_ws
                     )
     finally:
         if (input_file != NULL):
@@ -648,7 +662,8 @@ def read_single_label_from_str_py(
         const bool_t text_is_base1 = True,
         const bool_t assume_no_qid = True,
         bool_t use_int64 = True,
-        bool_t use_double = True
+        bool_t use_double = True,
+        bool_t assume_trailing_ws = True
     ):
     cdef bytes data_bytes = data_str.encode()
     cdef string cpp_str = data_bytes
@@ -681,7 +696,8 @@ def read_single_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
             else:
                 succeded = read_single_label_str[int64_t, float, float](
@@ -697,7 +713,8 @@ def read_single_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
         else:
             if use_double:
@@ -714,7 +731,8 @@ def read_single_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
             else:
                 succeded = read_single_label_str[int, float, float](
@@ -730,7 +748,8 @@ def read_single_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
 
     cdef vector[int64_t] indptr_lab, indices_lab
@@ -798,7 +817,8 @@ def read_multi_label_from_str_py(
         const bool_t text_is_base1 = True,
         const bool_t assume_no_qid = True,
         bool_t use_int64 = True,
-        bool_t use_double = True
+        bool_t use_double = True,
+        bool_t assume_trailing_ws = True
     ):
     cdef bytes data_bytes = data_str.encode()
     cdef string cpp_str = data_bytes
@@ -833,7 +853,8 @@ def read_multi_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
             else:
                 succeded = read_multi_label_str[int64_t, float](
@@ -850,7 +871,8 @@ def read_multi_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
         else:
             if use_double:
@@ -868,7 +890,8 @@ def read_multi_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
             else:
                 succeded = read_multi_label_str[int, float](
@@ -885,7 +908,8 @@ def read_multi_label_from_str_py(
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
-                    assume_no_qid
+                    assume_no_qid,
+                    assume_trailing_ws
                 )
 
     cdef vector[double] labels

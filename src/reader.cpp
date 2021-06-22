@@ -54,7 +54,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -71,7 +72,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -89,7 +91,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -105,7 +108,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -124,7 +128,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -141,7 +146,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -159,7 +165,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -175,7 +182,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -196,7 +204,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -213,7 +222,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -231,7 +241,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -247,7 +258,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -265,7 +277,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -281,7 +294,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -300,7 +314,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -317,7 +332,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -335,7 +351,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -351,7 +368,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -369,7 +387,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -385,7 +404,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -404,7 +424,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -421,7 +442,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -439,7 +461,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -455,7 +478,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -473,7 +497,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -489,7 +514,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -508,7 +534,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -525,7 +552,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -543,7 +571,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -559,7 +588,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -577,7 +607,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -593,7 +624,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -612,7 +644,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -629,7 +662,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -647,7 +681,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -663,7 +698,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -681,7 +717,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -697,7 +734,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -716,7 +754,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -733,7 +772,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -751,7 +791,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -767,7 +808,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -785,7 +827,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -801,7 +844,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -820,7 +864,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -837,7 +882,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -855,7 +901,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -871,7 +918,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -889,7 +937,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -905,7 +954,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -924,7 +974,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -941,7 +992,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -959,7 +1011,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -975,7 +1028,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -993,7 +1047,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1009,7 +1064,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1030,7 +1086,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -1047,7 +1104,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1065,7 +1123,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1081,7 +1140,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1099,7 +1159,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1115,7 +1176,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1133,7 +1195,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1149,7 +1212,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1167,7 +1231,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1183,7 +1248,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1201,7 +1267,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1217,7 +1284,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1236,7 +1304,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -1253,7 +1322,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1271,7 +1341,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1287,7 +1358,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1305,7 +1377,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1321,7 +1394,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1339,7 +1413,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1355,7 +1430,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1373,7 +1449,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1389,7 +1466,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1407,7 +1485,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1423,7 +1502,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1442,7 +1522,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -1459,7 +1540,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1477,7 +1559,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1493,7 +1576,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1511,7 +1595,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1527,7 +1612,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1545,7 +1631,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1561,7 +1648,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1579,7 +1667,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1595,7 +1684,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1613,7 +1703,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1629,7 +1720,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1648,7 +1740,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -1665,7 +1758,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1683,7 +1777,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1699,7 +1794,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1717,7 +1813,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1733,7 +1830,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1751,7 +1849,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1767,7 +1866,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1785,7 +1885,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1801,7 +1902,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1819,7 +1921,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1835,7 +1938,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1854,7 +1958,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -1871,7 +1976,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1889,7 +1995,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1905,7 +2012,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1923,7 +2031,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1939,7 +2048,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1957,7 +2067,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -1973,7 +2084,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -1991,7 +2103,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2007,7 +2120,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2025,7 +2139,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2041,7 +2156,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2060,7 +2176,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -2077,7 +2194,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2095,7 +2213,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2111,7 +2230,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2129,7 +2249,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2145,7 +2266,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2163,7 +2285,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2179,7 +2302,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2197,7 +2321,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2213,7 +2338,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2231,7 +2357,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2247,7 +2374,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2266,7 +2394,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -2283,7 +2412,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2301,7 +2431,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2317,7 +2448,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2335,7 +2467,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2351,7 +2484,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2369,7 +2503,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2385,7 +2520,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2403,7 +2539,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2419,7 +2556,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2437,7 +2575,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2453,7 +2592,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2472,7 +2612,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -2489,7 +2630,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2507,7 +2649,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2523,7 +2666,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2541,7 +2685,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2557,7 +2702,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2575,7 +2721,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2591,7 +2738,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2609,7 +2757,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2625,7 +2774,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2643,7 +2793,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2659,7 +2810,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2678,7 +2830,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -2695,7 +2848,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2713,7 +2867,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2729,7 +2884,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2747,7 +2903,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2763,7 +2920,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2781,7 +2939,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2797,7 +2956,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2815,7 +2975,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2831,7 +2992,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2849,7 +3011,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2865,7 +3028,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2884,7 +3048,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -2901,7 +3066,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2919,7 +3085,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2935,7 +3102,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2953,7 +3121,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -2969,7 +3138,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -2987,7 +3157,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3003,7 +3174,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3021,7 +3193,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3037,7 +3210,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3055,7 +3229,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3071,7 +3246,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3090,7 +3266,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -3107,7 +3284,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3125,7 +3303,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3141,7 +3320,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3159,7 +3339,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3175,7 +3356,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3193,7 +3375,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3209,7 +3392,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3227,7 +3411,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3243,7 +3428,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3261,7 +3447,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3277,7 +3464,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3296,7 +3484,8 @@ EXPORTABLE bool read_multi_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_multi_label_template(
@@ -3313,7 +3502,8 @@ EXPORTABLE bool read_multi_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3331,7 +3521,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3347,7 +3538,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3365,7 +3557,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3381,7 +3574,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3399,7 +3593,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3415,7 +3610,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3433,7 +3629,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3449,7 +3646,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 
@@ -3467,7 +3665,8 @@ EXPORTABLE bool read_single_label
     const bool ignore_zero_valued = true,
     const bool sort_indices = true,
     const bool text_is_base1 = true,
-    const bool assume_no_qid = true
+    const bool assume_no_qid = true,
+    const bool assume_trailing_ws = true
 )
 {
     return read_single_label_template(
@@ -3483,7 +3682,8 @@ EXPORTABLE bool read_single_label
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
-        assume_no_qid
+        assume_no_qid,
+        assume_trailing_ws
     );
 }
 

@@ -21,20 +21,20 @@ deepcopy_log <- function(x) {
     .Call(`_readsparse_deepcopy_log`, x)
 }
 
-read_multi_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid) {
-    .Call(`_readsparse_read_multi_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid)
+read_multi_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws) {
+    .Call(`_readsparse_read_multi_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws)
 }
 
-read_multi_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid) {
-    .Call(`_readsparse_read_multi_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid)
+read_multi_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws) {
+    .Call(`_readsparse_read_multi_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws)
 }
 
-read_single_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid) {
-    .Call(`_readsparse_read_single_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid)
+read_single_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws) {
+    .Call(`_readsparse_read_single_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws)
 }
 
-read_single_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid) {
-    .Call(`_readsparse_read_single_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid)
+read_single_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws) {
+    .Call(`_readsparse_read_single_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws)
 }
 
 write_multi_label_R <- function(fname, indptr, indices, values, indptr_lab, indices_lab, qid, ncols, nclasses, ignore_zero_valued, sort_indices, text_is_base1, add_header, decimal_places, append) {

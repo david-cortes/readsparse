@@ -14,7 +14,7 @@ file_name <- "covtype.libsvm.binary"
 ```
 ```{r}
 microbenchmark({
-    data <- readsparse::read.sparse(file_name)
+    data <- readsparse::read.sparse(file_name, no_trailing_ws=TRUE)
 }, times=3L)
 ```
 ```{r}
