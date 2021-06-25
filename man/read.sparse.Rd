@@ -14,6 +14,7 @@ read.sparse(
   ignore_zeros = TRUE,
   min_cols = 0L,
   min_classes = 0L,
+  limit_nrows = 0L,
   no_trailing_ws = FALSE,
   from_string = FALSE
 )
@@ -54,6 +55,10 @@ in case some columns are all missing in the input data.}
 \item{min_classes}{Minimum number of columns that the output `y` object should have,
 in case some columns are all missing in the input data. Only used when passing
 `multilabel=TRUE`.}
+
+\item{limit_nrows}{Maximum number of rows to read from the data. If there are more
+than this number of rows, it will only read the first 'limit_nrows' rows.
+If passing zero (the default), there will be no row limit.}
 
 \item{no_trailing_ws}{Whether to assume that lines in the file will never have extra whitespaces}
 

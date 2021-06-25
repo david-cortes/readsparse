@@ -11,7 +11,7 @@ __all__ = ["read_sparse", "write_sparse"]
 def read_sparse(
         file, multilabel=False, has_qid=False, integer_labels=False,
         index1=True, sort_indices=True, ignore_zeros=True,
-        min_cols=0, min_classes=0, no_trailing_ws = False,
+        min_cols=0, min_classes=0, limit_nrows=0, no_trailing_ws = False,
         use_int64=False, use_double=True, use_cpp=True, from_string=False
     ):
     """
@@ -125,6 +125,10 @@ def read_sparse(
         Minimum number of columns that the output ``y`` object should have,
         in case some columns are all missing in the input data. Only used when passing
         ``multilabel=True``.
+    limit_nrows : int
+        Maximum number of rows to read from the data. If there are more than this
+        number of rows, it will only read the first 'limit_nrows' rows.
+        If passing zero (the default), there will be no row limit.
     no_trailing_ws : bool
         Whether to assume that lines in the file will never have extra whitespaces
         at the end before a new line. Parsing large files with this option set to
@@ -185,10 +189,13 @@ def read_sparse(
 
     min_cols = int(min_cols)
     min_classes = int(min_classes)
+    limit_nrows = int(limit_nrows)
     if (min_cols < 0):
         raise ValueError("'min_cols' must be a non-negative integer.")
     if (min_classes < 0):
         raise ValueError("'min_classes' must be a non-negative integer.")
+    if (limit_nrows < 0):
+        raise ValueError("'limit_nrows' must be a non-negative integer.")
 
     if ("read" in dir(file)):
         file = file.read()
@@ -224,7 +231,8 @@ def read_sparse(
             assume_no_qid = not has_qid,
             use_int64 = use_int64,
             use_double = use_double,
-            assume_trailing_ws = not no_trailing_ws
+            assume_trailing_ws = not no_trailing_ws,
+            limit_nrows = limit_nrows
     )
 
     if len(r) == 0:

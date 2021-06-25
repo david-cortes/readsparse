@@ -202,6 +202,9 @@ readsparse_nonascii_support <- function() {
 #' @param min_classes Minimum number of columns that the output `y` object should have,
 #' in case some columns are all missing in the input data. Only used when passing
 #' `multilabel=TRUE`.
+#' @param limit_nrows Maximum number of rows to read from the data. If there are more
+#' than this number of rows, it will only read the first 'limit_nrows' rows.
+#' If passing zero (the default), there will be no row limit.
 #' @param no_trailing_ws Whether to assume that lines in the file will never have extra whitespaces
 # at the end before a new line. Parsing large files with this option set to
 # `TRUE` can be 1.5x faster, but if the file does turn up to have e.g. extra
@@ -263,7 +266,7 @@ readsparse_nonascii_support <- function() {
 #' The format is also described at the SVMLight webpage: \url{http://svmlight.joachims.org}.
 read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FALSE,
                         index1=TRUE, sort_indices=TRUE, ignore_zeros=TRUE,
-                        min_cols=0L, min_classes=0L, no_trailing_ws=FALSE,
+                        min_cols=0L, min_classes=0L, limit_nrows=0L, no_trailing_ws=FALSE,
                         from_string=FALSE) {
     multilabel      <-  check.bool(multilabel, "multilabel")
     has_qid         <-  check.bool(has_qid, "has_qid")
@@ -276,6 +279,7 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
     
     min_cols        <-  check.int(min_cols, "min_cols")
     min_classes     <-  check.int(min_classes, "min_classes")
+    limit_nrows     <-  check.int(limit_nrows, "limit_nrows")
     
     if (inherits(file, "connection")) {
         file <- paste(readLines(file), collapse="\n")
@@ -309,7 +313,8 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
         sort_indices,
         index1,
         !has_qid,
-        !no_trailing_ws
+        !no_trailing_ws,
+        limit_nrows
     )
     
     if (!length(r))

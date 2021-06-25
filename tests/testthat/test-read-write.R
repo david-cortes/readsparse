@@ -277,3 +277,29 @@ test_that("Problematic input 2", {
     expect_equal(r1$X@j, c(3L-1L, 5L-1L, 7L-1L, 2L-1L))
     expect_equal(r1$X@x, c(0.54, 4.2, 3, 0.38))
 })
+
+test_that("Limiting nrows", {
+    txt_mat <- paste(
+        "1 1:10 4:4.500000000",
+        "0 ",
+        "2 1:.001 2:5e-3",
+        sep="\n"
+    )
+    check.two.rows <- function(r) {
+        expect_equal(nrow(r$X), 2L)
+        expect_equal(NROW(r$y), 2L)
+    }
+    
+    r <- read.sparse(txt_mat, from_string=TRUE, limit_nrows=2)
+    check.two.rows(r)
+    r <- read.sparse(txt_mat, from_string=TRUE, limit_nrows=2, multilabel=TRUE)
+    check.two.rows(r)
+    
+    
+    file_name <- file.path(tempdir(), "test_sparse_matrix.txt")
+    writeLines(txt_mat, con = file_name, sep = "")
+    r <- read.sparse(file_name, from_string=FALSE, limit_nrows=2)
+    check.two.rows(r)
+    r <- read.sparse(file_name, from_string=FALSE, limit_nrows=2, multilabel=TRUE)
+    check.two.rows(r)
+})

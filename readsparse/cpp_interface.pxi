@@ -82,6 +82,7 @@ cdef extern from "reader.hpp":
         size_large &nrows,
         size_large &ncols,
         size_large &nclasses,
+        const size_t limit_nrows,
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
@@ -100,6 +101,7 @@ cdef extern from "reader.hpp":
         size_large &nrows,
         size_large &ncols,
         size_large &nclasses,
+        const size_t limit_nrows,
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
@@ -162,6 +164,7 @@ cdef extern from "python_streams.hpp":
         size_large &nrows,
         size_large &ncols,
         size_large &nclasses,
+        const size_t limit_nrows,
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
@@ -198,6 +201,7 @@ cdef extern from "python_streams.hpp":
         size_large &nrows,
         size_large &ncols,
         size_large &nclasses,
+        const size_t limit_nrows,
         const bool_t ignore_zero_valued,
         const bool_t sort_indices,
         const bool_t text_is_base1,
@@ -338,7 +342,8 @@ def read_single_label_py(
         bool_t assume_no_qid = True,
         bool_t use_int64 = True,
         bool_t use_double = True,
-        bool_t assume_trailing_ws = True
+        bool_t assume_trailing_ws = True,
+        size_t limit_nrows = 0
     ):
     cdef vector[int64_t] indptr, indices
     cdef vector[double] values, labels
@@ -369,6 +374,7 @@ def read_single_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -386,6 +392,7 @@ def read_single_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -404,6 +411,7 @@ def read_single_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -421,6 +429,7 @@ def read_single_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -498,7 +507,8 @@ def read_multi_label_py(
         bool_t assume_no_qid = True,
         bool_t use_int64 = True,
         bool_t use_double = True,
-        bool_t assume_trailing_ws = True
+        bool_t assume_trailing_ws = True,
+        size_t limit_nrows = 0
     ):
     cdef vector[int64_t] indptr, indices
     cdef vector[int64_t] indptr_lab, indices_lab
@@ -532,6 +542,7 @@ def read_multi_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -550,6 +561,7 @@ def read_multi_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -569,6 +581,7 @@ def read_multi_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -587,6 +600,7 @@ def read_multi_label_py(
                         nrows,
                         ncols,
                         nclasses,
+                        limit_nrows,
                         ignore_zero_valued,
                         sort_indices,
                         text_is_base1,
@@ -663,7 +677,8 @@ def read_single_label_from_str_py(
         const bool_t assume_no_qid = True,
         bool_t use_int64 = True,
         bool_t use_double = True,
-        bool_t assume_trailing_ws = True
+        bool_t assume_trailing_ws = True,
+        size_t limit_nrows = 0
     ):
     cdef bytes data_bytes = data_str.encode()
     cdef string cpp_str = data_bytes
@@ -693,6 +708,7 @@ def read_single_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -710,6 +726,7 @@ def read_single_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -728,6 +745,7 @@ def read_single_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -745,6 +763,7 @@ def read_single_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -818,7 +837,8 @@ def read_multi_label_from_str_py(
         const bool_t assume_no_qid = True,
         bool_t use_int64 = True,
         bool_t use_double = True,
-        bool_t assume_trailing_ws = True
+        bool_t assume_trailing_ws = True,
+        size_t limit_nrows = 0
     ):
     cdef bytes data_bytes = data_str.encode()
     cdef string cpp_str = data_bytes
@@ -850,6 +870,7 @@ def read_multi_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -868,6 +889,7 @@ def read_multi_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -887,6 +909,7 @@ def read_multi_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,
@@ -905,6 +928,7 @@ def read_multi_label_from_str_py(
                     nrows,
                     ncols,
                     nclasses,
+                    limit_nrows,
                     ignore_zero_valued,
                     sort_indices,
                     text_is_base1,

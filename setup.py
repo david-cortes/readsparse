@@ -66,7 +66,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.3-1',
+    version = '0.1.4',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     author_email = 'david.cortes.rivera@gmail.com',

@@ -202,6 +202,7 @@ bool read_multi_label_template
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -352,6 +353,8 @@ bool read_multi_label_template
             #if defined(HAS_Z_SPECIFIER) && defined(PLATFORM_IS_64_OR_HIGHER)
             std::sscanf(ln.c_str(), "%zu %zu %zu",
                         &header_nrows, &header_ncols, &header_nclasses);
+            if (limit_nrows)
+                header_nrows = std::min(header_nrows, limit_nrows);
             bool size_is_within_type
                 =
             check_size_is_within_type<int_t>(header_nrows, header_ncols, header_nclasses);
@@ -359,6 +362,8 @@ bool read_multi_label_template
             uint64_t temp1, temp2, temp3;
             std::sscanf(ln.c_str(), "%" SCNu64 " %" SCNu64 " %" SCNu64,
                         &temp1, &temp2, &temp3);
+            if (limit_nrows)
+                temp1 = std::min(temp1, (uint64_t)limit_nrows);
             bool size_is_within_type
                 =
             check_size_is_within_type<int_t>(temp1, temp2, temp3);
@@ -473,6 +478,8 @@ bool read_multi_label_template
 
         next_line:
         indptr.push_back(indices.size());
+        if (limit_nrows && indptr.size()-(size_t)1 == limit_nrows)
+            break;
     }
 
     if (text_is_base1) {
@@ -511,6 +518,7 @@ bool read_multi_label_template
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -679,6 +687,16 @@ bool read_multi_label_template
                 fseek_(input_file, return_to, SEEK_SET);
                 is_first_line = false;
                 continue;
+            }
+
+            else if (limit_nrows)
+            {
+                #if defined(HAS_Z_SPECIFIER) && defined(PLATFORM_IS_64_OR_HIGHER)
+                header_nrows = std::min(header_nrows, limit_nrows);
+                #else
+                temp1 = std::min(temp1, (uint64_t)limit_nrows);
+                header_nrows = temp1;
+                #endif
             }
 
             bool size_is_within_type
@@ -862,14 +880,13 @@ bool read_multi_label_template
 
         if (n_matched == EOF || next_char == EOF)
             break;
-        else if ((char)next_char == '\n')
-            continue;
-        else {
-            do { next_char = fgetc(input_file); }
-            while ((char)next_char != '\n' && next_char != EOF);
-            if (next_char == EOF)
-                break;
+        while (next_char != EOF && (char)next_char != '\n')
+        {
+            next_char = fgetc(input_file);
         }
+
+        if (limit_nrows && indptr.size()-1 == limit_nrows)
+            break;
     }
 
     if (!feof(input_file) && ferror(input_file))
@@ -912,6 +929,7 @@ bool read_single_label_template
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -1129,6 +1147,8 @@ bool read_single_label_template
             #if defined(HAS_Z_SPECIFIER) && defined(PLATFORM_IS_64_OR_HIGHER)
             std::sscanf(ln.c_str(), "%zu %zu %zu",
                         &header_nrows, &header_ncols, &header_nclasses);
+            if (limit_nrows)
+                header_nrows = std::min(header_nrows, limit_nrows);
             bool size_is_within_type
                 =
             check_size_is_within_type<int_t>(header_nrows, header_ncols, header_nclasses);
@@ -1136,6 +1156,8 @@ bool read_single_label_template
             uint64_t temp1, temp2, temp3;
             std::sscanf(ln.c_str(), "%" SCNu64 " %" SCNu64 " %" SCNu64,
                         &temp1, &temp2, &temp3);
+            if (limit_nrows)
+                temp1 = std::min(temp1, (uint64_t)limit_nrows);
             bool size_is_within_type
                 =
             check_size_is_within_type<int_t>(temp1, temp2, temp3);
@@ -1245,6 +1267,8 @@ bool read_single_label_template
 
         next_line:
         indptr.push_back(indices.size());
+        if (limit_nrows && indptr.size()-1 == limit_nrows)
+            break;
     }
 
     if (text_is_base1)
@@ -1280,6 +1304,7 @@ bool read_single_label_template
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -1518,6 +1543,16 @@ bool read_single_label_template
                 continue;
             }
 
+            else if (limit_nrows)
+            {
+                #if defined(HAS_Z_SPECIFIER) && defined(PLATFORM_IS_64_OR_HIGHER)
+                header_nrows = std::min(header_nrows, limit_nrows);
+                #else
+                temp1 = std::min(temp1, (uint64_t)limit_nrows);
+                header_nrows = temp1;
+                #endif
+            }
+
             bool size_is_within_type
                 =
             #if defined(HAS_Z_SPECIFIER) && defined(PLATFORM_IS_64_OR_HIGHER)
@@ -1700,14 +1735,13 @@ bool read_single_label_template
 
         if (n_matched == EOF || next_char == EOF)
             break;
-        else if ((char)next_char == '\n')
-            continue;
-        else {
-            do { next_char = fgetc(input_file); }
-            while ((char)next_char != '\n' && next_char != EOF);
-            if (next_char == EOF)
-                break;
+        while (next_char != EOF && (char)next_char != '\n')
+        {
+            next_char = fgetc(input_file);
         }
+
+        if (limit_nrows && indptr.size()-1 == limit_nrows)
+            break;
     }
 
     if (!feof(input_file) && ferror(input_file))

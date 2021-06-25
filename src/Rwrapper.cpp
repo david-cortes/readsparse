@@ -216,7 +216,8 @@ Rcpp::List read_multi_label_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws
+    const bool assume_trailing_ws,
+    const size_t limit_nrows
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -254,6 +255,7 @@ Rcpp::List read_multi_label_R
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
@@ -299,7 +301,8 @@ Rcpp::List read_multi_label_from_str_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws
+    const bool assume_trailing_ws,
+    const size_t limit_nrows
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -334,6 +337,7 @@ Rcpp::List read_multi_label_from_str_R
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
@@ -377,7 +381,8 @@ Rcpp::List read_single_label_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws
+    const bool assume_trailing_ws,
+    const size_t limit_nrows
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -413,6 +418,7 @@ Rcpp::List read_single_label_R
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
@@ -457,7 +463,8 @@ Rcpp::List read_single_label_from_str_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws
+    const bool assume_trailing_ws,
+    const size_t limit_nrows
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -490,6 +497,7 @@ Rcpp::List read_single_label_from_str_R
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,

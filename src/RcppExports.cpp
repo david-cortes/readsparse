@@ -54,8 +54,8 @@ BEGIN_RCPP
 END_RCPP
 }
 // read_multi_label_R
-Rcpp::List read_multi_label_R(Rcpp::CharacterVector fname, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws);
-RcppExport SEXP _readsparse_read_multi_label_R(SEXP fnameSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP) {
+Rcpp::List read_multi_label_R(Rcpp::CharacterVector fname, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws, const size_t limit_nrows);
+RcppExport SEXP _readsparse_read_multi_label_R(SEXP fnameSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP, SEXP limit_nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type fname(fnameSEXP);
@@ -64,13 +64,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const bool >::type text_is_base1(text_is_base1SEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_no_qid(assume_no_qidSEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_trailing_ws(assume_trailing_wsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_multi_label_R(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws));
+    Rcpp::traits::input_parameter< const size_t >::type limit_nrows(limit_nrowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_multi_label_R(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows));
     return rcpp_result_gen;
 END_RCPP
 }
 // read_multi_label_from_str_R
-Rcpp::List read_multi_label_from_str_R(Rcpp::CharacterVector file_as_str, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws);
-RcppExport SEXP _readsparse_read_multi_label_from_str_R(SEXP file_as_strSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP) {
+Rcpp::List read_multi_label_from_str_R(Rcpp::CharacterVector file_as_str, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws, const size_t limit_nrows);
+RcppExport SEXP _readsparse_read_multi_label_from_str_R(SEXP file_as_strSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP, SEXP limit_nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type file_as_str(file_as_strSEXP);
@@ -79,13 +80,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const bool >::type text_is_base1(text_is_base1SEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_no_qid(assume_no_qidSEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_trailing_ws(assume_trailing_wsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_multi_label_from_str_R(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws));
+    Rcpp::traits::input_parameter< const size_t >::type limit_nrows(limit_nrowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_multi_label_from_str_R(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows));
     return rcpp_result_gen;
 END_RCPP
 }
 // read_single_label_R
-Rcpp::List read_single_label_R(Rcpp::CharacterVector fname, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws);
-RcppExport SEXP _readsparse_read_single_label_R(SEXP fnameSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP) {
+Rcpp::List read_single_label_R(Rcpp::CharacterVector fname, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws, const size_t limit_nrows);
+RcppExport SEXP _readsparse_read_single_label_R(SEXP fnameSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP, SEXP limit_nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type fname(fnameSEXP);
@@ -94,13 +96,14 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const bool >::type text_is_base1(text_is_base1SEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_no_qid(assume_no_qidSEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_trailing_ws(assume_trailing_wsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_single_label_R(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws));
+    Rcpp::traits::input_parameter< const size_t >::type limit_nrows(limit_nrowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_single_label_R(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows));
     return rcpp_result_gen;
 END_RCPP
 }
 // read_single_label_from_str_R
-Rcpp::List read_single_label_from_str_R(Rcpp::CharacterVector file_as_str, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws);
-RcppExport SEXP _readsparse_read_single_label_from_str_R(SEXP file_as_strSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP) {
+Rcpp::List read_single_label_from_str_R(Rcpp::CharacterVector file_as_str, const bool ignore_zero_valued, const bool sort_indices, const bool text_is_base1, const bool assume_no_qid, const bool assume_trailing_ws, const size_t limit_nrows);
+RcppExport SEXP _readsparse_read_single_label_from_str_R(SEXP file_as_strSEXP, SEXP ignore_zero_valuedSEXP, SEXP sort_indicesSEXP, SEXP text_is_base1SEXP, SEXP assume_no_qidSEXP, SEXP assume_trailing_wsSEXP, SEXP limit_nrowsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type file_as_str(file_as_strSEXP);
@@ -109,7 +112,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const bool >::type text_is_base1(text_is_base1SEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_no_qid(assume_no_qidSEXP);
     Rcpp::traits::input_parameter< const bool >::type assume_trailing_ws(assume_trailing_wsSEXP);
-    rcpp_result_gen = Rcpp::wrap(read_single_label_from_str_R(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws));
+    Rcpp::traits::input_parameter< const size_t >::type limit_nrows(limit_nrowsSEXP);
+    rcpp_result_gen = Rcpp::wrap(read_single_label_from_str_R(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -254,10 +258,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_readsparse_deepcopy_num", (DL_FUNC) &_readsparse_deepcopy_num, 1},
     {"_readsparse_deepcopy_int", (DL_FUNC) &_readsparse_deepcopy_int, 1},
     {"_readsparse_deepcopy_log", (DL_FUNC) &_readsparse_deepcopy_log, 1},
-    {"_readsparse_read_multi_label_R", (DL_FUNC) &_readsparse_read_multi_label_R, 6},
-    {"_readsparse_read_multi_label_from_str_R", (DL_FUNC) &_readsparse_read_multi_label_from_str_R, 6},
-    {"_readsparse_read_single_label_R", (DL_FUNC) &_readsparse_read_single_label_R, 6},
-    {"_readsparse_read_single_label_from_str_R", (DL_FUNC) &_readsparse_read_single_label_from_str_R, 6},
+    {"_readsparse_read_multi_label_R", (DL_FUNC) &_readsparse_read_multi_label_R, 7},
+    {"_readsparse_read_multi_label_from_str_R", (DL_FUNC) &_readsparse_read_multi_label_from_str_R, 7},
+    {"_readsparse_read_single_label_R", (DL_FUNC) &_readsparse_read_single_label_R, 7},
+    {"_readsparse_read_single_label_from_str_R", (DL_FUNC) &_readsparse_read_single_label_from_str_R, 7},
     {"_readsparse_write_multi_label_R", (DL_FUNC) &_readsparse_write_multi_label_R, 15},
     {"_readsparse_write_multi_label_to_str_R", (DL_FUNC) &_readsparse_write_multi_label_to_str_R, 13},
     {"_readsparse_write_single_label_numeric_R", (DL_FUNC) &_readsparse_write_single_label_numeric_R, 14},

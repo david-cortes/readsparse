@@ -67,6 +67,7 @@ int main()
         nrows,
         ncols,
         nclasses,
+        0,
         true,
         true,
         true,

@@ -22,7 +22,6 @@
 *     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 *     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
 #ifdef _FOR_PYTHON
 
 #pragma once
@@ -42,6 +41,7 @@ bool read_multi_label_str
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -62,6 +62,7 @@ bool read_multi_label_str
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,
@@ -128,6 +129,7 @@ bool read_single_label_str
     size_large &nrows,
     size_large &ncols,
     size_large &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -147,6 +149,7 @@ bool read_single_label_str
         nrows,
         ncols,
         nclasses,
+        limit_nrows,
         ignore_zero_valued,
         sort_indices,
         text_is_base1,

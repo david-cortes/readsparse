@@ -98,7 +98,7 @@ git clone https://www.github.com/david-cortes/readsparse.git
 mkdir build
 cd build
 cmake ..
-make
+cmake --build .
 sudo make install
 ```
 
