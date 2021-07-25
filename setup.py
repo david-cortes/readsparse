@@ -23,11 +23,11 @@ class build_ext_subclass( build_ext ):
 
         if is_msvc:
             for e in self.extensions:
-                e.extra_compile_args = ['/O2', '/std:c++14']
+                e.extra_compile_args += ['/O2', '/std:c++14']
                 e.define_macros += [("_CRT_SECURE_NO_WARNINGS", None)]
         elif is_clang:
             for e in self.extensions:
-                e.extra_compile_args = ['-O2', '-std=c++17']
+                e.extra_compile_args += ['-O2', '-std=c++17']
         else:
             ### here only 'mingw32' should be a valid option, the rest are set there
             ### just in case
@@ -37,7 +37,7 @@ class build_ext_subclass( build_ext ):
                    in ["mingw32", "mingw64", "mingw", "msys", "msys2", "gcc", "g++"])
                 ):
                 for e in self.extensions:
-                    e.extra_compile_args = ['-O2', '-std=gnu++11']
+                    e.extra_compile_args += ['-O2', '-std=gnu++11']
                     e.define_macros += [("_FILE_OFFSET_BITS", 64),
                                         ("__STDC_FORMAT_MACROS", None)]
                     if use_ansi_stdio:
@@ -46,7 +46,7 @@ class build_ext_subclass( build_ext ):
                         e.define_macros += [("AVOID_MINGW_ANSI_STDIO", None)]
             else:
                 for e in self.extensions:
-                    e.extra_compile_args = ['-O2', '-std=c++11']
+                    e.extra_compile_args += ['-O2', '-std=c++11']
                     # e.extra_compile_args = ["-std=c++11", "-fsanitize=address", "-static-libasan", "-ggdb"]
                     # e.extra_link_args    = ["-fsanitize=address", "-static-libasan"]
         build_ext.build_extensions(self)
@@ -113,7 +113,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.4-2',
+    version = '0.1.4-3',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     author_email = 'david.cortes.rivera@gmail.com',
