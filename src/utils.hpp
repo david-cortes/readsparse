@@ -28,7 +28,7 @@
 #include "readsparse_internal.hpp"
 
 #ifndef _FOR_R
-#   define throw_err(msg) {fprintf(stderr, msg); fflush(stderr);}
+#   define throw_err(msg) {fprintf(stderr, "%s", msg); fflush(stderr);}
 #else
 #   define throw_err(msg) REprintf(msg)
 #endif
