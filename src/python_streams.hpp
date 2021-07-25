@@ -27,6 +27,7 @@
 #pragma once
 #include "readsparse_internal.hpp"
 #include "readsparse_detemplated.hpp"
+#include <sstream>
 
 template <class int_t=int64_t, class real_t=double>
 bool read_multi_label_str
@@ -49,7 +50,7 @@ bool read_multi_label_str
     const bool assume_trailing_ws
 )
 {
-    std::stringstream ss;
+    std::basic_stringstream<char> ss;
     ss.str(input_str);
     return read_multi_label(
         ss,
@@ -92,7 +93,7 @@ std::string write_multi_label_str
     const int decimal_places
 )
 {
-    std::stringstream ss;
+    std::basic_stringstream<char> ss;
     bool succeeded = write_multi_label(
         ss,
         indptr,
@@ -137,7 +138,7 @@ bool read_single_label_str
     const bool assume_trailing_ws
 )
 {
-    std::stringstream ss;
+    std::basic_stringstream<char> ss;
     ss.str(input_str);
     return read_single_label(
         ss,
@@ -179,7 +180,7 @@ std::string write_single_label_str
     const int decimal_places
 )
 {
-    std::stringstream ss;
+    std::basic_stringstream<char> ss;
     bool succeeded = write_single_label(
         ss,
         indptr,
