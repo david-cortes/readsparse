@@ -97,10 +97,12 @@ install.packages("readsparse")
 git clone https://www.github.com/david-cortes/readsparse.git
 mkdir build
 cd build
-cmake ..
+cmake -DUSE_MARCH_NATIVE=1 ..
 cmake --build .
 sudo make install
 ```
+
+(If adding `-DUSE_MARCH_NATIVE=1`, will add argument `-march=native`, which will optimize it for the CPU on which it's being compiled and might not run on older CPUs. Remove that option for more "portability")
 
 # Documentation
 
