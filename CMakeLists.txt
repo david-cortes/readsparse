@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.9)
-project (readsparse VERSION 0.1.4)
+project (readsparse VERSION 0.1.5)
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 11)
 
@@ -15,6 +15,21 @@ endif()
 
 # Compiler optimizations
 include(CheckCXXSourceCompiles)
+
+check_cxx_source_compiles(
+    "
+    int main(int argc, char **argv)
+    {
+        double *__restrict x = nullptr;
+        return 0;
+    }
+    "
+    SUPPORTS_RESTRICT
+)
+if (SUPPORTS_RESTRICT)
+    add_compile_definitions(SUPPORTS_RESTRICT=1)
+endif()
+
 if (MSVC)
     if (NOT (${CMAKE_CXX_FLAGS_RELEASE} MATCHES "/O2"))
         set(OLD_FLAGS ${CMAKE_REQUIRED_FLAGS})

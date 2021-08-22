@@ -15,3 +15,4 @@ exclude example/*
 prune example/*
 exclude src/Rwrapper.cpp
 exclude src/RcppExports.cpp
+prune autom4te.cache/*

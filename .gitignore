@@ -30,3 +30,7 @@ docs/.directory
 docs/_build/*
 
 .Rproj.user
+src/Makevars
+autom4te.cache/*
+config.status
+config.log

@@ -96,7 +96,7 @@
 #endif
 
 /* Aliasing for compiler optimizations */
-#if defined(__GNUG__) || defined(__GNUC__) || defined(__clang__) || defined(__INTEL_COMPILER)
+#if defined(__GNUG__) || defined(__GNUC__) || defined(__clang__) || defined(__INTEL_COMPILER) || defined(SUPPORTS_RESTRICT)
     #define restrict __restrict
 #else
     #define restrict 
@@ -206,6 +206,7 @@ bool read_multi_label_template
     size_t &nrows,
     size_t &ncols,
     size_t &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -227,6 +228,7 @@ bool read_multi_label_template
     size_t &nrows,
     size_t &ncols,
     size_t &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -247,6 +249,7 @@ bool read_single_label_template
     size_t &nrows,
     size_t &ncols,
     size_t &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,
@@ -267,6 +270,7 @@ bool read_single_label_template
     size_t &nrows,
     size_t &ncols,
     size_t &nclasses,
+    const size_t limit_nrows,
     const bool ignore_zero_valued,
     const bool sort_indices,
     const bool text_is_base1,

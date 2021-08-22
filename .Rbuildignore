@@ -21,3 +21,5 @@
 ^requirements\.txt$
 ^setup\.py$
 ^a\.out$
+^src/Makevars$
+^autom4te.cache/.*$
