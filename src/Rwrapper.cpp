@@ -32,6 +32,8 @@
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::plugins(unwindProtect)]]
 
+#define throw_errno() {REprintf("Error %d: %s\n", errno, strerror(errno)); R_FlushConsole();}
+
 /* This library will use different code paths for opening a file path
    in order to support non-ASCII characters, depending on compiler and
    platform support. */
@@ -241,7 +243,7 @@ Rcpp::List read_multi_label_R
     FILE *input_file = file_.get_handle();
     if (input_file == NULL)
     {
-        REprintf("Error %d: %s\n", errno, strerror(errno));
+        throw_errno();
         return Rcpp::List();
     }
     bool succeeded = read_multi_label(
@@ -405,7 +407,7 @@ Rcpp::List read_single_label_R
     FILE *input_file = file_.get_handle();
     if (input_file == NULL)
     {
-        REprintf("Error %d: %s\n", errno, strerror(errno));
+        throw_errno();
         return Rcpp::List();
     }
     bool succeeded = read_single_label(
@@ -555,7 +557,7 @@ bool write_multi_label_R
     FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
-        REprintf("Error %d: %s\n", errno, strerror(errno));
+        throw_errno();
         return false;
     }
 
@@ -688,7 +690,7 @@ bool write_single_label_numeric_R
     FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
-        REprintf("Error %d: %s\n", errno, strerror(errno));
+        throw_errno();
         return false;
     }
     bool succeeded = write_single_label(
@@ -737,7 +739,7 @@ bool write_single_label_integer_R
     FILE *output_file = file_.get_handle();
     if (output_file == NULL)
     {
-        REprintf("Error %d: %s\n", errno, strerror(errno));
+        throw_errno();
         return false;
     }
 

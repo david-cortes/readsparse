@@ -30,7 +30,7 @@
 #ifndef _FOR_R
 #   define throw_err(msg) {fprintf(stderr, "%s", msg); fflush(stderr);}
 #else
-#   define throw_err(msg) REprintf(msg)
+#   define throw_err(msg) {REprintf(msg); R_FlushConsole();}
 #endif
 
 static void print_errno()
