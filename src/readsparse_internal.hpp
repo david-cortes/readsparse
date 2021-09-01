@@ -52,6 +52,7 @@
 #include <algorithm>
 #include <unordered_map>
 #ifdef _FOR_R
+#   include <R.h>
 #   include <Rinternals.h>
 #endif
 
