@@ -197,7 +197,7 @@ def read_sparse(
     if (limit_nrows < 0):
         raise ValueError("'limit_nrows' must be a non-negative integer.")
 
-    if ("read" in dir(file)):
+    if hasattr(file, "read"):
         file = file.read()
         from_string = True
     elif from_string and isinstance(file, bytes):
@@ -214,7 +214,7 @@ def read_sparse(
             read_func = _cpp_interface.read_single_label_py
 
     else: ## from_string
-        if (not isinstance(file, str)) and (not isinstance(file, bytes)):
+        if not isinstance(file, (str, bytes)):
             raise ValueError("Error: 'file' is not a string.")
 
         if multilabel:
@@ -390,7 +390,7 @@ def write_sparse(
 
     write_str_to_file_conn = False
     return_string = to_string
-    if ("write" in dir(file)):
+    if hasattr(file, "write"):
         write_str_to_file_conn = True
         to_string = True
     if not use_cpp:
@@ -535,7 +535,7 @@ def _process_y(y, add_header=False, integer_labels=True):
         y = y.codes
     if y.__class__.__name__ == "Series":
         y = y.to_numpy()
-    if isinstance(y, list) or isinstance(y, tuple):
+    if isinstance(y, (list, tuple)):
         y = np.array(y)
     if np.isscalar(y):
         y = np.array([y])
