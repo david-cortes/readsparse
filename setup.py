@@ -18,7 +18,7 @@ class build_ext_subclass( build_ext ):
         is_msvc = self.compiler.compiler_type.lower() == 'msvc'
         is_clang = hasattr(self.compiler, 'compiler_cxx') and ("clang++" in self.compiler.compiler_cxx)
 
-        if not is_msvc:
+        if (not is_msvc) and (not self.check_cflags_or_cxxflags_contain_arch()):
             self.add_march_native()
         self.add_restrict_qualifier()
 
@@ -51,6 +51,15 @@ class build_ext_subclass( build_ext ):
                     # e.extra_compile_args = ["-std=c++11", "-fsanitize=address", "-static-libasan", "-ggdb"]
                     # e.extra_link_args    = ["-fsanitize=address", "-static-libasan"]
         build_ext.build_extensions(self)
+
+    def check_cflags_or_cxxflags_contain_arch(self):
+        arch_list = ["-march", "-mcpu", "-mtune", "-msse", "-msse2", "-msse3", "-mssse3", "-msse4", "-msse4a", "-msse4.1", "-msse4.2", "-mavx", "-mavx2"]
+        for env_var in ("CFLAGS", "CXXFLAGS"):
+            if env_var in os.environ:
+                for flag in arch_list:
+                    if flag in os.environ[env_var]:
+                        return True
+        return False
 
     def add_march_native(self):
         arg_march_native = "-march=native"
@@ -146,7 +155,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-1',
+    version = '0.1.5-2',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     author_email = 'david.cortes.rivera@gmail.com',
