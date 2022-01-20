@@ -84,15 +84,17 @@ pip install --no-use-pep517 readsparse
 (A small note: on Windows, if compiling with MinGW, will use its default `stdio` library, which at the time of writing takes it from an outdated MSVC library. To use MinGW's own workarounds for `stdio`, one can define an environment variable `ANSISTDIO` or pass argument `-ansistdio` to `setup.py`)
 
 ** *
-**IMPORTANT:** the setup script will try to add compilation flag `-march=native`. This instructs the compiler to tune the package for the CPU in which it is being installed, but the result might not be usable in other computers. If building a binary wheel of this package or putting it into a docker image which will be used in different machines, this can be overriden by manually supplying compilation `CXXFLAGS` as an environment variable with something related to architecture. For maximum compatibility (but slowest speed), assuming `x86-64` computers, it's possible to do something like this:
+**IMPORTANT:** the setup script will try to add compilation flag `-march=native`. This instructs the compiler to tune the package for the CPU in which it is being installed, but the result might not be usable in other computers. If building a binary wheel of this package or putting it into a docker image which will be used in different machines, this can be overriden by manually supplying compilation `CFLAGS` and `CXXFLAGS` as environment variables with something related to architecture. For maximum compatibility (but slowest speed), assuming `x86-64` computers, it's possible to do something like this:
 
 ```
+export CFLAGS="-msse2"
 export CXXFLAGS="-msse2"
 pip install readsparse
 ```
 
 or for creating wheels:
 ```
+export CFLAGS="-msse2"
 export CXXFLAGS="-msse2"
 python setup.py bwheel
 ```
