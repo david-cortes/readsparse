@@ -84,19 +84,18 @@ pip install --no-use-pep517 readsparse
 (A small note: on Windows, if compiling with MinGW, will use its default `stdio` library, which at the time of writing takes it from an outdated MSVC library. To use MinGW's own workarounds for `stdio`, one can define an environment variable `ANSISTDIO` or pass argument `-ansistdio` to `setup.py`)
 
 ** *
-**IMPORTANT:** the setup script will try to add compilation flag `-march=native`. This instructs the compiler to tune the package for the CPU in which it is being installed, but the result might not be usable in other computers. If building a binary wheel of this package or putting it into a docker image which will be used in different machines, this can be overriden by manually supplying compilation `CFLAGS` and `CXXFLAGS` as environment variables with something related to architecture. For maximum compatibility (but slowest speed), assuming `x86-64` computers, it's possible to do something like this:
+**IMPORTANT:** the setup script will try to add compilation flag `-march=native`. This instructs the compiler to tune the package for the CPU in which it is being installed (by e.g. using AVX instructions if available), but the result might not be usable in other computers. If building a binary wheel of this package or putting it into a docker image which will be used in different machines, this can be overriden either by (a) defining an environment variable `DONT_SET_MARCH=1`, or by (b) manually supplying compilation `CFLAGS` as an environment variable with something related to architecture. For maximum compatibility (but slowest speed), it's possible to do something like this:
 
 ```
-export CFLAGS="-msse2"
-export CXXFLAGS="-msse2"
+export DONT_SET_MARCH=1
 pip install readsparse
 ```
 
-or for creating wheels:
+or, by specifying some compilation flag for architecture:
 ```
-export CFLAGS="-msse2"
-export CXXFLAGS="-msse2"
-python setup.py bwheel
+export CFLAGS="-march=x86-64"
+export CXXFLAGS="-march=x86-64"
+pip install readsparse
 ```
 ** *
 

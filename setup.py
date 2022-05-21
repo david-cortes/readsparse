@@ -18,7 +18,7 @@ class build_ext_subclass( build_ext ):
         is_msvc = self.compiler.compiler_type.lower() == 'msvc'
         is_clang = hasattr(self.compiler, 'compiler_cxx') and ("clang++" in self.compiler.compiler_cxx)
 
-        if (not is_msvc) and (not self.check_cflags_or_cxxflags_contain_arch()):
+        if (not is_msvc) and (not self.check_for_variable_dont_set_march() and not self.check_cflags_or_cxxflags_contain_arch()):
             self.add_march_native()
         self.add_restrict_qualifier()
 
@@ -46,8 +46,9 @@ class build_ext_subclass( build_ext ):
                     else:
                         e.define_macros += [("AVOID_MINGW_ANSI_STDIO", None)]
             else:
-                for e in self.extensions:
-                    e.extra_compile_args += ['-O2', '-std=c++11']
+                self.add_O2()
+                self.add_std_cpp11()
+                # for e in self.extensions:
                     # e.extra_compile_args = ["-std=c++11", "-fsanitize=address", "-static-libasan", "-ggdb"]
                     # e.extra_link_args    = ["-fsanitize=address", "-static-libasan"]
         build_ext.build_extensions(self)
@@ -61,6 +62,9 @@ class build_ext_subclass( build_ext ):
                         return True
         return False
 
+    def check_for_variable_dont_set_march(self):
+        return "DONT_SET_MARCH" in os.environ
+
     def add_march_native(self):
         arg_march_native = "-march=native"
         arg_mcpu_native = "-mcpu=native"
@@ -70,6 +74,20 @@ class build_ext_subclass( build_ext ):
         elif self.test_supports_compile_arg(arg_mcpu_native):
             for e in self.extensions:
                 e.extra_compile_args.append(arg_mcpu_native)
+
+    def add_O2(self):
+        arg_O2 = "-O2"
+        if self.test_supports_compile_arg(arg_O2):
+            for e in self.extensions:
+                e.extra_compile_args.append(arg_O2)
+                e.extra_link_args.append(arg_O2)
+
+    def add_std_cpp11(self):
+        arg_std_cpp11 = "-std=c++11"
+        if self.test_supports_compile_arg(arg_std_cpp11):
+            for e in self.extensions:
+                e.extra_compile_args.append(arg_std_cpp11)
+                e.extra_link_args.append(arg_std_cpp11)
 
     def test_supports_compile_arg(self, comm):
         is_supported = False
@@ -83,9 +101,12 @@ class build_ext_subclass( build_ext ):
             with open(fname, "w") as ftest:
                 ftest.write(u"int main(int argc, char**argv) {return 0;}\n")
             try:
-                cmd = [self.compiler.compiler_cxx[0]]
+                if not isinstance(self.compiler.compiler_cxx, list):
+                    cmd = list(self.compiler.compiler_cxx)
+                else:
+                    cmd = self.compiler.compiler_cxx
             except:
-                cmd = list(self.compiler.compiler_cxx)
+                cmd = self.compiler.compiler_cxx
             val_good = subprocess.call(cmd + [fname])
             try:
                 val = subprocess.call(cmd + comm + [fname])
@@ -110,9 +131,12 @@ class build_ext_subclass( build_ext ):
             with open(fname, "w") as ftest:
                 ftest.write(u"int main(int argc, char**argv) {return 0;}\n")
             try:
-                cmd = [self.compiler.compiler_cxx[0]]
+                if not isinstance(self.compiler.compiler_cxx, list):
+                    cmd = list(self.compiler.compiler_cxx)
+                else:
+                    cmd = self.compiler.compiler_cxx
             except:
-                cmd = list(self.compiler.compiler_cxx)
+                cmd = self.compiler.compiler_cxx
             val_good = subprocess.call(cmd + [fname])
             try:
                 with open(fname, "w") as ftest:
@@ -155,7 +179,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-2',
+    version = '0.1.5-3',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     author_email = 'david.cortes.rivera@gmail.com',
