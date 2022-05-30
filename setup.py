@@ -1,7 +1,7 @@
 try:
     from setuptools import setup
     from setuptools.extension import Extension
-except:
+except ImportError:
     from distutils.core import setup
     from distutils.extension import Extension
 
@@ -105,19 +105,19 @@ class build_ext_subclass( build_ext ):
                     cmd = list(self.compiler.compiler_cxx)
                 else:
                     cmd = self.compiler.compiler_cxx
-            except:
+            except Exception:
                 cmd = self.compiler.compiler_cxx
             val_good = subprocess.call(cmd + [fname])
             try:
                 val = subprocess.call(cmd + comm + [fname])
                 is_supported = (val == val_good)
-            except:
+            except Exception:
                 is_supported = False
-        except:
+        except Exception:
             pass
         try:
             os.remove(fname)
-        except:
+        except Exception:
             pass
         return is_supported
 
@@ -135,7 +135,7 @@ class build_ext_subclass( build_ext ):
                     cmd = list(self.compiler.compiler_cxx)
                 else:
                     cmd = self.compiler.compiler_cxx
-            except:
+            except Exception:
                 cmd = self.compiler.compiler_cxx
             val_good = subprocess.call(cmd + [fname])
             try:
@@ -143,13 +143,13 @@ class build_ext_subclass( build_ext ):
                     ftest.write(u"int main(int argc, char**argv) {double *__restrict x = 0; return 0;}\n")
                 val = subprocess.call(cmd + [fname])
                 supports_restrict = (val == val_good)
-            except:
+            except Exception:
                 return None
-        except:
+        except Exception:
             pass
         try:
             os.remove(fname)
-        except:
+        except Exception:
             pass
         
         if supports_restrict:
@@ -179,7 +179,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-3',
+    version = '0.1.5-4',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     author_email = 'david.cortes.rivera@gmail.com',
