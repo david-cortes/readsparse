@@ -106,7 +106,7 @@ test_that("Multilabel mode", {
     compare_vals(expected_X, expected_y, r$X, r$y)
     
     
-    s <- write.sparse(file_name, r$X, as(as.matrix(r$y), "RsparseMatrix"),
+    s <- write.sparse(file_name, r$X, as(as(as.matrix(r$y), "RsparseMatrix"), "generalMatrix"),
                       to_string=TRUE, add_header=TRUE)
     r <- read.sparse(s, from_string=TRUE, multilabel=TRUE)
     compare_vals(expected_X, expected_y, r$X, r$y)

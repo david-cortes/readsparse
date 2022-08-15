@@ -501,6 +501,8 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
     } else {
         if (!inherits(X, "RsparseMatrix"))
             X <- as (X, "RsparseMatrix")
+        if (!inherits(X, "generalMatrix"))
+            X <- as(X, "generalMatrix")
         if (!inherits(X, "dgRMatrix")) {
             ### Note: casting from ngRMatrix to dgRMatrix is broken in Matrix==1.3.0
             X.csr        <- new("dgRMatrix")
@@ -531,6 +533,8 @@ write.sparse <- function(file, X, y, qid=NULL, integer_labels=TRUE,
             } else {
                 y <- as(y, "RsparseMatrix")
             }
+            if (!inherits(y, "dgRMatrix"))
+                y <- as(y, "generalMatrix")
         }
     } else {
         if (inherits(y, "float32") && ncol(y) != 1L)
