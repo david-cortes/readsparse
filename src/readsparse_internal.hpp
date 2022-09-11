@@ -40,6 +40,7 @@
 #include <errno.h>
 #include <stddef.h>
 #include <limits.h>
+#include <string.h>
 #include <cmath>
 #include <vector>
 #include <iostream>
