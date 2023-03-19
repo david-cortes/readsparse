@@ -16,6 +16,7 @@ dist/
 MANIFEST
 .directory
 
+readsparse_compiler_testing.cpp
 readsparse/cpp_interface.cpp
 readsparse/cpp_interface_size_t.cpp
 readsparse/cpp_interface_uint64_t.cpp

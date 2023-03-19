@@ -12,13 +12,23 @@ from platform import architecture
 from os import environ
 import sys, os, subprocess, warnings, re
 
+## Modify this to make the output of the compilation tests more verbose
+silent_tests = not (("verbose" in sys.argv)
+                    or ("-verbose" in sys.argv)
+                    or ("--verbose" in sys.argv))
+
+## Workaround for python<=3.9 on windows
+try:
+    EXIT_SUCCESS = os.EX_OK
+except AttributeError:
+    EXIT_SUCCESS = 0
 
 class build_ext_subclass( build_ext ):
     def build_extensions(self):
         is_msvc = self.compiler.compiler_type.lower() == 'msvc'
         is_clang = hasattr(self.compiler, 'compiler_cxx') and ("clang++" in self.compiler.compiler_cxx)
 
-        if (not is_msvc) and (not self.check_for_variable_dont_set_march() and not self.check_cflags_or_cxxflags_contain_arch()):
+        if (not is_msvc) and (not self.check_for_variable_dont_set_march() and not self.check_cflags_contain_arch()):
             self.add_march_native()
         self.add_restrict_qualifier()
 
@@ -53,27 +63,32 @@ class build_ext_subclass( build_ext ):
                     # e.extra_link_args    = ["-fsanitize=address", "-static-libasan"]
         build_ext.build_extensions(self)
 
-    def check_cflags_or_cxxflags_contain_arch(self):
-        arch_list = ["-march", "-mcpu", "-mtune", "-msse", "-msse2", "-msse3", "-mssse3", "-msse4", "-msse4a", "-msse4.1", "-msse4.2", "-mavx", "-mavx2"]
-        for env_var in ("CFLAGS", "CXXFLAGS"):
-            if env_var in os.environ:
-                for flag in arch_list:
-                    if flag in os.environ[env_var]:
-                        return True
+    def check_cflags_contain_arch(self):
+        if ("CFLAGS" in os.environ) or ("CXXFLAGS" in os.environ):
+            has_cflags = "CFLAGS" in os.environ
+            has_cxxflags = "CXXFLAGS" in os.environ
+            arch_list = [
+                "-march", "-mcpu", "-mtune", "-msse", "-msse2", "-msse3",
+                "-mssse3", "-msse4", "-msse4a", "-msse4.1", "-msse4.2",
+                "-mavx", "-mavx2", "-mavx512"
+            ]
+            for flag in arch_list:
+                if has_cflags and flag in os.environ["CFLAGS"]:
+                    return True
+                if has_cxxflags and flag in os.environ["CXXFLAGS"]:
+                    return True
         return False
 
     def check_for_variable_dont_set_march(self):
         return "DONT_SET_MARCH" in os.environ
 
     def add_march_native(self):
-        arg_march_native = "-march=native"
-        arg_mcpu_native = "-mcpu=native"
-        if self.test_supports_compile_arg(arg_march_native):
-            for e in self.extensions:
-                e.extra_compile_args.append(arg_march_native)
-        elif self.test_supports_compile_arg(arg_mcpu_native):
-            for e in self.extensions:
-                e.extra_compile_args.append(arg_mcpu_native)
+        args_march_native = ["-march=native", "-mcpu=native"]
+        for arg_march_native in args_march_native:
+            if self.test_supports_compile_arg(arg_march_native):
+                for e in self.extensions:
+                    e.extra_compile_args.append(arg_march_native)
+                break
 
     def add_O2(self):
         arg_O2 = "-O2"
@@ -107,10 +122,9 @@ class build_ext_subclass( build_ext ):
                     cmd = self.compiler.compiler_cxx
             except Exception:
                 cmd = self.compiler.compiler_cxx
-            val_good = subprocess.call(cmd + [fname])
             try:
-                val = subprocess.call(cmd + comm + [fname])
-                is_supported = (val == val_good)
+                val = subprocess.run(cmd + comm + [fname], capture_output=silent_tests).returncode
+                is_supported = (val == EXIT_SUCCESS)
             except Exception:
                 is_supported = False
         except Exception:
@@ -137,12 +151,11 @@ class build_ext_subclass( build_ext ):
                     cmd = self.compiler.compiler_cxx
             except Exception:
                 cmd = self.compiler.compiler_cxx
-            val_good = subprocess.call(cmd + [fname])
             try:
                 with open(fname, "w") as ftest:
                     ftest.write(u"int main(int argc, char**argv) {double *__restrict x = 0; return 0;}\n")
-                val = subprocess.call(cmd + [fname])
-                supports_restrict = (val == val_good)
+                val = subprocess.run(cmd + comm + [fname], capture_output=silent_tests).returncode
+                is_supported = (val == EXIT_SUCCESS)
             except Exception:
                 return None
         except Exception:
@@ -155,6 +168,7 @@ class build_ext_subclass( build_ext ):
         if supports_restrict:
             for e in self.extensions:
                 e.define_macros += [("SUPPORTS_RESTRICT", "1")]
+
 
 
 args_ansi_stdio = ["ansistdio", "-ansistdio", "--ansistdio"]
@@ -179,10 +193,9 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-5',
+    version = '0.1.5-6',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
-    author_email = 'david.cortes.rivera@gmail.com',
     url = 'https://github.com/david-cortes/readsparse',
     keywords = ['sparse', 'svmlight', 'libsvm'],
     cmdclass = {'build_ext': build_ext_subclass},
@@ -196,7 +209,10 @@ setup(
                                 include_dirs=[np.get_include(), "./src", "./readsparse"],
                                 language="c++",
                                 install_requires=["numpy", "cython", "scipy"],
-                                define_macros=[("_FOR_PYTHON", None)],
+                                define_macros=[
+                                    ("_FOR_PYTHON", None),
+                                    ("NDEBUG", None)
+                                ],
                                 compiler_directives={'language_level' : "3"}
                             )]
     )
