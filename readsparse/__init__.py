@@ -1,11 +1,15 @@
 import numpy as np
 import os, warnings
 import ctypes
-from scipy.sparse import csr_matrix, isspmatrix_csr
+from scipy.sparse import csr_array, issparse
 from . import _cpp_interface 
 
 __all__ = ["read_sparse", "write_sparse"]
 
+def _as_csr(X):
+    if not (issparse(X) and (X.format == "csr")):
+        X = csr_array(X)
+    return X
 
 ### Main functions
 def read_sparse(
@@ -161,12 +165,12 @@ def read_sparse(
     -------
     data : dict
         A dict with the following entries:
-            - 'X' : the features, as a CSR Matrix from SciPy, with data of type ``np.float64``
+            - 'X' : the features, as a CSR array from SciPy, with data of type ``np.float64``
               or ``np.float32`` depending on argument ``use_double``.
             - 'y' : the labels. If passing ``multilabel=False`` (the default), will be a vector
               (NumPy 1-d array, with dtype float64 when passing ``integer_labels=False``, or
               dtype `equal to the indices of 'X' when passing ``integer_labels=True``),
-              otherwise will be a binary CSR Matrix (same dtype as the values of 'X').
+              otherwise will be a binary CSR array (same dtype as the values of 'X').
             - 'qid' : the query IDs used for ranking, as an integer vector.
               This entry will **only** be present when passing ``has_qid=True``
 
@@ -241,13 +245,13 @@ def read_sparse(
     r["ncols"] = max(r["ncols"], min_cols)
     r["nclasses"] = max(r["nclasses"], min_classes)
 
-    features = csr_matrix((r["values"], r["indices"], r["indptr"]),
-                          shape=(r["nrows"], r["ncols"]))
+    features = csr_array((r["values"], r["indices"], r["indptr"]),
+                         shape=(r["nrows"], r["ncols"]))
 
     if multilabel:
-        labels = csr_matrix((np.ones_like(r["indices_lab"], dtype=r["values"].dtype),
+        labels = csr_array((np.ones_like(r["indices_lab"], dtype=r["values"].dtype),
                              r["indices_lab"], r["indptr_lab"]),
-                            shape=(r["nrows"], r["nclasses"]))
+                           shape=(r["nrows"], r["nclasses"]))
     else:
         labels = r["labels"]
         if integer_labels:
@@ -316,7 +320,7 @@ def write_sparse(
         Will be ignored when passing ``to_string=True``.
     X : CSR(n_samples, n_labels)
         Sparse data to write. Can be a sparse matrix from SciPy, a dense array from NumPy,
-        or a DataFrame from Pandas, but will be converted to a CSR matrix if it isn't already.
+        or a DataFrame from Pandas, but will be converted to a CSR array if it isn't already.
 
         If ``X`` is a vector (1-d NumPy array), will be assumed to
         be a row vector and will thus write one row only.
@@ -339,7 +343,7 @@ def write_sparse(
     sort_indices : bool
         Whether to sort the indices of ``X`` (and of ``y`` if multi-label) before
         writing the data. Note that this will cause in-place modifications if either ``X`` or ``y``
-        are passed as CSR matrices.
+        are passed as CSR arrays/matrices.
     ignore_zeros : bool
         Whether to ignore (not write) features with a value of zero
         after rounding to the specified decimal places.
@@ -399,9 +403,9 @@ def write_sparse(
     ### Note: this check should be made right here due to potential
     ### in-place modifications of the data which would render the input unusable
     if sort_indices:
-        if isspmatrix_csr(y):
+        if issparse(y) and (y.format == "csr"):
             y.sort_indices()
-        if isspmatrix_csr(X):
+        if issparse(X) and (X.format == "csr"):
             X.sort_indices()
         sort_indices = False
 
@@ -521,8 +525,7 @@ dtypes_values = [np.float32, np.float64]
 dtypes_labels = dtypes_indices + dtypes_values
 
 def _process_X(X):
-    if not isspmatrix_csr(X):
-        X = csr_matrix(X)
+    X = _as_csr(X)
     return (
         X.indptr,
         X.indices,
@@ -573,8 +576,7 @@ def _process_y(y, add_header=False, integer_labels=True):
 
             return None, None, y, y.shape[0], nclasses
 
-    if not isspmatrix_csr(y):
-        y = csr_matrix(y)
+    y = _as_csr(y)
     return (
         y.indptr,
         y.indices,
