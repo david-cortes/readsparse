@@ -208,7 +208,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-8',
+    version = '0.1.5-9',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     url = 'https://github.com/david-cortes/readsparse',
@@ -226,7 +226,8 @@ setup(
                                 install_requires=["numpy", "cython", "scipy"],
                                 define_macros=[
                                     ("_FOR_PYTHON", None),
-                                    ("NDEBUG", None)
+                                    ("NDEBUG", None),
+                                    ("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")
                                 ],
                                 compiler_directives={'language_level' : "3"}
                             )]

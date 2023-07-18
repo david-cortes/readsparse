@@ -88,7 +88,7 @@ cdef extern from "reader.hpp":
         const bool_t text_is_base1,
         const bool_t assume_no_qid,
         const bool_t assume_trailing_ws
-    ) nogil except +
+    ) except + nogil
 
     bool_t read_multi_label_template[int_t_, real_t_](
         FILE *input_file,
@@ -107,7 +107,7 @@ cdef extern from "reader.hpp":
         const bool_t text_is_base1,
         const bool_t assume_no_qid,
         const bool_t assume_trailing_ws
-    ) nogil except +
+    ) except + nogil
 
 cdef extern from "writer.hpp":
 
@@ -129,7 +129,7 @@ cdef extern from "writer.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    ) nogil except +
+    ) except + nogil
 
     bool_t write_multi_label_template[int_t_, real_t_](
         FILE *output_file,
@@ -149,7 +149,7 @@ cdef extern from "writer.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    ) nogil except +
+    ) except + nogil
 
 
 cdef extern from "python_streams.hpp":
@@ -170,7 +170,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t assume_no_qid,
         const bool_t assume_trailing_ws
-    ) nogil except +
+    ) except + nogil
 
     string write_multi_label_str[int_t_, real_t_](
         int_t_ *indptr,
@@ -189,7 +189,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    ) nogil except +
+    ) except + nogil
 
     bool_t read_single_label_str[int_t_, real_t_, label_t_](
         string &input_str,
@@ -207,7 +207,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t assume_no_qid,
         const bool_t assume_trailing_ws
-    ) nogil except +
+    ) except + nogil
 
     string write_single_label_str[int_t_, real_t_, label_t_](
         int_t_ *indptr,
@@ -226,7 +226,7 @@ cdef extern from "python_streams.hpp":
         const bool_t text_is_base1,
         const bool_t add_header,
         const int decimal_places
-    ) nogil except +
+    ) except + nogil
 
 cdef extern from "utils.hpp":
     void sort_sparse_indices_known_ncol[int_t_, real_t_](
