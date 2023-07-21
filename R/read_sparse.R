@@ -80,18 +80,6 @@ process.file.name <- function(fname) {
     return(fname)
 }
 
-#' @title Determine if readsparse will handle non-ASCII file paths
-#' @description See \link{read.sparse} for details. In general, the library will
-#' be able to handle non-ASCII file paths, unless it is compiled with G++ version
-#' 4 or earlier (the default under Windows for older versions of RTools, such as
-#' RTools35).
-#' @return A logical/boolean value telling whether non-ASCII file names will be
-#' supported or not.
-#' @export
-readsparse_nonascii_support <- function() {
-    return(supports_nonascii_internal())
-}
-
 #' @title Read Sparse Matrix from Text File
 #' @description Read a labelled sparse CSR matrix in text format as used by libraries
 #' such as SVMLight, LibSVM, ThunderSVM, LibFM, xLearn, XGBoost, LightGBM, and more.
@@ -149,14 +137,6 @@ readsparse_nonascii_support <- function() {
 #' Be aware that the data is represented as a CSR matrix with index pointer of
 #' class C `int`, thus the number of rows/columns/non-zero-elements cannot exceed
 #' `.Machine$integer.max`.
-#' 
-#' On Windows, if the package is installed from CRAN and compiled using the GCC
-#' compiler version 4 or earlier (the default in older versions of RTools, such
-#' as Rtools35), it will not be able to read from or write to file names with
-#' non-ASCII characters, which can be solved by installing it directly from the
-#' GitHub repository (`remotes::install_github("david-cortes/readsparse")`).
-#' Whether support for non-ASCII file names is available or not can be checked
-#' through \link{readsparse_nonascii_support}.
 #' 
 #' On 64-bit Windows systems, if compiling the library with a compiler other than MinGW
 #' or MSVC, it will not be able to read files larger than 2GB. This should not be a concern

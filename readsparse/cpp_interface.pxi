@@ -39,37 +39,18 @@ def py_throw_err():
     raise ValueError(msg) 
 
 
-IF UNAME_SYSNAME != "Windows":
-    cdef FILE* cy_fopen(str fname, bool_t read, bool_t append):
-        cdef bytes fname_py = fname.encode()
-        cdef char* fname_c = fname_py
-        cdef char* mode
-        if (read):
-            mode = b"r"
-        elif (append):
-            mode = b"a"
-        else:
-            mode = b"w"
-        cdef FILE *out = fopen(fname_c, mode)
-        return out
-ELSE:
-    from libc.stddef cimport wchar_t
-    cdef extern from "stdio.h":
-        FILE *_wfopen(const wchar_t *filename, const wchar_t *mode)
-    cdef FILE* cy_fopen(str fname, bool_t read, bool_t append):
-        cdef Py_UNICODE *fname_c = fname
-        cdef str mode = "r"
-        if (read):
-            mode = "r"
-        elif (append):
-            mode = "a"
-        else:
-            mode = "w"
-
-        cdef Py_UNICODE *mode_ptr = mode
-        cdef FILE *out = _wfopen(<wchar_t*>fname_c, <wchar_t*>mode_ptr)    
-        return out
-
+cdef FILE* cy_fopen(str fname, bool_t read, bool_t append):
+    cdef bytes fname_py = fname.encode()
+    cdef char* fname_c = fname_py
+    cdef char* mode
+    if (read):
+        mode = b"r"
+    elif (append):
+        mode = b"a"
+    else:
+        mode = b"w"
+    cdef FILE *out = fopen(fname_c, mode)
+    return out
 
 cdef extern from "reader.hpp":
     bool_t read_single_label_template[int_t_, real_t_, label_t_](

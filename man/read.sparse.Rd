@@ -137,14 +137,6 @@ Be aware that the data is represented as a CSR matrix with index pointer of
 class C `int`, thus the number of rows/columns/non-zero-elements cannot exceed
 `.Machine$integer.max`.
 
-On Windows, if the package is installed from CRAN and compiled using the GCC
-compiler version 4 or earlier (the default in older versions of RTools, such
-as Rtools35), it will not be able to read from or write to file names with
-non-ASCII characters, which can be solved by installing it directly from the
-GitHub repository (`remotes::install_github("david-cortes/readsparse")`).
-Whether support for non-ASCII file names is available or not can be checked
-through \link{readsparse_nonascii_support}.
-
 On 64-bit Windows systems, if compiling the library with a compiler other than MinGW
 or MSVC, it will not be able to read files larger than 2GB. This should not be a concern
 if installing it from CRAN or from R itself, as the Windows version at the time

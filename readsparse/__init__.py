@@ -76,7 +76,8 @@ def read_sparse(
     
     On 64-bit Windows systems, if compiling the library with a compiler other than MinGW
     or MSVC, it will not be able to read files larger than 2GB and might crash the system
-    if the file is larger.
+    if the file is larger. Note that, on windows, file paths with non-ascii characters
+    will only be interpreted correctly when using UTF8 as system encoding.
 
     If the file contains a header, and this header denotes a larger number of columns
     or of labels than the largest index in the data, the resulting object will have
