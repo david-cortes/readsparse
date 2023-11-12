@@ -148,13 +148,13 @@ test_that("Ranking mode", {
 })
 
 test_that("Non-ascii file names", {
-    if (readsparse_nonascii_support()) {
+    has_utf8 <- grepl("UTF-?8$", Sys.getenv("LANG"))
+    if (has_utf8) {
         X <- matrix(1:10, nrow=5)
         y <- 11:15
         mode(X) <- "numeric"
         mode(y) <- "numeric"
         
-        has_utf8 <- grepl("UTF-?8$", Sys.getenv("LANG"))
         is_windows <- Sys.info()['sysname'] == "Windows"
         
         file_name <- "\u00d1o\u00f1o.txt"
@@ -302,4 +302,35 @@ test_that("Limiting nrows", {
     check.two.rows(r)
     r <- read.sparse(file_name, from_string=FALSE, limit_nrows=2, multilabel=TRUE)
     check.two.rows(r)
+})
+
+test_that("With comments", {
+    txt_mat <- paste(
+        "-1.234 1:10 4:4.500000000 #",
+        "0 #1:1",
+        "1e3 1:.001 2:5e-3 # 4:1",
+        sep="\n"
+    )
+    r <- read.sparse(txt_mat, from_string=TRUE)
+    expect_s4_class(r$X, "dgRMatrix")
+    expect_type(r$y, "double")
+
+    expected_X <- matrix(c(10, 0, 0, 4.5, 0, 0, 0, 0, 0.001, 0.005, 0, 0),
+                         nrow=3, ncol=4, byrow=TRUE)
+    expected_y <- c(-1.234, 0, 1000)
+    compare_vals <- function(expected_X, expected_y, X, y) {
+        expect_equal(expected_X, unname(as.matrix(X)))
+        expect_equal(expected_y, y)
+    }
+
+    compare_vals(expected_X, expected_y, r$X, r$y)
+
+    file_name <- file.path(tempdir(), "test_sparse_matrix.txt")
+    write.sparse(file_name, r$X, r$y, integer_labels=FALSE)
+    r <- read.sparse(file_name, from_string=FALSE)
+    compare_vals(expected_X, expected_y, r$X, r$y)
+
+    s <- write.sparse(file_name, r$X, r$y, integer_labels=FALSE, to_string=TRUE)
+    r <- read.sparse(s, from_string=TRUE)
+    compare_vals(expected_X, expected_y, r$X, r$y)
 })

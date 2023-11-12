@@ -217,19 +217,19 @@ cdef extern from "utils.hpp":
         size_t nrows, size_t ncols
     )
 
-cdef int_t* get_ptr_int(np.ndarray[int_t, ndim=1] a):
+cdef void* get_ptr_int(np.ndarray[int_t, ndim=1] a):
     if a.shape[0]:
         return &a[0]
     else:
         return NULL
 
-cdef real_t* get_ptr_num(np.ndarray[real_t, ndim=1] a):
+cdef void* get_ptr_num(np.ndarray[real_t, ndim=1] a):
     if a.shape[0]:
         return &a[0]
     else:
         return NULL
 
-cdef label_t* get_ptr_lab(np.ndarray[label_t, ndim=1] a):
+cdef void* get_ptr_lab(np.ndarray[label_t, ndim=1] a):
     if a.shape[0]:
         return &a[0]
     else:
@@ -246,19 +246,19 @@ def sort_matrix_indices(
     cdef real_t *ptr_values = NULL
 
     if int_t is int:
-        ptr_indptr = get_ptr_int[int](indptr)
-        ptr_indices = get_ptr_int[int](indices)
+        ptr_indptr = <int_t*>get_ptr_int[int](indptr)
+        ptr_indices = <int_t*>get_ptr_int[int](indices)
     elif int_t is int64_t:
-        ptr_indptr = get_ptr_int[int64_t](indptr)
-        ptr_indices = get_ptr_int[int64_t](indices)
+        ptr_indptr = <int_t*>get_ptr_int[int64_t](indptr)
+        ptr_indices = <int_t*>get_ptr_int[int64_t](indices)
     else:
-        ptr_indptr = get_ptr_int[size_t](indptr)
-        ptr_indices = get_ptr_int[size_t](indices)
+        ptr_indptr = <int_t*>get_ptr_int[size_t](indptr)
+        ptr_indices = <int_t*>get_ptr_int[size_t](indices)
 
     if real_t is float:
-        ptr_values = get_ptr_num[float](values)
+        ptr_values = <real_t*>get_ptr_num[float](values)
     else:
-        ptr_values = get_ptr_num[double](values)
+        ptr_values = <real_t*>get_ptr_num[double](values)
     
     sort_sparse_indices_known_ncol(
         ptr_indptr,
@@ -267,24 +267,87 @@ def sort_matrix_indices(
         nrows, ncols
     )
 
+cdef extern from *:
+    """
+    template <class T>
+    void delete_cpp_vector(void *vector_pointer)
+    {
+        std::vector<T> *ptr_typed = (std::vector<T>*)vector_pointer;
+        delete ptr_typed;
+    }
+    
+    template <class T>
+    void delete_vector_capsule(PyObject *obj)
+    {
+        void *ptr = (void*)PyCapsule_GetPointer(obj, NULL);
+        delete_cpp_vector<T>(ptr);
+    }
+
+    template <class T>
+    NPY_TYPES get_numpy_type()
+    {
+        if (std::is_same<T, double>::value) return NPY_DOUBLE;
+
+        if (std::is_same<T, float>::value) return NPY_FLOAT;
+
+        if (std::is_same<T, int>::value) return NPY_INT;
+
+        if (std::is_same<T, int64_t>::value) return NPY_INT64;
+
+        if (std::is_same<T, size_t>::value)
+        {
+            if (sizeof(size_t) == 8) return NPY_UINT64;
+
+            if (sizeof(size_t) == 4) return NPY_UINT32;
+
+            if (sizeof(size_t) == 2) return NPY_UINT16;
+
+            throw std::runtime_error("Platform has unsupported variant for 'size_t' indices.");
+        }
+
+        throw std::runtime_error("Internal error. Please open a bug report.");
+    }
+    
+    template <class T>
+    PyObject* make_numpy_from_cpp_vec(void *vector_pointer, size_t dim)
+    {
+        std::vector<T> *typed_pointer = (std::vector<T>*)vector_pointer;
+        std::vector<T> *temp_vector = new std::vector<T>();
+        std::swap(*typed_pointer, *temp_vector);
+        PyObject *wrapped_vec_obj_base = PyCapsule_New((void*)temp_vector, NULL, delete_vector_capsule<T>);
+        npy_intp dims[] = {(npy_intp)dim};
+        PyObject *out = PyArray_SimpleNewFromData(1, dims, get_numpy_type<T>(), (void*)temp_vector->data());
+        PyArray_SetBaseObject((PyArrayObject*)out, wrapped_vec_obj_base);
+        return out;
+    }
+
+    PyObject* make_numpy_from_cpp_vec_double(void *vector_pointer, size_t dim) { return make_numpy_from_cpp_vec<double>(vector_pointer, dim); }
+    PyObject* make_numpy_from_cpp_vec_float(void *vector_pointer, size_t dim) { return make_numpy_from_cpp_vec<float>(vector_pointer, dim); }
+    PyObject* make_numpy_from_cpp_vec_int(void *vector_pointer, size_t dim) { return make_numpy_from_cpp_vec<int>(vector_pointer, dim); }
+    PyObject* make_numpy_from_cpp_vec_int64(void *vector_pointer, size_t dim) { return make_numpy_from_cpp_vec<int64_t>(vector_pointer, dim); }
+    PyObject* make_numpy_from_cpp_vec_size_t(void *vector_pointer, size_t dim) { return make_numpy_from_cpp_vec<size_t>(vector_pointer, dim); }
+    """
+    object make_numpy_from_cpp_vec_double(void *vector_pointer, size_t dim) except +
+    object make_numpy_from_cpp_vec_float(void *vector_pointer, size_t dim) except +
+    object make_numpy_from_cpp_vec_int(void *vector_pointer, size_t dim) except +
+    object make_numpy_from_cpp_vec_int64(void *vector_pointer, size_t dim) except +
+    object make_numpy_from_cpp_vec_size_t(void *vector_pointer, size_t dim) except +
+
+
 ### https://github.com/cython/cython/issues/3968
 cdef np.ndarray[label_t, ndim=1] cast_vec(label_t *v0, vector[label_t] &inp):
     if label_t is int:
-        dtype_ = ctypes.c_int
+        return make_numpy_from_cpp_vec_int(&inp, inp.size())
     elif label_t is int64_t:
-        dtype_ = ctypes.c_int64
+        return make_numpy_from_cpp_vec_int64(&inp, inp.size())
     elif label_t is size_t:
-        dtype_ = ctypes.c_size_t
+        return make_numpy_from_cpp_vec_size_t(&inp, inp.size())
     elif label_t is float:
-        dtype_ = ctypes.c_float
+        return make_numpy_from_cpp_vec_float(&inp, inp.size())
     elif label_t is double:
-        dtype_ = ctypes.c_double
-    cdef np.ndarray[label_t, ndim=1] out = np.empty(0, dtype=dtype_)
-    if inp.size():
-        out = np.empty(inp.size(), dtype=dtype_)
-        memcpy(&out[0], inp.data(), inp.size()*sizeof(label_t))
-        inp.clear()
-    return out
+        return make_numpy_from_cpp_vec_double(&inp, inp.size())
+    else:
+        raise ValueError("Internal error. Please open a bug report.")
 
 cdef dict convert_cpp_vectors_to_numpy(
         int_t *v0, real_t *v1, label_t *v2,
@@ -1003,11 +1066,11 @@ def write_single_label_py(
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0]-1
 
-    cdef int_t *ptr_indptr = get_ptr_int(indptr)
-    cdef int_t *ptr_indices = get_ptr_int(indices)
-    cdef real_t *ptr_values = get_ptr_num(values)
-    cdef int_t *ptr_qid = get_ptr_int(qid)
-    cdef label_t *ptr_labels = get_ptr_lab(labels)
+    cdef int_t *ptr_indptr = <int_t*>get_ptr_int(indptr)
+    cdef int_t *ptr_indices = <int_t*>get_ptr_int(indices)
+    cdef real_t *ptr_values = <real_t*>get_ptr_num(values)
+    cdef int_t *ptr_qid = <int_t*>get_ptr_int(qid)
+    cdef label_t *ptr_labels = <label_t*>get_ptr_lab(labels)
 
     cdef FILE *output_file = cy_fopen(fname, False, append)
     if output_file == NULL:
@@ -1263,12 +1326,12 @@ def write_multi_label_py(
     cdef int_t missing_qid = SIZE_MAX if int_t is size_t else -INT_MAX
     cdef bool_t succeded = False
 
-    cdef int_t * ptr_indptr = get_ptr_int(indptr)
-    cdef int_t * ptr_indices = get_ptr_int(indices)
-    cdef real_t * ptr_values = get_ptr_num(values)
-    cdef int_t * ptr_indptr_lab = get_ptr_int(indptr_lab)
-    cdef int_t * ptr_indices_lab = get_ptr_int(indices_lab)
-    cdef int_t * ptr_qid = get_ptr_int(qid)
+    cdef int_t * ptr_indptr = <int_t*>get_ptr_int(indptr)
+    cdef int_t * ptr_indices = <int_t*>get_ptr_int(indices)
+    cdef real_t * ptr_values = <real_t*>get_ptr_num(values)
+    cdef int_t * ptr_indptr_lab = <int_t*>get_ptr_int(indptr_lab)
+    cdef int_t * ptr_indices_lab = <int_t*>get_ptr_int(indices_lab)
+    cdef int_t * ptr_qid = <int_t*>get_ptr_int(qid)
 
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0] - 1
@@ -1364,11 +1427,11 @@ def write_single_label_to_str_py(
     else:
         missing_label = -INT_MAX
 
-    cdef int_t *ptr_indptr = get_ptr_int(indptr)
-    cdef int_t *ptr_indices = get_ptr_int(indices)
-    cdef real_t *ptr_values = get_ptr_num(values)
-    cdef int_t *ptr_qid = get_ptr_int(qid)
-    cdef label_t *ptr_labels = get_ptr_lab(labels)
+    cdef int_t *ptr_indptr = <int_t*>get_ptr_int(indptr)
+    cdef int_t *ptr_indices = <int_t*>get_ptr_int(indices)
+    cdef real_t *ptr_values = <real_t*>get_ptr_num(values)
+    cdef int_t *ptr_qid = <int_t*>get_ptr_int(qid)
+    cdef label_t *ptr_labels = <label_t*>get_ptr_lab(labels)
 
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0] - 1
@@ -1617,12 +1680,12 @@ def write_multi_label_to_str_py(
     cdef int_t missing_qid = SIZE_MAX if int_t is size_t else -INT_MAX
     cdef string succeded
 
-    cdef int_t * ptr_indptr = get_ptr_int(indptr)
-    cdef int_t * ptr_indices = get_ptr_int(indices)
-    cdef real_t * ptr_values = get_ptr_num(values)
-    cdef int_t * ptr_indptr_lab = get_ptr_int(indptr_lab)
-    cdef int_t * ptr_indices_lab = get_ptr_int(indices_lab)
-    cdef int_t * ptr_qid = get_ptr_int(qid)
+    cdef int_t * ptr_indptr = <int_t*>get_ptr_int(indptr)
+    cdef int_t * ptr_indices = <int_t*>get_ptr_int(indices)
+    cdef real_t * ptr_values = <real_t*>get_ptr_num(values)
+    cdef int_t * ptr_indptr_lab = <int_t*>get_ptr_int(indptr_lab)
+    cdef int_t * ptr_indices_lab = <int_t*>get_ptr_int(indices_lab)
+    cdef int_t * ptr_qid = <int_t*>get_ptr_int(qid)
 
     cdef bool_t has_qid = qid.shape[0] > 0
     cdef size_t nrows = indptr.shape[0] - 1

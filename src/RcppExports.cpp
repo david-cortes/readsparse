@@ -276,7 +276,9 @@ static const R_CallMethodDef CallEntries[] = {
     {NULL, NULL, 0}
 };
 
+void init_altrepped_vectors(DllInfo* dll);
 RcppExport void R_init_readsparse(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
+    init_altrepped_vectors(dll);
 }
