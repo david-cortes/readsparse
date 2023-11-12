@@ -27,6 +27,7 @@
 
 #include <memory>
 #include <type_traits>
+#include <fstream>
 
 #include <Rcpp.h>
 #include <Rcpp/unwindProtect.h>
@@ -35,6 +36,11 @@
 // [[Rcpp::plugins(cpp11)]]
 
 #define throw_errno() {REprintf("Error %d: %s\n", errno, strerror(errno)); R_FlushConsole();}
+
+void throw_err_rcpp(const char *msg)
+{
+    throw Rcpp::exception(msg);
+}
 
 /* This library will use different code paths for opening a file path
    in order to support non-ASCII characters, depending on compiler and
@@ -298,6 +304,7 @@ Rcpp::List read_multi_label_R
     const size_t limit_nrows
 )
 {
+    Rcpp::String fstr = fname[0];
     Rcpp::List out = Rcpp::List::create(
         Rcpp::_["nrows"] = Rcpp::IntegerVector(1),
         Rcpp::_["ncols"] = Rcpp::IntegerVector(1),
@@ -318,15 +325,11 @@ Rcpp::List read_multi_label_R
     std::unique_ptr<std::vector<int>> qid(new std::vector<int>());
     size_large nrows, ncols, nclasses;
 
-    FileOpener file_(fname[0], "r");
-    FILE *input_file = file_.get_handle();
-    if (input_file == NULL)
-    {
-        throw_errno();
-        return Rcpp::List();
-    }
+    const char * c_fname = fstr.get_cstring();
+    std::ifstream fstream(c_fname, std::ios::in);
+
     bool succeeded = read_multi_label(
-        input_file,
+        fstream,
         *indptr,
         *indices,
         *values,
@@ -343,7 +346,6 @@ Rcpp::List read_multi_label_R
         assume_no_qid,
         assume_trailing_ws
     );
-    file_.close_file();
 
     if (!succeeded)
         return Rcpp::List();
@@ -452,6 +454,7 @@ Rcpp::List read_single_label_R
     const size_t limit_nrows
 )
 {
+    Rcpp::String fstr = fname[0];
     Rcpp::List out = Rcpp::List::create(
         Rcpp::_["nrows"] = Rcpp::IntegerVector(1),
         Rcpp::_["ncols"] = Rcpp::IntegerVector(1),
@@ -468,15 +471,11 @@ Rcpp::List read_single_label_R
     std::unique_ptr<std::vector<int>> qid(new std::vector<int>());
     size_large nrows, ncols, nclasses;
 
-    FileOpener file_(fname[0], "r");
-    FILE *input_file = file_.get_handle();
-    if (input_file == NULL)
-    {
-        throw_errno();
-        return Rcpp::List();
-    }
+    const char * c_fname = fstr.get_cstring();
+    std::ifstream fstream(c_fname, std::ios::in);
+
     bool succeeded = read_single_label(
-        input_file,
+        fstream,
         *indptr,
         *indices,
         *values,
@@ -492,7 +491,6 @@ Rcpp::List read_single_label_R
         assume_no_qid,
         assume_trailing_ws
     );
-    file_.close_file();
     
     if (!succeeded)
         return Rcpp::List();

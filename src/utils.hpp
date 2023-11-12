@@ -27,10 +27,13 @@
 
 #include "readsparse_internal.hpp"
 
-#ifndef _FOR_R
-#   define throw_err(msg) {fprintf(stderr, "%s", msg); fflush(stderr);}
+#ifdef _FOR_R
+    extern void throw_err_rcpp(const char *msg);
+#   define throw_err(msg) throw_err_rcpp(msg)
+#elif defined(_FOR_PYTHON)
+#   define throw_err(msg) throw std::runtime_error(msg);
 #else
-#   define throw_err(msg) {REprintf(msg); R_FlushConsole();}
+#   define throw_err(msg) {fprintf(stderr, "%s", msg); fflush(stderr);}
 #endif
 
 static void print_errno()

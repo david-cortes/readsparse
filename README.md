@@ -8,18 +8,16 @@ Written in C++ with interfaces for Python and R.
 
 Timings for reading the [Cover Type](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary.html#covtype.binary) dataset, available at [LibSVM datasets](https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/).
 
-(Code to reproduce is available under [timings](https://github.com/david-cortes/readsparse/tree/master/timings))
 
 | Library              |  Time (s) |
 | :---:                |  :---:    |
-| readsparse (Py)      | 1.96      |
-| readsparse (R)       | 2.00      |
-| scikit-learn (Py)    | 4.23      |
-| svmlight-loader (Py) | 5.17      |
-| sparsio (R)          | 2.75      |
-| e1071 (R)            | 30.58     |
+| readsparse (Py)      | 0.85      |
+| readsparse (R)       | 0.83      |
+| scikit-learn (Py)    | 1.76      |
+| svmlight-loader (Py) | 1.03      |
+| sparsio (R)          | 0.95      |
+| e1071 (R)            | 10.73     |
 
-*Note: achieving these speeds requires non-default settings, otherwise timing is similar to `sparsio`.*
 
 # Supported formats
 

@@ -36,7 +36,7 @@ def py_throw_err():
     cdef int nchar = snprintf(&str_buffer[0], 999, "Error %d: %s\n", errno, strerror(errno))
     cdef string s = string(&str_buffer[0], nchar)
     cdef str msg = s.decode()
-    raise ValueError(msg) 
+    raise ValueError(msg)
 
 
 cdef FILE* cy_fopen(str fname, bool_t read, bool_t append):
@@ -209,6 +209,43 @@ cdef extern from "python_streams.hpp":
         const int decimal_places
     ) except + nogil
 
+    bool_t read_multi_label_filestream[int_t_, real_t_](
+        const char *fname,
+        vector[int_t_] &indptr,
+        vector[int_t_] &indices,
+        vector[real_t_] &values,
+        vector[int_t_] &indptr_lab,
+        vector[int_t_] &indices_lab,
+        vector[int_t_] &qid,
+        size_large &nrows,
+        size_large &ncols,
+        size_large &nclasses,
+        const size_t limit_nrows,
+        const bool_t ignore_zero_valued,
+        const bool_t sort_indices,
+        const bool_t text_is_base1,
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
+    ) except + nogil
+
+    bool_t read_single_label_filestream[int_t_, real_t_, label_t_](
+        const char *fname,
+        vector[int_t_] &indptr,
+        vector[int_t_] &indices,
+        vector[real_t_] &values,
+        vector[label_t_] &labels,
+        vector[int_t_] &qid,
+        size_large &nrows,
+        size_large &ncols,
+        size_large &nclasses,
+        const size_t limit_nrows,
+        const bool_t ignore_zero_valued,
+        const bool_t sort_indices,
+        const bool_t text_is_base1,
+        const bool_t assume_no_qid,
+        const bool_t assume_trailing_ws
+    ) except + nogil
+
 cdef extern from "utils.hpp":
     void sort_sparse_indices_known_ncol[int_t_, real_t_](
         int_t_ *indptr,
@@ -335,7 +372,7 @@ cdef extern from *:
 
 
 ### https://github.com/cython/cython/issues/3968
-cdef np.ndarray[label_t, ndim=1] cast_vec(label_t *v0, vector[label_t] &inp):
+cdef np.ndarray[label_t, ndim=1] cast_vec(label_t *v0, vector[label_t] &inp) with gil:
     if label_t is int:
         return make_numpy_from_cpp_vec_int(&inp, inp.size())
     elif label_t is int64_t:
@@ -400,90 +437,84 @@ def read_single_label_py(
     cdef vector[int] qid_int
     cdef vector[float] values_float, labels_float
 
-    cdef FILE *input_file = cy_fopen(fname, True, False)
-    if input_file == NULL:
-        py_throw_err()
+    cdef bytes fname_py = fname.encode()
+    cdef char* fname_c = fname_py
     cdef bool_t succeded
-    try:
-        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-            if use_int64:
-                if use_double:
-                    succeded = read_single_label_template[int64_t, double, double](
-                        input_file,
-                        indptr,
-                        indices,
-                        values,
-                        labels,
-                        qid,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-                else:
-                    succeded = read_single_label_template[int64_t, float, float](
-                        input_file,
-                        indptr,
-                        indices,
-                        values_float,
-                        labels_float,
-                        qid,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
+    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+        if use_int64:
+            if use_double:
+                succeded = read_single_label_filestream[int64_t, double, double](
+                    fname_c,
+                    indptr,
+                    indices,
+                    values,
+                    labels,
+                    qid,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
             else:
-                if use_double:
-                    succeded = read_single_label_template[int, double, double](
-                        input_file,
-                        indptr_int,
-                        indices_int,
-                        values,
-                        labels,
-                        qid_int,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-                else:
-                    succeded = read_single_label_template[int, float, float](
-                        input_file,
-                        indptr_int,
-                        indices_int,
-                        values_float,
-                        labels_float,
-                        qid_int,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-    finally:
-        if (input_file != NULL):
-            fclose(input_file)
-            input_file = NULL
+                succeded = read_single_label_filestream[int64_t, float, float](
+                    fname_c,
+                    indptr,
+                    indices,
+                    values_float,
+                    labels_float,
+                    qid,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
+        else:
+            if use_double:
+                succeded = read_single_label_filestream[int, double, double](
+                    fname_c,
+                    indptr_int,
+                    indices_int,
+                    values,
+                    labels,
+                    qid_int,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
+            else:
+                succeded = read_single_label_filestream[int, float, float](
+                    fname_c,
+                    indptr_int,
+                    indices_int,
+                    values_float,
+                    labels_float,
+                    qid_int,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
 
     cdef vector[int64_t] indptr_lab, indices_lab
     cdef vector[int] indptr_lab_int, indices_lab_int
@@ -567,94 +598,88 @@ def read_multi_label_py(
     cdef vector[int] qid_int
     cdef vector[float] values_float
 
-    cdef FILE *input_file = cy_fopen(fname, True, False)
-    if input_file == NULL:
-        py_throw_err()
+    cdef bytes fname_py = fname.encode()
+    cdef char* fname_c = fname_py
     cdef bool_t succeded
-    try:
-        with nogil, boundscheck(False), nonecheck(False), wraparound(False):
-            if use_int64:
-                if use_double:
-                    succeded = read_multi_label_template[int64_t, double](
-                        input_file,
-                        indptr,
-                        indices,
-                        values,
-                        indptr_lab,
-                        indices_lab,
-                        qid,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-                else:
-                    succeded = read_multi_label_template[int64_t, float](
-                        input_file,
-                        indptr,
-                        indices,
-                        values_float,
-                        indptr_lab,
-                        indices_lab,
-                        qid,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
+    with nogil, boundscheck(False), nonecheck(False), wraparound(False):
+        if use_int64:
+            if use_double:
+                succeded = read_multi_label_filestream[int64_t, double](
+                    fname_c,
+                    indptr,
+                    indices,
+                    values,
+                    indptr_lab,
+                    indices_lab,
+                    qid,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
             else:
-                if use_double:
-                    succeded = read_multi_label_template[int, double](
-                        input_file,
-                        indptr_int,
-                        indices_int,
-                        values,
-                        indptr_lab_int,
-                        indices_lab_int,
-                        qid_int,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-                else:
-                    succeded = read_multi_label_template[int, float](
-                        input_file,
-                        indptr_int,
-                        indices_int,
-                        values_float,
-                        indptr_lab_int,
-                        indices_lab_int,
-                        qid_int,
-                        nrows,
-                        ncols,
-                        nclasses,
-                        limit_nrows,
-                        ignore_zero_valued,
-                        sort_indices,
-                        text_is_base1,
-                        assume_no_qid,
-                        assume_trailing_ws
-                    )
-    finally:
-        if (input_file != NULL):
-            fclose(input_file)
-            input_file = NULL
+                succeded = read_multi_label_filestream[int64_t, float](
+                    fname_c,
+                    indptr,
+                    indices,
+                    values_float,
+                    indptr_lab,
+                    indices_lab,
+                    qid,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
+        else:
+            if use_double:
+                succeded = read_multi_label_filestream[int, double](
+                    fname_c,
+                    indptr_int,
+                    indices_int,
+                    values,
+                    indptr_lab_int,
+                    indices_lab_int,
+                    qid_int,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
+            else:
+                succeded = read_multi_label_filestream[int, float](
+                    fname_c,
+                    indptr_int,
+                    indices_int,
+                    values_float,
+                    indptr_lab_int,
+                    indices_lab_int,
+                    qid_int,
+                    nrows,
+                    ncols,
+                    nclasses,
+                    limit_nrows,
+                    ignore_zero_valued,
+                    sort_indices,
+                    text_is_base1,
+                    assume_no_qid,
+                    assume_trailing_ws
+                )
 
     cdef vector[double] labels
     cdef vector[float] labels_float

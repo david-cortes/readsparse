@@ -28,6 +28,7 @@
 #include "readsparse_internal.hpp"
 #include "readsparse_detemplated.hpp"
 #include <sstream>
+#include <fstream>
 
 template <class int_t=int64_t, class real_t=double>
 bool read_multi_label_str
@@ -203,6 +204,89 @@ std::string write_single_label_str
     if (!succeeded)
         return std::string("e");
     return ss.str();
+}
+
+
+template <class int_t=int64_t, class real_t=double>
+bool read_multi_label_filestream
+(
+    const char *fname,
+    std::vector<int_t> &indptr,
+    std::vector<int_t> &indices,
+    std::vector<real_t> &values,
+    std::vector<int_t> &indptr_lab,
+    std::vector<int_t> &indices_lab,
+    std::vector<int_t> &qid,
+    size_large &nrows,
+    size_large &ncols,
+    size_large &nclasses,
+    const size_t limit_nrows,
+    const bool ignore_zero_valued,
+    const bool sort_indices,
+    const bool text_is_base1,
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
+)
+{
+    std::ifstream fstream(fname, std::ios::in);
+    return read_multi_label(
+        fstream,
+        indptr,
+        indices,
+        values,
+        indptr_lab,
+        indices_lab,
+        qid,
+        nrows,
+        ncols,
+        nclasses,
+        limit_nrows,
+        ignore_zero_valued,
+        sort_indices,
+        text_is_base1,
+        assume_no_qid,
+        assume_trailing_ws
+    );
+}
+
+template <class int_t=int64_t, class real_t=double, class label_t=double>
+bool read_single_label_filestream
+(
+    const char *fname,
+    std::vector<int_t> &indptr,
+    std::vector<int_t> &indices,
+    std::vector<real_t> &values,
+    std::vector<label_t> &labels,
+    std::vector<int_t> &qid,
+    size_large &nrows,
+    size_large &ncols,
+    size_large &nclasses,
+    const size_t limit_nrows,
+    const bool ignore_zero_valued,
+    const bool sort_indices,
+    const bool text_is_base1,
+    const bool assume_no_qid,
+    const bool assume_trailing_ws
+)
+{
+    std::ifstream fstream(fname, std::ios::in);
+    return read_single_label(
+        fstream,
+        indptr,
+        indices,
+        values,
+        labels,
+        qid,
+        nrows,
+        ncols,
+        nclasses,
+        limit_nrows,
+        ignore_zero_valued,
+        sort_indices,
+        text_is_base1,
+        assume_no_qid,
+        assume_trailing_ws
+    );
 }
 
 #endif 

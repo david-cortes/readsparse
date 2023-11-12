@@ -334,3 +334,17 @@ test_that("With comments", {
     r <- read.sparse(s, from_string=TRUE)
     compare_vals(expected_X, expected_y, r$X, r$y)
 })
+
+test_that("Error on non-existent file", {
+    tentative_file_name <- "qwerty.invalid"
+    while (TRUE) {
+        file_name <- file.path(tempdir(), tentative_file_name)
+        if (file.exists(file_name)) {
+            file_name <- paste0(file_name, as.character(sample.int(.Machine$integer.max, size=1)))
+        } else {
+            break
+        }
+    }
+
+    expect_error(read.sparse(file_name))
+})
