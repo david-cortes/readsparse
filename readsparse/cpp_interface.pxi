@@ -352,8 +352,15 @@ cdef extern from *:
         std::vector<T> *temp_vector = new std::vector<T>();
         std::swap(*typed_pointer, *temp_vector);
         PyObject *wrapped_vec_obj_base = PyCapsule_New((void*)temp_vector, NULL, delete_vector_capsule<T>);
+        if (!wrapped_vec_obj_base) {
+            delete temp_vector;
+            throw std::bad_alloc();
+        }
         npy_intp dims[] = {(npy_intp)dim};
         PyObject *out = PyArray_SimpleNewFromData(1, dims, get_numpy_type<T>(), (void*)temp_vector->data());
+        if (!out) {
+            throw std::bad_alloc();
+        }
         PyArray_SetBaseObject((PyArrayObject*)out, wrapped_vec_obj_base);
         return out;
     }
