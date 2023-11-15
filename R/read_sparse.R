@@ -185,10 +185,14 @@ process.file.name <- function(fname) {
 #' @param limit_nrows Maximum number of rows to read from the data. If there are more
 #' than this number of rows, it will only read the first 'limit_nrows' rows.
 #' If passing zero (the default), there will be no row limit.
-#' @param no_trailing_ws Whether to assume that lines in the file will never have extra whitespaces
-# at the end before a new line. Parsing large files with this option set to
-# `TRUE` can be 1.5x faster, but if the file does turn up to have e.g. extra
-# spaces at the end of lines, the results will be incorrect.
+#' @param use_altrep Whether to use R's ALTREP system to return C++ vector objects
+#' without generating extra data copies. If passing `FALSE`, each piece of data will
+#' be copied into a an R-allocated vector and returned as such.
+#' 
+#' Passing `TRUE` is faster and uses less memory (as there are no redundant data copies),
+#' but these ALTREP'd objects can potentially result in some functions/methods running
+#' slower on them than on R objects (for example, manually sub-setting the vectors in
+#' the S4 Matrix classes that are returned can potentially be slower by some microseconds).
 #' @param from_string Whether to read the data from a string variable instead of a file.
 #' If passing `from_string=TRUE`, then `file` is assumed to be a variable with the
 #' data contents on it.
@@ -246,8 +250,8 @@ process.file.name <- function(fname) {
 #' The format is also described at the SVMLight webpage: \url{http://svmlight.joachims.org}.
 read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FALSE,
                         index1=TRUE, sort_indices=TRUE, ignore_zeros=TRUE,
-                        min_cols=0L, min_classes=0L, limit_nrows=0L, no_trailing_ws=FALSE,
-                        from_string=FALSE) {
+                        min_cols=0L, min_classes=0L, limit_nrows=0L,
+                        use_altrep=TRUE, from_string=FALSE) {
     multilabel      <-  check.bool(multilabel, "multilabel")
     has_qid         <-  check.bool(has_qid, "has_qid")
     integer_labels  <-  check.bool(integer_labels, "integer_labels")
@@ -255,8 +259,8 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
     sort_indices    <-  check.bool(sort_indices, "sort_indices")
     ignore_zeros    <-  check.bool(ignore_zeros, "ignore_zeros")
     from_string     <-  check.bool(from_string, "from_string")
-    no_trailing_ws  <-  check.bool(no_trailing_ws, "no_trailing_ws")
-    
+    use_altrep      <-  check.bool(use_altrep, "use_altrep")
+
     min_cols        <-  check.int(min_cols, "min_cols")
     min_classes     <-  check.int(min_classes, "min_classes")
     limit_nrows     <-  check.int(limit_nrows, "limit_nrows")
@@ -293,8 +297,8 @@ read.sparse <- function(file, multilabel=FALSE, has_qid=FALSE, integer_labels=FA
         sort_indices,
         index1,
         !has_qid,
-        !no_trailing_ws,
-        limit_nrows
+        limit_nrows,
+        use_altrep
     )
     
     if (!length(r))

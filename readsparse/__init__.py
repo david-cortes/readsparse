@@ -15,7 +15,7 @@ def _as_csr(X):
 def read_sparse(
         file, multilabel=False, has_qid=False, integer_labels=False,
         index1=True, sort_indices=True, ignore_zeros=True,
-        min_cols=0, min_classes=0, limit_nrows=0, no_trailing_ws = False,
+        min_cols=0, min_classes=0, limit_nrows=0,
         use_int64=False, use_double=True, use_cpp=True, from_string=False
     ):
     """
@@ -134,11 +134,6 @@ def read_sparse(
         Maximum number of rows to read from the data. If there are more than this
         number of rows, it will only read the first 'limit_nrows' rows.
         If passing zero (the default), there will be no row limit.
-    no_trailing_ws : bool
-        Whether to assume that lines in the file will never have extra whitespaces
-        at the end before a new line. Parsing large files with this option set to
-        'True' can be 1.5x faster, but if the file does turn up to have e.g. extra
-        spaces at the end of lines, the results will be incorrect.
     use_int64 : bool
         Whether to use 64-bit integers for column and label indices (when passing
         ``multilabel=True``). If passing ``False``, will use the machine's 'int' type
@@ -236,7 +231,6 @@ def read_sparse(
             assume_no_qid = not has_qid,
             use_int64 = use_int64,
             use_double = use_double,
-            assume_trailing_ws = not no_trailing_ws,
             limit_nrows = limit_nrows
     )
 

@@ -21,20 +21,20 @@ deepcopy_log <- function(x) {
     .Call(`_readsparse_deepcopy_log`, x)
 }
 
-read_multi_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows) {
-    .Call(`_readsparse_read_multi_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows)
+read_multi_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep) {
+    .Call(`_readsparse_read_multi_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep)
 }
 
-read_multi_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows) {
-    .Call(`_readsparse_read_multi_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows)
+read_multi_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep) {
+    .Call(`_readsparse_read_multi_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep)
 }
 
-read_single_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows) {
-    .Call(`_readsparse_read_single_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows)
+read_single_label_R <- function(fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep) {
+    .Call(`_readsparse_read_single_label_R`, fname, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep)
 }
 
-read_single_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows) {
-    .Call(`_readsparse_read_single_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, assume_trailing_ws, limit_nrows)
+read_single_label_from_str_R <- function(file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep) {
+    .Call(`_readsparse_read_single_label_from_str_R`, file_as_str, ignore_zero_valued, sort_indices, text_is_base1, assume_no_qid, limit_nrows, use_altrep)
 }
 
 write_multi_label_R <- function(fname, indptr, indices, values, indptr_lab, indices_lab, qid, ncols, nclasses, ignore_zero_valued, sort_indices, text_is_base1, add_header, decimal_places, append) {

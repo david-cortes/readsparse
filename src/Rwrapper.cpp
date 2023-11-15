@@ -235,14 +235,18 @@ void init_altrepped_vectors(DllInfo* dll)
 
 SEXP convert_IntVecToRcpp(void *data)
 {
-    return Rcpp::IntegerVector(((std::vector<int>*)data)->begin(),
-                               ((std::vector<int>*)data)->end());
+    std::unique_ptr<std::vector<int>> *ptr = (std::unique_ptr<std::vector<int>>*)data;
+    Rcpp::IntegerVector out(ptr->get()->begin(), ptr->get()->end());
+    ptr->release();
+    return out;
 }
 
 SEXP convert_NumVecToRcpp(void *data)
 {
-    return Rcpp::NumericVector(((std::vector<double>*)data)->begin(),
-                               ((std::vector<double>*)data)->end());
+    std::unique_ptr<std::vector<int>> *ptr = (std::unique_ptr<std::vector<int>>*)data;
+    Rcpp::NumericVector out(ptr->get()->begin(), ptr->get()->end());
+    ptr->release();
+    return out;
 }
 
 SEXP convert_StringStreamToRcpp(void *data)
@@ -300,8 +304,8 @@ Rcpp::List read_multi_label_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws,
-    const size_t limit_nrows
+    const size_t limit_nrows,
+    const bool use_altrep
 )
 {
     Rcpp::String fstr = fname[0];
@@ -344,7 +348,7 @@ Rcpp::List read_multi_label_R
         sort_indices,
         text_is_base1,
         assume_no_qid,
-        assume_trailing_ws
+        true
     );
 
     if (!succeeded)
@@ -360,12 +364,12 @@ Rcpp::List read_multi_label_R
     INTEGER(out["nrows"])[0] = (int)nrows;
     INTEGER(out["ncols"])[0] = (int)ncols;
     INTEGER(out["nclasses"])[0] = (int)nclasses;
-    out["values"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&values);
-    out["indptr"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr);
-    out["indices"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices);
-    out["indptr_lab"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr_lab);
-    out["indices_lab"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices_lab);
-    out["qid"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&qid);
+    out["values"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&values);
+    out["indptr"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr);
+    out["indices"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices);
+    out["indptr_lab"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr_lab);
+    out["indices_lab"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices_lab);
+    out["qid"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&qid);
     return out;
 }
 
@@ -377,8 +381,8 @@ Rcpp::List read_multi_label_from_str_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws,
-    const size_t limit_nrows
+    const size_t limit_nrows,
+    const bool use_altrep
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -418,7 +422,7 @@ Rcpp::List read_multi_label_from_str_R
         sort_indices,
         text_is_base1,
         assume_no_qid,
-        assume_trailing_ws
+        true
     );
     if (!succeeded)
         return Rcpp::List();
@@ -433,12 +437,12 @@ Rcpp::List read_multi_label_from_str_R
     INTEGER(out["nrows"])[0] = (int)nrows;
     INTEGER(out["ncols"])[0] = (int)ncols;
     INTEGER(out["nclasses"])[0] = (int)nclasses;
-    out["values"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&values);
-    out["indptr"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr);
-    out["indices"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices);
-    out["indptr_lab"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr_lab);
-    out["indices_lab"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices_lab);
-    out["qid"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&qid);
+    out["values"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&values);
+    out["indptr"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr);
+    out["indices"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices);
+    out["indptr_lab"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr_lab);
+    out["indices_lab"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices_lab);
+    out["qid"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&qid);
     return out;
 }
 
@@ -450,8 +454,8 @@ Rcpp::List read_single_label_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws,
-    const size_t limit_nrows
+    const size_t limit_nrows,
+    const bool use_altrep
 )
 {
     Rcpp::String fstr = fname[0];
@@ -489,7 +493,7 @@ Rcpp::List read_single_label_R
         sort_indices,
         text_is_base1,
         assume_no_qid,
-        assume_trailing_ws
+        true
     );
     
     if (!succeeded)
@@ -506,11 +510,11 @@ Rcpp::List read_single_label_R
     INTEGER(out["nrows"])[0] = (int)nrows;
     INTEGER(out["ncols"])[0] = (int)ncols;
     INTEGER(out["nclasses"])[0] = (int)nclasses;
-    out["values"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&values);
-    out["indptr"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr);
-    out["indices"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices);
-    out["labels"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&labels);
-    out["qid"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&qid);
+    out["values"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&values);
+    out["indptr"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr);
+    out["indices"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices);
+    out["labels"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&labels);
+    out["qid"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&qid);
     return out;
 }
 
@@ -522,8 +526,8 @@ Rcpp::List read_single_label_from_str_R
     const bool sort_indices,
     const bool text_is_base1,
     const bool assume_no_qid,
-    const bool assume_trailing_ws,
-    const size_t limit_nrows
+    const size_t limit_nrows,
+    const bool use_altrep
 )
 {
     Rcpp::List out = Rcpp::List::create(
@@ -561,7 +565,7 @@ Rcpp::List read_single_label_from_str_R
         sort_indices,
         text_is_base1,
         assume_no_qid,
-        assume_trailing_ws
+        true
     );
     if (!succeeded)
         return Rcpp::List();
@@ -576,11 +580,11 @@ Rcpp::List read_single_label_from_str_R
     INTEGER(out["nrows"])[0] = (int)nrows;
     INTEGER(out["ncols"])[0] = (int)ncols;
     INTEGER(out["nclasses"])[0] = (int)nclasses;
-    out["values"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&values);
-    out["indptr"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indptr);
-    out["indices"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&indices);
-    out["labels"] = Rcpp::unwindProtect(altrep_vec<double>, (void*)&labels);
-    out["qid"] = Rcpp::unwindProtect(altrep_vec<int>, (void*)&qid);
+    out["values"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&values);
+    out["indptr"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indptr);
+    out["indices"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&indices);
+    out["labels"] = Rcpp::unwindProtect(use_altrep? altrep_vec<double> : convert_NumVecToRcpp, (void*)&labels);
+    out["qid"] = Rcpp::unwindProtect(use_altrep? altrep_vec<int> : convert_IntVecToRcpp, (void*)&qid);
     return out;
 }
 
