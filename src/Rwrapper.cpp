@@ -199,7 +199,7 @@ R_xlen_t altrepped_length_vec(SEXP R_ptr)
 template <class T>
 Rboolean altrepped_inspect_vec(SEXP x, int pre, int deep, int pvec, void (*inspect_subtree)(SEXP, int, int, int))
 {
-    Rprintf("std::vector<int> (len=%d, ptr=%p)\n", altrepped_length_vec<T>(x), R_ExternalPtrAddr(R_altrep_data1(x)));
+    Rprintf("std::vector<int> (len=%d, ptr=%p)\n", (int)altrepped_length_vec<T>(x), R_ExternalPtrAddr(R_altrep_data1(x)));
     return TRUE;
 }
 
