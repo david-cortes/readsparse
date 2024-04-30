@@ -124,7 +124,7 @@ endif()
 
 set(HEADER_FILES ${PROJECT_SOURCE_DIR}/src/readsparse.hpp
                  ${PROJECT_SOURCE_DIR}/src/readsparse_detemplated.hpp)
-set_target_properties(readsparse PROPERTIES PUBLIC_HEADER HEADER_FILES)
+set_target_properties(readsparse PROPERTIES PUBLIC_HEADER HEADER_FILES SOVERSION 0 VERSION ${PROJECT_VERSION})
 
 # Install target
 include(GNUInstallDirs)
