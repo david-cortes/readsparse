@@ -11,6 +11,7 @@ from Cython.Distutils import build_ext
 from platform import architecture
 from os import environ
 import sys, os, subprocess, warnings, re
+import tempfile
 
 ## Modify this to make the output of the compilation tests more verbose
 silent_tests = not (("verbose" in sys.argv)
@@ -116,7 +117,7 @@ class build_ext_subclass( build_ext ):
             if not isinstance(comm, list):
                 comm = [comm]
             print("--- Checking compiler support for option '%s'" % " ".join(comm))
-            fname = "readsparse_compiler_testing.cpp"
+            fname = os.path.join(tempfile.gettempdir(), "readsparse_compiler_testing.cpp")
             with open(fname, "w") as ftest:
                 ftest.write(u"int main(int argc, char**argv) {return 0;}\n")
             try:
@@ -156,7 +157,7 @@ class build_ext_subclass( build_ext ):
             if not hasattr(self.compiler, "compiler_cxx"):
                 return None
             print("--- Checking compiler support for '__restrict' qualifier")
-            fname = "readsparse_compiler_testing.cpp"
+            fname = os.path.join(tempfile.gettempdir(), "readsparse_compiler_testing.cpp")
             with open(fname, "w") as ftest:
                 ftest.write(u"int main(int argc, char**argv) {return 0;}\n")
             try:
@@ -208,7 +209,7 @@ is_windows = sys.platform[:3] == "win"
 setup(
     name  = "readsparse",
     packages = ["readsparse"],
-    version = '0.1.5-14',
+    version = '0.1.5-15',
     description = 'Read and Write Sparse Matrices in Text Format',
     author = 'David Cortes',
     url = 'https://github.com/david-cortes/readsparse',
