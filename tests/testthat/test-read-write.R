@@ -2,7 +2,18 @@ library("testthat")
 library("readsparse")
 context("Read and Write sparse matrices")
 
+# Note: tests are skipped when it detects that it was compiled with GCC.
+# Reason being that there's a compiler bug that shows up at CRAN checks:
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=117457
+# The bug there only happens when compiling with all three of: (a) LTO,
+# (b) address sanitizer, (c) O2 or higher; so it should not affect any
+# "production" builds (since they won't use the address sanitizer), but
+# this was necessary to keep the CRAN checks passing.
+
+skip_tests <- compiled_with_gcc_internal()
+
 test_that("Regression mode", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "-1.234 1:10 4:4.500000000",
         "0 ",
@@ -34,6 +45,7 @@ test_that("Regression mode", {
 })
 
 test_that("Classification mode", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "1 1:10 4:4.500000000",
         "0 ",
@@ -66,6 +78,7 @@ test_that("Classification mode", {
 })
 
 test_that("Multilabel mode", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "1,2 1:10 4:4.500000000",
         " ",
@@ -113,6 +126,7 @@ test_that("Multilabel mode", {
 })
 
 test_that("Ranking mode", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "1 qid:1 1:10 4:4.500000000",
         "0 qid:2",
@@ -148,6 +162,7 @@ test_that("Ranking mode", {
 })
 
 test_that("Non-ascii file names", {
+    skip_if(skip_tests)
     has_utf8 <- grepl("UTF-?8$", Sys.getenv("LANG"))
     if (has_utf8) {
         X <- matrix(1:10, nrow=5)
@@ -220,6 +235,7 @@ test_that("Non-ascii file names", {
 })
 
 test_that("Problematic input 1", {
+    skip_if(skip_tests)
 
     txt_mat <- "1 19767:0.5479394618272178 
 1 20336:0.3895789860528069 
@@ -249,6 +265,7 @@ test_that("Problematic input 1", {
 })
 
 test_that("Problematic input 2", {
+    skip_if(skip_tests)
 
     txt_mat <- "1 3:0.54 5:4.2 
  7:3
@@ -279,6 +296,7 @@ test_that("Problematic input 2", {
 })
 
 test_that("Limiting nrows", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "1 1:10 4:4.500000000",
         "0 ",
@@ -305,6 +323,7 @@ test_that("Limiting nrows", {
 })
 
 test_that("With comments", {
+    skip_if(skip_tests)
     txt_mat <- paste(
         "-1.234 1:10 4:4.500000000 #",
         "0 #1:1",
@@ -336,6 +355,7 @@ test_that("With comments", {
 })
 
 test_that("Error on non-existent file", {
+    skip_if(skip_tests)
     tentative_file_name <- "qwerty.invalid"
     while (TRUE) {
         file_name <- file.path(tempdir(), tentative_file_name)

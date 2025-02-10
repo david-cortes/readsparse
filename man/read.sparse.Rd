@@ -163,6 +163,7 @@ If any such difference is encountered, please submit a bug report in the
 package's GitHub page.
 }
 \examples{
+\dontrun{
 library(Matrix)
 library(readsparse)
 
@@ -196,6 +197,7 @@ print(r)
 
 ### (Note that columns with all-zeros are discarded,
 ###  this behavior can be avoided with 'add_header=TRUE')
+}
 }
 \references{
 Datasets in this format can be found here:\itemize{

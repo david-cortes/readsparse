@@ -1,7 +1,7 @@
 Package: readsparse
 Type: Package
 Title: Read and Write Sparse Matrices in 'SVMLight' and 'LibSVM' Formats
-Version: 0.1.5-6
+Version: 0.1.5-7
 Author: David Cortes
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
 URL: https://github.com/david-cortes/readsparse
@@ -14,4 +14,4 @@ License: BSD_2_clause + file LICENSE
 Imports: Rcpp (>= 1.0.5), Matrix, methods
 Suggests: MatrixExtra, testthat
 LinkingTo: Rcpp
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

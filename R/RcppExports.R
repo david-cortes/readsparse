@@ -5,6 +5,10 @@ supports_nonascii_internal <- function() {
     .Call(`_readsparse_supports_nonascii_internal`)
 }
 
+compiled_with_gcc_internal <- function() {
+    .Call(`_readsparse_compiled_with_gcc_internal`)
+}
+
 take_as_utf8 <- function() {
     .Call(`_readsparse_take_as_utf8`)
 }

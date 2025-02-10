@@ -127,6 +127,16 @@ bool supports_nonascii_internal()
 }
 
 // [[Rcpp::export(rng = false)]]
+bool compiled_with_gcc_internal()
+{
+#if defined(__GNUC__) && !defined(__clang__)
+    return true;
+#else
+    return false;
+#endif
+}
+
+// [[Rcpp::export(rng = false)]]
 bool take_as_utf8()
 {
     return TAKE_AS_UTF8;

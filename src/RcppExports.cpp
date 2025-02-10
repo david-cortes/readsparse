@@ -19,6 +19,15 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// compiled_with_gcc_internal
+bool compiled_with_gcc_internal();
+RcppExport SEXP _readsparse_compiled_with_gcc_internal() {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    rcpp_result_gen = Rcpp::wrap(compiled_with_gcc_internal());
+    return rcpp_result_gen;
+END_RCPP
+}
 // take_as_utf8
 bool take_as_utf8();
 RcppExport SEXP _readsparse_take_as_utf8() {
@@ -259,6 +268,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_readsparse_supports_nonascii_internal", (DL_FUNC) &_readsparse_supports_nonascii_internal, 0},
+    {"_readsparse_compiled_with_gcc_internal", (DL_FUNC) &_readsparse_compiled_with_gcc_internal, 0},
     {"_readsparse_take_as_utf8", (DL_FUNC) &_readsparse_take_as_utf8, 0},
     {"_readsparse_deepcopy_num", (DL_FUNC) &_readsparse_deepcopy_num, 1},
     {"_readsparse_deepcopy_int", (DL_FUNC) &_readsparse_deepcopy_int, 1},
