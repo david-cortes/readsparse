@@ -1,8 +1,11 @@
 Package: readsparse
 Type: Package
 Title: Read and Write Sparse Matrices in 'SVMLight' and 'LibSVM' Formats
-Version: 0.1.5-7
-Author: David Cortes
+Version: 0.1.5-8
+Authors@R: person(given = "David",
+                  family = "Cortes",
+                  role = c("aut", "cre", "cph"),
+                  email = "david.cortes.rivera@gmail.com")
 Maintainer: David Cortes <david.cortes.rivera@gmail.com>
 URL: https://github.com/david-cortes/readsparse
 BugReports: https://github.com/david-cortes/readsparse/issues
