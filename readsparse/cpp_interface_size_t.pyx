@@ -1,4 +1,4 @@
-#cython: language_level=3
+#cython: freethreading_compatible=True, language_level=3
 
 ctypedef size_t size_large
 
